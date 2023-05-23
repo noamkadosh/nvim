@@ -272,9 +272,9 @@ function M.shortcuts()
             opts = {
                 position = "center",
                 hl = {
-                    { "String", 1, 18 },
-                    { "PreProc", 18, 36 },
-                    { "Function", 36, 54 },
+                    { "String", 0, 16 },
+                    { "PreProc", 16, 34 },
+                    { "Function", 34, 54 },
                     { "Constant", 54, 74 },
                     { "rainbowcol1", 74, 100 },
                 },
