@@ -91,6 +91,12 @@ local function setup_rust()
             },
         },
         server = {
+            diagnostics = {
+                enable = true,
+                experimental = {
+                    enabled = true,
+                },
+            },
             on_attach = function(_, bufnr)
                 -- Hover actions
                 vim.keymap.set(

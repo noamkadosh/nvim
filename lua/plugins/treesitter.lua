@@ -3,7 +3,8 @@ return {
         "nvim-treesitter/nvim-treesitter",
         event = { "BufReadPost", "BufNewFile" },
         dependencies = {
-            "nvim-treesitter/playground",
+            { "nvim-treesitter/nvim-treesitter-context" },
+            { "nvim-treesitter/playground" },
             "JoosepAlviste/nvim-ts-context-commentstring",
             "windwp/nvim-ts-autotag",
         },
@@ -56,11 +57,6 @@ return {
                 },
             })
         end,
-    },
-
-    {
-        "nvim-treesitter/playground",
-        lazy = true,
     },
 
     {

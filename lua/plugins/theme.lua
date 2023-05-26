@@ -72,6 +72,9 @@ return {
 
                     local bg = highlights.StatusLine.bg
 
+                    highlights.TreesitterContext = { bg = bg, fg = highlights.NormalFloat.fg }
+                    highlights.TreesitterContextLineNumber = { bg = bg, fg = highlights.LineNr.fg }
+
                     highlights.StatusLineSeparator =
                         { fg = highlights.Comment.fg, bg = bg }
 
