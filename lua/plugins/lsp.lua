@@ -37,6 +37,9 @@ return {
             -- Code actions
             "kosayoda/nvim-lightbulb",
 
+            -- LSP Diagnostics
+            "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+
             -- Hints
             "lvimuser/lsp-inlayhints.nvim",
 
@@ -84,19 +87,19 @@ return {
                     require("nvim-navic").attach(client, bufnr)
                 end
 
-                vim.keymap.set("n", "<leader>tc", function()
-                    local _, float_winid = vim.diagnostic.open_float(
-                        nil,
-                        { focusable = true, source = true }
-                    )
-
-                    if float_winid == nil then
-                        return
-                    end
-
-                    vim.api.nvim_set_current_win(float_winid)
-                end, { desc = "Current line diagnostics pop up" })
-
+                -- vim.keymap.set("n", "<leader>tc", function()
+                --     local _, float_winid = vim.diagnostic.open_float(
+                --         nil,
+                --         { focusable = true, source = true }
+                --     )
+                --
+                --     if float_winid == nil then
+                --         return
+                --     end
+                --
+                --     vim.api.nvim_set_current_win(float_winid)
+                -- end, { desc = "Current line diagnostics pop up" })
+                --
                 require("lsp-inlayhints").on_attach(client, bufnr)
 
                 vim.keymap.set("n", "<leader>f", function()
@@ -125,9 +128,7 @@ return {
 
             lsp.setup()
 
-            require("plugins.tools.language_tools").setup_language_tools(
-                lsp
-            )
+            require("plugins.tools.language_tools").setup_language_tools(lsp)
 
             require("noice").setup({
                 lsp = {
@@ -146,12 +147,8 @@ return {
                     },
                     priority = 30,
                 },
-                virtual_text = {
-                    severity = {
-                        min = vim.diagnostic.severity.WARN,
-                        source = "if_many",
-                    },
-                },
+                virtual_text = false,
+                virtual_lines = true,
                 underline = true,
                 severity_sort = true,
                 update_in_insert = true,
@@ -176,6 +173,14 @@ return {
                 texthl = "@string.documentation",
             })
         end,
+    },
+
+    {
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        lazy = true,
+        config = function ()
+            require("lsp_lines").setup({})
+        end
     },
 
     {
