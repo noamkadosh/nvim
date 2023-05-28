@@ -62,7 +62,6 @@ return {
                 "cssls",
                 "dockerls",
                 "docker_compose_language_service",
-                "eslint",
                 "gopls",
                 "html",
                 "jsonls",
@@ -105,7 +104,14 @@ return {
                 lsp.default_keymaps({ buffer = bufnr })
 
                 vim.keymap.set({ "n", "x" }, "<leader>f", function()
-                    vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+                    vim.lsp.buf.format({
+                        async = false,
+                        timeout_ms = 10000,
+                        filter = function(server)
+                            -- Only use null-ls
+                            return server.name == "null-ls"
+                        end,
+                    })
                 end, { buffer = bufnr, desc = "Format" })
             end)
 
