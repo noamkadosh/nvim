@@ -13,6 +13,8 @@ return {
                 on_highlights = function(highlights, colors)
                     local util = require("tokyonight.util")
 
+                    highlights.Yanked = { bg = util.darken(colors.orange, 0.15)}
+
                     highlights.gradient1 = { fg = "#1ABC9C" }
                     highlights.gradient2 = { fg = "#2EB3A5" }
                     highlights.gradient3 = { fg = "#40AAAE" }
