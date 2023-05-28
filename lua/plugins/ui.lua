@@ -290,6 +290,17 @@ return {
     },
 
     {
+        "yuki-yano/highlight-undo.nvim",
+        dependencies = { "vim-denops/denops.vim" },
+        event = { "BufReadPre", "BufNewFile" },
+        config = function()
+            require("highlight-undo").setup({
+                duration = 150,
+            })
+        end,
+    },
+
+    {
         "NvChad/nvim-colorizer.lua",
         event = { "BufReadPre", "BufNewFile" },
         config = function()
@@ -303,22 +314,4 @@ return {
     },
 
     { "nvim-tree/nvim-web-devicons", lazy = true },
-
-    -- {
-    --     "akinsho/bufferline.nvim",
-    --     tag = "v3.1.0",
-    --     event = "VeryLazy",
-    --     config = function()
-    --         vim.opt.termguicolors = true
-    --         require("bufferline").setup({
-    --             options = {
-    --                 diagnostics = "nvim_lsp",
-    --                 indicator = { style = "underline" },
-    --                 separator_style = "thick",
-    --                 show_close_icon = false,
-    --                 hover = { enabled = true, reveal = { "close" } },
-    --             },
-    --         })
-    --     end,
-    -- },
 }
