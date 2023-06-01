@@ -40,9 +40,6 @@ return {
             -- LSP Diagnostics
             "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
 
-            -- Hints
-            "lvimuser/lsp-inlayhints.nvim",
-
             { "RRethy/vim-illuminate" },
         },
         event = { "BufReadPre", "BufNewFile", "InsertEnter", "CmdlineEnter" },
@@ -79,19 +76,6 @@ return {
             })
 
             lsp.on_attach(function(client, bufnr)
-                -- vim.keymap.set("n", "<leader>tc", function()
-                --     local _, float_winid = vim.diagnostic.open_float(
-                --         nil,
-                --         { focusable = true, source = true }
-                --     )
-                --
-                --     if float_winid == nil then
-                --         return
-                --     end
-                --
-                --     vim.api.nvim_set_current_win(float_winid)
-                -- end, { desc = "Current line diagnostics pop up" })
-                --
                 require("lsp-inlayhints").on_attach(client, bufnr)
 
                 lsp.default_keymaps({ buffer = bufnr })
@@ -184,8 +168,15 @@ return {
                 "<cmd>Lspsaga lsp_finder<CR>",
                 { desc = "Find symbol's definition" }
             )
-            vim.keymap.set("n", "gr", "<cmd>Lspsaga rename<CR>", { desc = "Rename occurrences of hovered word for current file"})
-            vim.keymap.set("n", "gR", "<cmd>Lspsaga rename ++project<CR>", { desc = "Rename occurrences of hovered word for selected files" })
+            vim.keymap.set(
+                "n",
+                "gr",
+                "<cmd>Lspsaga rename<CR>",
+                { desc = "Rename occurrences of hovered word for current file" }
+            )
+            vim.keymap.set("n", "gR", "<cmd>Lspsaga rename ++project<CR>", {
+                desc = "Rename occurrences of hovered word for selected files",
+            })
             vim.keymap.set(
                 { "n", "v" },
                 "<leader>ca",
@@ -241,9 +232,12 @@ return {
 
     {
         "lvimuser/lsp-inlayhints.nvim",
-        lazy = true,
+        branch = "anticonceal",
+        event = "LspAttach",
         config = function()
-            require("lsp-inlayhints").setup({
+            local inlayhints = require("lsp-inlayhints")
+
+            inlayhints.setup({
                 inlay_hints = {
                     parameter_hints = {
                         prefix = " <- ",
@@ -251,8 +245,22 @@ return {
                     type_hints = {
                         prefix = " => ",
                     },
-                    highlight = "Comment",
+                    highlight = "InlayHint",
                 },
+            })
+
+            vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+            vim.api.nvim_create_autocmd("LspAttach", {
+                group = "LspAttach_inlayhints",
+                callback = function(args)
+                    if not (args.data and args.data.client_id) then
+                        return
+                    end
+
+                    local bufnr = args.buf
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    require("lsp-inlayhints").on_attach(client, bufnr)
+                end,
             })
         end,
     },
