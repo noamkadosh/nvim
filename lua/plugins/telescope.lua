@@ -19,7 +19,6 @@ return {
             local themes = require("telescope.themes")
             local trouble = require("trouble.providers.telescope")
 
-            -- not sure it works, missing mapping which-key description
             telescope.setup({
                 defaults = {
                     prompt_prefix = " ",
@@ -41,7 +40,7 @@ return {
                         require("telescope.themes").get_dropdown({}),
                     },
                     file_browser = {
-                        -- hidden = true,
+                        hidden = true,
                         hijack_netrw = true,
                         path = "%:p:h",
                         cwd_to_path = true,
@@ -100,12 +99,6 @@ return {
                 telescope.extensions.zoxide.list,
                 { desc = "Jump list (Zoxide)" }
             )
-            -- vim.keymap.set(
-            --     "n",
-            --     "<leader>ca",
-            --     vim.lsp.buf.code_action,
-            --     { desc = "Line code actions" }
-            -- )
             vim.keymap.set(
                 "n",
                 "<leader>u",
