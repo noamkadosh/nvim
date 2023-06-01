@@ -350,7 +350,7 @@ function M.get_recent_projects(start, target_width)
                     keymap = {
                         "n",
                         shortcut,
-                        "<cmd>lua require('config.plugins.tools.helpers').open_project('"
+                        "<cmd>lua require('plugins.tools.helpers').open_project('"
                             .. project_path
                             .. "')<CR>",
                         { noremap = true, silent = true, nowait = true },
