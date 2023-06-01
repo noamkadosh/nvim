@@ -13,7 +13,8 @@ return {
                 on_highlights = function(highlights, colors)
                     local util = require("tokyonight.util")
 
-                    highlights.Yanked = { bg = util.darken(colors.orange, 0.15)}
+                    highlights.Yanked =
+                        { bg = util.darken(colors.orange, 0.15) }
 
                     highlights.gradient1 = { fg = "#1ABC9C" }
                     highlights.gradient2 = { fg = "#2EB3A5" }
@@ -29,16 +30,21 @@ return {
 
                     highlights.NormalFloat = { bg = colors.bg }
                     highlights.FloatBorder =
-                    { bg = colors.bg, fg = highlights.FloatBorder.fg }
+                        { bg = colors.bg, fg = highlights.FloatBorder.fg }
+
+                    highlights.DiagnosticVirtualTextError.bg = colors.bg
+                    highlights.DiagnosticVirtualTextWarn.bg = colors.bg
+                    highlights.DiagnosticVirtualTextInfo.bg = colors.bg
+                    highlights.DiagnosticVirtualTextHint.bg = colors.bg
 
                     highlights.DiagnosticFloatingError =
-                    { bg = colors.bg, fg = colors.error }
+                        { bg = colors.bg, fg = colors.error }
                     highlights.DiagnosticFloatingWarn =
-                    { bg = colors.bg, fg = colors.warning }
+                        { bg = colors.bg, fg = colors.warning }
                     highlights.DiagnosticFloatingInfo =
-                    { bg = colors.bg, fg = colors.info }
+                        { bg = colors.bg, fg = colors.info }
                     highlights.DiagnosticFloatingHint =
-                    { bg = colors.bg, fg = colors.hint }
+                        { bg = colors.bg, fg = colors.hint }
 
                     highlights.TelescopeNormal = {
                         bg = colors.bg,
@@ -48,6 +54,7 @@ return {
                         bg = colors.bg,
                         fg = highlights.TelescopeBorder.fg,
                     }
+                    highlights.SagaLightBulb = { fg = colors.yellow }
 
                     highlights.Rainbow1 = { fg = colors.red }
                     highlights.Rainbow2 = { fg = colors.yellow }
@@ -58,59 +65,34 @@ return {
                     highlights.Rainbow7 = { fg = colors.purple }
 
                     highlights.RainbowLight1 =
-                    { fg = util.blend(colors.red, colors.bg, 0.5) }
+                        { fg = util.blend(colors.red, colors.bg, 0.5) }
                     highlights.RainbowLight2 =
-                    { fg = util.blend(colors.yellow, colors.bg, 0.5) }
+                        { fg = util.blend(colors.yellow, colors.bg, 0.5) }
                     highlights.RainbowLight3 =
-                    { fg = util.blend(colors.green, colors.bg, 0.5) }
+                        { fg = util.blend(colors.green, colors.bg, 0.5) }
                     highlights.RainbowLight4 =
-                    { fg = util.blend(colors.teal, colors.bg, 0.5) }
+                        { fg = util.blend(colors.teal, colors.bg, 0.5) }
                     highlights.RainbowLight5 =
-                    { fg = util.blend(colors.blue, colors.bg, 0.5) }
+                        { fg = util.blend(colors.blue, colors.bg, 0.5) }
                     highlights.RainbowLight6 =
-                    { fg = util.blend(colors.magenta, colors.bg, 0.5) }
+                        { fg = util.blend(colors.magenta, colors.bg, 0.5) }
                     highlights.RainbowLight7 =
-                    { fg = util.blend(colors.purple, colors.bg, 0.5) }
+                        { fg = util.blend(colors.purple, colors.bg, 0.5) }
 
                     local bg = highlights.StatusLine.bg
 
                     highlights.TreesitterContext =
-                    { bg = bg, fg = highlights.NormalFloat.fg }
+                        { bg = bg, fg = highlights.NormalFloat.fg }
                     highlights.TreesitterContextLineNumber =
-                    { bg = bg, fg = highlights.LineNr.fg }
+                        { bg = bg, fg = highlights.LineNr.fg }
 
                     highlights.StatusLineSeparator =
-                    { fg = highlights.Comment.fg, bg = bg }
+                        { fg = highlights.Comment.fg, bg = bg }
 
-                    highlights.NavicIconsFile.bg = bg
-                    highlights.NavicIconsModule.bg = bg
-                    highlights.NavicIconsNamespace.bg = bg
-                    highlights.NavicIconsPackage.bg = bg
-                    highlights.NavicIconsClass.bg = bg
-                    highlights.NavicIconsMethod.bg = bg
-                    highlights.NavicIconsProperty.bg = bg
-                    highlights.NavicIconsField.bg = bg
-                    highlights.NavicIconsConstructor.bg = bg
-                    highlights.NavicIconsEnum.bg = bg
-                    highlights.NavicIconsInterface.bg = bg
-                    highlights.NavicIconsFunction.bg = bg
-                    highlights.NavicIconsVariable.bg = bg
-                    highlights.NavicIconsConstant.bg = bg
-                    highlights.NavicIconsString.bg = bg
-                    highlights.NavicIconsNumber.bg = bg
-                    highlights.NavicIconsBoolean.bg = bg
-                    highlights.NavicIconsArray.bg = bg
-                    highlights.NavicIconsObject.bg = bg
-                    highlights.NavicIconsKey.bg = bg
-                    highlights.NavicIconsKeyword.bg = bg
-                    highlights.NavicIconsNull.bg = bg
-                    highlights.NavicIconsEnumMember.bg = bg
-                    highlights.NavicIconsStruct.bg = bg
-                    highlights.NavicIconsEvent.bg = bg
-                    highlights.NavicIconsOperator.bg = bg
-                    highlights.NavicIconsTypeParameter.bg = bg
-                    highlights.NavicText.bg = bg
-                    highlights.NavicSeparator.bg = bg
+                    highlights.SagaWinbarFileName = { bg = bg }
+                    highlights.SagaWinbarFileIcon = { bg = bg }
+                    highlights.SagaWinbarFolderName = { bg = bg }
+                    highlights.SagaWinbarSep = { bg = bg }
                 end,
             })
 

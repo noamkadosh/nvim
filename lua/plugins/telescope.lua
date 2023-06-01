@@ -69,7 +69,6 @@ return {
             telescope.load_extension("zoxide")
             telescope.load_extension("projects")
             telescope.load_extension("noice")
-            telescope.load_extension("aerial")
 
             vim.keymap.set(
                 "n",
@@ -101,12 +100,12 @@ return {
                 telescope.extensions.zoxide.list,
                 { desc = "Jump list (Zoxide)" }
             )
-            vim.keymap.set(
-                "n",
-                "<leader>ca",
-                vim.lsp.buf.code_action,
-                { desc = "Line code actions" }
-            )
+            -- vim.keymap.set(
+            --     "n",
+            --     "<leader>ca",
+            --     vim.lsp.buf.code_action,
+            --     { desc = "Line code actions" }
+            -- )
             vim.keymap.set(
                 "n",
                 "<leader>u",

@@ -5,7 +5,7 @@ return {
         config = function()
             local noice = require("noice")
             local colors = require("tokyonight.colors").setup({})
-            local navic = require("nvim-navic")
+            local lspsapa_winbar = require("lspsaga.symbolwinbar")
 
             require("lualine").setup({
                 options = {
@@ -114,7 +114,7 @@ return {
                     lualine_c = {
                         {
                             function()
-                                return (navic.get_location() or "")
+                                return (lspsapa_winbar:get_winbar() or "")
                                     .. "%#StatusLine#"
                             end,
                             cond = function()
@@ -125,14 +125,6 @@ return {
                 },
             })
         end,
-    },
-
-    {
-        "SmiteshP/nvim-navic",
-        lazy = true,
-        opts = {
-            highlight = true,
-        },
     },
 
     {

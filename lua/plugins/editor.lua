@@ -58,7 +58,7 @@ return {
                     require("spectre").open()
                     vim.api.nvim_win_set_width(0, 60)
                 end,
-                desc = "Search and replace (Spectre)",
+                desc = "Search and replace",
             },
             {
                 "<leader>sw",
@@ -66,7 +66,7 @@ return {
                     require("spectre").open_visual({ select_word = true })
                     vim.api.nvim_win_set_width(0, 60)
                 end,
-                desc = "Search current word (Spectre)",
+                desc = "Search current word",
             },
             {
                 "<leader>sw",
@@ -75,7 +75,7 @@ return {
                     vim.api.nvim_win_set_width(0, 60)
                 end,
                 mode = "v",
-                desc = "Search current word (Spectre)",
+                desc = "Search current word",
             },
             {
                 "<leader>sp",
@@ -83,7 +83,7 @@ return {
                     require("spectre").open_file_search()
                     vim.api.nvim_win_set_width(0, 60)
                 end,
-                desc = "Search in current file (Spectre)",
+                desc = "Search in current file",
             },
         },
     },
@@ -139,42 +139,6 @@ return {
     },
 
     {
-        "stevearc/aerial.nvim",
-        event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            require("aerial").setup({
-                on_attach = function(bufnr)
-                    vim.keymap.set(
-                        "n",
-                        "{",
-                        "<cmd>AerialPrev<CR>",
-                        { buffer = bufnr }
-                    )
-                    vim.keymap.set(
-                        "n",
-                        "}",
-                        "<cmd>AerialNext<CR>",
-                        { buffer = bufnr }
-                    )
-                end,
-            })
-
-            vim.keymap.set(
-                "n",
-                "<leader>av",
-                "<cmd>AerialToggle!<CR>",
-                { desc = "Toggle Aerial view" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>as",
-                "<cmd>call aerial#fzf()<cr>",
-                { silent = true, desc = "Trigger fuzzy finding for Aerial" }
-            )
-        end,
-    },
-
-    {
         "folke/trouble.nvim",
         lazy = true,
         keys = function()
@@ -182,7 +146,7 @@ return {
                 "n",
                 "<leader>tx",
                 "<cmd>TroubleToggle<cr>",
-                { silent = true, noremap = true, desc = "Toggle Trouble" }
+                { silent = true, noremap = true, desc = "Toggle diagnostics" }
             )
             vim.keymap.set(
                 "n",
@@ -191,7 +155,7 @@ return {
                 {
                     silent = true,
                     noremap = true,
-                    desc = "Workspace diagnostics (Trouble)",
+                    desc = "Workspace diagnostics",
                 }
             )
             vim.keymap.set(
@@ -201,22 +165,22 @@ return {
                 {
                     silent = true,
                     noremap = true,
-                    desc = "Document diagnostics (Trouble)",
+                    desc = "Document diagnostics",
                 }
             )
             vim.keymap.set("n", "<leader>tl", "<cmd>TroubleToggle loclist<cr>", {
                 silent = true,
                 noremap = true,
-                desc = "Location list (Trouble)",
+                desc = "Location list",
             })
             vim.keymap.set("n", "<leader>tq", "<cmd>TroubleToggle quickfix<cr>", {
                 silent = true,
                 noremap = true,
-                desc = "Quickfix list (Trouble)",
+                desc = "Quickfix list",
             })
             vim.keymap.set(
                 "n",
-                "gR",
+                "<leader>tR",
                 "<cmd>TroubleToggle lsp_references<cr>",
                 { silent = true, noremap = true, desc = "LSP references" }
             )

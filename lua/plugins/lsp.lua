@@ -34,17 +34,14 @@ return {
             },
             { "b0o/schemastore.nvim" },
 
-            -- Code actions
-            "kosayoda/nvim-lightbulb",
+            -- LspSaga
+            "glepnir/lspsaga.nvim",
 
             -- LSP Diagnostics
             "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
 
             -- Hints
             "lvimuser/lsp-inlayhints.nvim",
-
-            -- LSP Statusline Components
-            "SmiteshP/nvim-navic",
 
             { "RRethy/vim-illuminate" },
         },
@@ -82,10 +79,6 @@ return {
             })
 
             lsp.on_attach(function(client, bufnr)
-                if client.server_capabilities.documentSymbolProvider then
-                    require("nvim-navic").attach(client, bufnr)
-                end
-
                 -- vim.keymap.set("n", "<leader>tc", function()
                 --     local _, float_winid = vim.diagnostic.open_float(
                 --         nil,
@@ -162,21 +155,79 @@ return {
     },
 
     {
-        "kosayoda/nvim-lightbulb",
+        "glepnir/lspsaga.nvim",
         lazy = true,
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+            "nvim-treesitter/nvim-treesitter",
+        },
         config = function()
-            require("nvim-lightbulb").setup({
-                autocmd = { enabled = true },
-                sign = {
-                    enabled = true,
-                    priority = 40,
+            require("lspsaga").setup({
+                lightbulb = {
+                    virtual_text = false,
+                },
+                outline = {
+                    win_width = 40,
+                },
+                symbol_in_winbar = {
+                    enable = false,
+                    show_file = false,
+                },
+                ui = {
+                    code_action = "󱠂",
                 },
             })
 
-            vim.fn.sign_define("LightBulbSign", {
-                text = "󱠂",
-                texthl = "@string.documentation",
-            })
+            vim.keymap.set(
+                "n",
+                "gh",
+                "<cmd>Lspsaga lsp_finder<CR>",
+                { desc = "Find symbol's definition" }
+            )
+            vim.keymap.set("n", "gr", "<cmd>Lspsaga rename<CR>", { desc = "Rename occurrences of hovered word for current file"})
+            vim.keymap.set("n", "gR", "<cmd>Lspsaga rename ++project<CR>", { desc = "Rename occurrences of hovered word for selected files" })
+            vim.keymap.set(
+                { "n", "v" },
+                "<leader>ca",
+                "<cmd>Lspsaga code_action<CR>",
+                { desc = "Line code actions" }
+            )
+            vim.keymap.set(
+                "n",
+                "gp",
+                "<cmd>Lspsaga peek_definition<CR>",
+                { desc = "Peek definition" }
+            )
+            vim.keymap.set(
+                "n",
+                "gd",
+                "<cmd>Lspsaga goto_definition<CR>",
+                { desc = "Go to definition" }
+            )
+            vim.keymap.set(
+                "n",
+                "gP",
+                "<cmd>Lspsaga peek_type_definition<CR>",
+                { desc = "Peek type definition" }
+            )
+            vim.keymap.set(
+                "n",
+                "gD",
+                "<cmd>Lspsaga goto_type_definition<CR>",
+                { desc = "Go to type definition" }
+            )
+            vim.keymap.set(
+                "n",
+                "go",
+                "<cmd>Lspsaga outline<CR>",
+                { desc = "Toggle outline" }
+            )
+            vim.keymap.set(
+                "n",
+                "gk",
+                "<cmd>Lspsaga hover_doc<CR>",
+                { desc = "Hover documentation" }
+            )
         end,
     },
 
