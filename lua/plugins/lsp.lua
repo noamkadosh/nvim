@@ -162,6 +162,19 @@ return {
                 },
             })
 
+            local colors = require("tokyonight.colors").setup() -- pass in any of the config options as explained above
+            local kind_groups = require("lspsaga.lspkind").get_kind_group()
+            table.insert(kind_groups, "SagaWinbarFileName")
+            table.insert(kind_groups, "SagaWinbarFileIcon")
+            table.insert(kind_groups, "SagaWinbarFolderName")
+            table.insert(kind_groups, "SagaWinbarSep")
+
+            for _, name in pairs(kind_groups) do
+                local group = vim.api.nvim_get_hl_by_name(name, true)
+                group.background = colors.bg_statusline
+                vim.api.nvim_set_hl(0, name, group)
+            end
+
             vim.keymap.set(
                 "n",
                 "gh",

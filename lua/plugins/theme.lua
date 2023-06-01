@@ -88,11 +88,6 @@ return {
 
                     highlights.StatusLineSeparator =
                         { fg = highlights.Comment.fg, bg = bg }
-
-                    highlights.SagaWinbarFileName = { bg = bg }
-                    highlights.SagaWinbarFileIcon = { bg = bg }
-                    highlights.SagaWinbarFolderName = { bg = bg }
-                    highlights.SagaWinbarSep = { bg = bg }
                 end,
             })
 
