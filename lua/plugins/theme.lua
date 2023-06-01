@@ -13,11 +13,6 @@ return {
                 on_highlights = function(highlights, colors)
                     local util = require("tokyonight.util")
 
-                    highlights.InlayHint = {
-                        bg = highlights.Comment.bg,
-                        fg = util.lighten(highlights.Comment.fg, 0.61),
-                    }
-
                     highlights.Yanked =
                         { bg = util.darken(colors.orange, 0.15) }
 

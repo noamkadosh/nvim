@@ -245,7 +245,7 @@ return {
                     type_hints = {
                         prefix = " => ",
                     },
-                    highlight = "InlayHint",
+                    highlight = "Comment",
                 },
             })
 
