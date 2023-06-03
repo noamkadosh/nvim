@@ -63,7 +63,10 @@ return {
             {
                 "<leader>sw",
                 function()
-                    require("spectre").open_visual({ select_word = true })
+                    require("spectre").open_visual({
+                        select_word = true,
+                        is_insert_mode = false,
+                    })
                     vim.api.nvim_win_set_width(0, 60)
                 end,
                 desc = "Search current word",
@@ -71,7 +74,9 @@ return {
             {
                 "<leader>sw",
                 function()
-                    require("spectre").open_visual()
+                    require("spectre").open_visual({
+                        is_insert_mode = false,
+                    })
                     vim.api.nvim_win_set_width(0, 60)
                 end,
                 mode = "v",
