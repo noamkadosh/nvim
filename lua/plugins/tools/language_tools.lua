@@ -17,6 +17,7 @@ local function setup_null_ls()
             require("typescript.extensions.null-ls.code-actions"),
             null_ls.builtins.formatting.eslint_d,
             null_ls.builtins.formatting.prettierd,
+            null_ls.builtins.formatting.rustywind,
 
             -- HTML
             null_ls.builtins.diagnostics.tidy,
