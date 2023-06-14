@@ -18,7 +18,10 @@ return {
                     "package.json",
                 },
                 ignore_lsp = {},
-                exclude_dirs = {},
+                exclude_dirs = {
+                    "!>packages",
+                    "!>apps",
+                },
                 show_hidden = false,
                 silent_chdir = true,
                 datapath = vim.fn.stdpath("data"),
