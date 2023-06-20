@@ -283,8 +283,7 @@ return {
     },
 
     {
-        "yuki-yano/highlight-undo.nvim",
-        dependencies = { "vim-denops/denops.vim" },
+        "tzachar/highlight-undo.nvim",
         event = { "BufReadPre", "BufNewFile" },
         config = function()
             require("highlight-undo").setup({
