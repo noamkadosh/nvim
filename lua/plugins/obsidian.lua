@@ -10,12 +10,10 @@ return {
   opts = {
     dir = "~/.config/obsidian",
 
-    -- daily_notes = {
-    --   -- Optional, if you keep daily notes in a separate directory.
-    --   folder = "notes/dailies",
-    --   -- Optional, if you want to change the date format for daily notes.
-    --   date_format = "%Y-%m-%d"
-    -- },
+    daily_notes = {
+      folder = "Inbox/Daily Notes",
+      date_format = "%ddd, %LL",
+    },
 
     completion = {
       nvim_cmp = true,
@@ -40,9 +38,9 @@ return {
     -- end,
 
     templates = {
-      subdir = "templates",
+      subdir = "Templates",
       date_format = "%ddd, %LL",
-      time_format = "%h:%m %A",
+      time_format = "%h:%mm %A",
     },
 
     -- Optional, by default when you use `:ObsidianFollowLink` on a link to an external

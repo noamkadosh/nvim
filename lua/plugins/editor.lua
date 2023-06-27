@@ -10,6 +10,33 @@ return {
     },
 
     {
+        "m4xshen/hardtime.nvim",
+        event = "VeryLazy",
+        opts = {
+            restricted_keys = {
+                ["<RIGHT>"] = { "n", "v" },
+                ["<LEFT>"] = { "n", "v" },
+                ["h"] = { "n", "v" },
+                ["j"] = { "n", "v" },
+                ["k"] = { "n", "v" },
+                ["l"] = { "n", "v" },
+                ["-"] = { "n", "v" },
+                ["+"] = { "n", "v" },
+                ["gj"] = { "n", "v" },
+                ["gk"] = { "n", "v" },
+                ["<CR>"] = { "n", "v" },
+                ["<C-M>"] = { "n", "v" },
+                ["<C-N>"] = { "n", "v" },
+                ["<C-P>"] = { "n", "v" },
+            },
+            disabled_keys = {
+                ["<UP>"] = { "", "i" },
+                ["<DOWN>"] = { "", "i" },
+            },
+        },
+    },
+
+    {
         "folke/persistence.nvim",
         config = function()
             require("persistence").setup({})
