@@ -8,6 +8,12 @@ return {
     },
 
     {
+        "sindrets/diffview.nvim",
+        event = "VeryLazy",
+        opts = {},
+    },
+
+    {
         "lewis6991/gitsigns.nvim",
         event = { "BufReadPre", "BufNewFile" },
         opts = {
