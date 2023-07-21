@@ -9,7 +9,7 @@ return {
         lazy = true,
         config = function()
             require("project_nvim").setup({
-                manual_mode = false,
+                manual_mode = true,
                 detection_methods = { "lsp", "pattern" },
                 patterns = {
                     "lazy-lock.json",
@@ -18,12 +18,9 @@ return {
                     "package.json",
                 },
                 ignore_lsp = {},
-                exclude_dirs = {
-                    "!>packages",
-                    "!>apps",
-                },
+                exclude_dirs = {},
                 show_hidden = false,
-                silent_chdir = true,
+                silent_chdir = false,
                 datapath = vim.fn.stdpath("data"),
             })
         end,
