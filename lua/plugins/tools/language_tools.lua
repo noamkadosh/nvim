@@ -128,43 +128,45 @@ local function setup_rust()
 end
 
 local function setup_typescript()
-    require("typescript").setup({
-        disable_commands = false,
-        server = {
-            on_attach = function(_, bufnr)
-                vim.keymap.set(
-                    "n",
-                    "<leader>ci",
-                    "<cmd>TypescriptAddMissingImports<cr>",
-                    { buffer = bufnr }
-                )
-            end,
-            settings = {
-                typescript = {
-                    inlayHints = {
-                        includeInlayParameterNameHints = "all",
-                        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                        includeInlayFunctionParameterTypeHints = true,
-                        includeInlayVariableTypeHints = true,
-                        includeInlayPropertyDeclarationTypeHints = true,
-                        includeInlayFunctionLikeReturnTypeHints = true,
-                        includeInlayEnumMemberValueHints = true,
-                    },
-                },
-                javascript = {
-                    inlayHints = {
-                        includeInlayParameterNameHints = "all",
-                        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                        includeInlayFunctionParameterTypeHints = true,
-                        includeInlayVariableTypeHints = true,
-                        includeInlayPropertyDeclarationTypeHints = true,
-                        includeInlayFunctionLikeReturnTypeHints = true,
-                        includeInlayEnumMemberValueHints = true,
-                    },
-                },
-            },
-        },
-    })
+    require("typescript-tools").setup({})
+
+    -- require("typescript").setup({
+    --     disable_commands = false,
+    --     server = {
+    --         on_attach = function(_, bufnr)
+    --             vim.keymap.set(
+    --                 "n",
+    --                 "<leader>ci",
+    --                 "<cmd>TypescriptAddMissingImports<cr>",
+    --                 { buffer = bufnr }
+    --             )
+    --         end,
+    --         settings = {
+    --             typescript = {
+    --                 inlayHints = {
+    --                     includeInlayParameterNameHints = "all",
+    --                     includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+    --                     includeInlayFunctionParameterTypeHints = true,
+    --                     includeInlayVariableTypeHints = true,
+    --                     includeInlayPropertyDeclarationTypeHints = true,
+    --                     includeInlayFunctionLikeReturnTypeHints = true,
+    --                     includeInlayEnumMemberValueHints = true,
+    --                 },
+    --             },
+    --             javascript = {
+    --                 inlayHints = {
+    --                     includeInlayParameterNameHints = "all",
+    --                     includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+    --                     includeInlayFunctionParameterTypeHints = true,
+    --                     includeInlayVariableTypeHints = true,
+    --                     includeInlayPropertyDeclarationTypeHints = true,
+    --                     includeInlayFunctionLikeReturnTypeHints = true,
+    --                     includeInlayEnumMemberValueHints = true,
+    --                 },
+    --             },
+    --         },
+    --     },
+    -- })
 end
 
 local function setup_golang()

@@ -25,7 +25,8 @@ return {
 
             -- Language tools
             { "simrat39/rust-tools.nvim" },
-            { "jose-elias-alvarez/typescript.nvim" },
+            { "pmizio/typescript-tools.nvim" },
+            { "jose-elias-alvarez/typescript.nvim" }, -- used only for null-ls code actions
             {
                 "ray-x/go.nvim",
                 dependencies = { "ray-x/guihua.lua" },
