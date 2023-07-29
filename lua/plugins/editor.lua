@@ -32,6 +32,8 @@ return {
             disabled_keys = {
                 ["<UP>"] = { "", "i" },
                 ["<DOWN>"] = { "", "i" },
+                ["<RIGHT>"] = {},
+                ["<LEFT>"] = {},
             },
         },
     },

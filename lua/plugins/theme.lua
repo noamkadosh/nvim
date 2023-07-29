@@ -2,9 +2,6 @@ return {
     {
         "folke/tokyonight.nvim",
         lazy = false, -- make sure we load this during startup if it is your main colorscheme
-        dependencies = {
-            "mawkler/modicator.nvim",
-        },
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
             require("tokyonight").setup({
@@ -27,6 +24,16 @@ return {
 
                     highlights.BufferManagerNormal = { fg = colors.green }
                     highlights.BufferManagerModified = { fg = colors.red }
+
+                    highlights.CursorLineNr.fg = colors.blue
+                    highlights.NormalMode = { fg = colors.blue }
+                    highlights.InsertMode = { fg = colors.green }
+                    highlights.VisualMode = { fg = colors.magenta }
+                    highlights.CommandMode = { fg = colors.yellow }
+                    highlights.ReplaceMode = { fg = colors.magenta }
+                    highlights.SelectMode = { fg = colors.magenta }
+                    highlights.TerminalMode = { fg = colors.yellow }
+                    highlights.TerminalNormalMode = { fg = colors.yellow }
 
                     highlights.NormalFloat = { bg = colors.bg }
                     highlights.FloatBorder =
@@ -98,48 +105,14 @@ return {
 
     {
         "mawkler/modicator.nvim",
-        lazy = true,
+        event = { "BufReadPost", "BufNewFile" },
         init = function()
             vim.o.cursorline = true
             vim.o.number = true
             vim.o.termguicolors = true
         end,
         config = function()
-            local colors = require("tokyonight.colors").setup()
-
-            require("modicator").setup({
-                highlights = {
-                    modes = {
-                        ["n"] = {
-                            foreground = colors.blue,
-                        },
-                        ["i"] = {
-                            foreground = colors.green,
-                        },
-                        ["v"] = {
-                            foreground = colors.magenta,
-                        },
-                        ["V"] = {
-                            foreground = colors.magenta,
-                        },
-                        ["�"] = { -- This symbol is the ^V character
-                            foreground = colors.magenta,
-                        },
-                        ["s"] = {
-                            foreground = colors.magenta,
-                        },
-                        ["S"] = {
-                            foreground = colors.magenta,
-                        },
-                        ["R"] = {
-                            foreground = colors.red,
-                        },
-                        ["c"] = {
-                            foreground = colors.yellow,
-                        },
-                    },
-                },
-            })
+            require("modicator").setup({})
         end,
     },
 }

@@ -5,7 +5,6 @@ return {
         config = function()
             local noice = require("noice")
             local colors = require("tokyonight.colors").setup({})
-            local lspsaga_status, lspsapa_winbar = pcall(require, "lspsaga.symbolwinbar")
 
             require("lualine").setup({
                 options = {
@@ -115,11 +114,12 @@ return {
                     lualine_c = {
                         {
                             function()
-                                return (lspsapa_winbar:get_winbar() or "")
-                                    .. "%#StatusLine#"
+                                local breadcrumbs = require("lspsaga.symbol.winbar").get_bar()
+
+                                return breadcrumbs or ""
                             end,
                             cond = function()
-                                return lspsaga_status and vim.api.nvim_get_current_buf() > 1
+                                return vim.api.nvim_get_current_buf() > 1
                             end,
                         },
                     },
