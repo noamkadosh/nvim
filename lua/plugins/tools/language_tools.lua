@@ -131,9 +131,19 @@ end
 local function setup_typescript()
     require("typescript-tools").setup({
         settings = {
-            tsserver_path = "~/.volta/bin/tsserver",
+            tsserver_path = "/Users/noam/.volta/tools/image/packages/typescript/lib/node_modules/typescript/lib/tsserver.js",
+            -- WARNING: Not sure the plugins work without a way to specify a custom path (like for tsserver above)
             tsserver_plugins = {
                 "@styled/typescript-styled-plugin",
+            },
+            tsserver_file_preferences = {
+                includeInlayParameterNameHints = "all",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
             },
         },
     })
