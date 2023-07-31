@@ -56,7 +56,7 @@ function M.lsp_breakdown()
 
             table.insert(
                 status,
-                "%#DevIconTsStatus#" .. icon .. "%#StatusLine#" .. client.name
+                "%#DevIconTsStatus#" .. icon .. "%#StatusLine#" .. "tsserver" -- client.name
             )
         elseif client.config.name == "eslint" then
             local fg_hl_id = vim.api.nvim_get_hl_id_by_name("TSRainbowViolet")
