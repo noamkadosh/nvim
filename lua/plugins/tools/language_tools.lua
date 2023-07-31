@@ -61,6 +61,7 @@ local function setup_null_ls()
     require("mason-null-ls").setup({
         ensure_installed = {
             "actionlint",
+            "eslint_d",
             "golangci_lint",
             "prettierd",
             "rustfmt",
@@ -128,7 +129,14 @@ local function setup_rust()
 end
 
 local function setup_typescript()
-    require("typescript-tools").setup({})
+    require("typescript-tools").setup({
+        settings = {
+            tsserver_path = "~/.volta/bin/tsserver",
+            tsserver_plugins = {
+                "@styled/typescript-styled-plugin",
+            },
+        },
+    })
 
     -- require("typescript").setup({
     --     disable_commands = false,

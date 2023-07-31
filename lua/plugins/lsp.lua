@@ -65,7 +65,7 @@ return {
                 "nil_ls",
                 "rust_analyzer",
                 "tailwindcss",
-                "tsserver",
+                -- "tsserver",
                 "yamlls",
             })
 

@@ -45,6 +45,7 @@ function M.lsp_breakdown()
             )
         elseif
             client.config.name == "tsserver"
+            or client.config.name == "typescript-tools"
             or client.config.filetypes[1] == "typescript"
         then
             local icon = web_devicons.get_icon("ts") .. " "
