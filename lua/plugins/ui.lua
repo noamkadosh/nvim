@@ -114,7 +114,8 @@ return {
                     lualine_c = {
                         {
                             function()
-                                local breadcrumbs = require("lspsaga.symbol.winbar").get_bar()
+                                local breadcrumbs =
+                                    require("lspsaga.symbol.winbar").get_bar()
 
                                 return breadcrumbs or ""
                             end,

@@ -22,6 +22,8 @@ vim.opt.undofile = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
+vim.opt.modeline = false
+
 vim.opt.termguicolors = true
 vim.opt.guicursor = "i-ci-ve:block-blinkwait10-blinkon80-blinkoff80"
 

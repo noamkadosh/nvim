@@ -10,7 +10,7 @@ return {
             { "williamboman/mason.nvim" },
             { "williamboman/mason-lspconfig.nvim" },
 
-            "jose-elias-alvarez/null-ls.nvim",
+            { "jose-elias-alvarez/null-ls.nvim", commit = "db09b6c691def0038c456551e4e2772186449f35" }, -- NOTE: archived
             "mfussenegger/nvim-dap",
 
             "jay-babu/mason-null-ls.nvim",
@@ -26,7 +26,7 @@ return {
             -- Language tools
             { "simrat39/rust-tools.nvim" },
             { "pmizio/typescript-tools.nvim" },
-            { "jose-elias-alvarez/typescript.nvim" }, -- used only for null-ls code actions
+            { "jose-elias-alvarez/typescript.nvim", commit = "de304087e6e49981fde01af8ccc5b21e8519306f" }, -- NOTE: archived, used only for null-ls code actions
             {
                 "ray-x/go.nvim",
                 dependencies = { "ray-x/guihua.lua" },

@@ -1,11 +1,11 @@
 return {
   "epwalsh/obsidian.nvim",
-  lazy = true,
   event = { "BufReadPre " .. vim.fn.expand ("~") .. "/.config/obsidian/**.md" },
   dependencies = {
     "nvim-lua/plenary.nvim",
     "hrsh7th/nvim-cmp",
     "nvim-telescope/telescope.nvim",
+    "nvim-treesitter/nvim-treesitter",
   },
   opts = {
     dir = "~/.config/obsidian",
