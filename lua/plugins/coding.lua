@@ -36,7 +36,6 @@ return {
 
     {
         "echasnovski/mini.ai",
-        version = false,
         event = { "BufReadPost", "BufNewFile" },
         config = function()
             require("mini.ai").setup({})
@@ -45,7 +44,6 @@ return {
 
     {
         "echasnovski/mini.surround",
-        version = false,
         event = { "BufReadPost", "BufNewFile" },
         config = function()
             require("mini.surround").setup({})
@@ -54,7 +52,6 @@ return {
 
     {
         "echasnovski/mini.pairs",
-        version = false,
         event = { "BufReadPost", "BufNewFile" },
         config = function()
             require("mini.pairs").setup({})

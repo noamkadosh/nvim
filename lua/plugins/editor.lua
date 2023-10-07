@@ -144,6 +144,14 @@ return {
     },
 
     {
+        "lewis6991/satellite.nvim",
+        event = { "BufReadPost", "BufNewFile" },
+        config = function()
+            require("satellite").setup({})
+        end,
+    },
+
+    {
         "smoka7/multicursors.nvim",
         event = { "BufReadPost", "BufNewFile" },
         dependencies = {
@@ -270,7 +278,6 @@ return {
 
     {
         "echasnovski/mini.bufremove",
-        version = false,
         event = { "BufReadPost", "BufNewFile" },
         config = function()
             local bufremove = require("mini.bufremove")
@@ -282,6 +289,21 @@ return {
             vim.keymap.set("n", "<leader>bD", function()
                 require("mini.bufremove").delete(0, true)
             end, { desc = "Delete Buffer (Force)" })
+        end,
+    },
+
+    {
+        "kevinhwang91/nvim-fundo",
+        event = "VeryLazy",
+        dependencies = { "kevinhwang91/promise-async" },
+        run = function()
+            require("fundo").install()
+        end,
+        config = function()
+            require("fundo").setup({
+                archives_dir = vim.fn.stdpath("cache") .. "/fundo",
+                limit_archives_size = 128,
+            })
         end,
     },
 }
