@@ -228,10 +228,11 @@ return {
     {
         "lukas-reineke/indent-blankline.nvim",
         event = { "BufReadPre", "BufNewFile" },
+        dependencies = { "https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git" },
         config = function()
             vim.opt.list = true
 
-            local color_list = {
+            local indent_highlights = {
                 "RainbowLight1",
                 "RainbowLight2",
                 "RainbowLight3",
@@ -241,7 +242,7 @@ return {
                 "RainbowLight7",
             }
 
-            local context_color_list = {
+            local scope_highlights = {
                 "Rainbow1",
                 "Rainbow2",
                 "Rainbow3",
@@ -251,17 +252,37 @@ return {
                 "Rainbow7",
             }
 
-            require("indent_blankline").setup({
-                char_highlight_list = color_list,
-                -- show_trailing_blankline_indent = false,
-                -- indent_blankline_show_trailing_blankline_indent = true,
-                -- space_char_highlight_list = color_list,
-                use_treesitter = true,
-                context_char = "┃",
-                context_highlight_list = context_color_list,
-                show_current_context = true,
-                show_current_context_start = true,
+            require("ibl").setup({
+                indent = {
+                    highlight = indent_highlights,
+                },
+                scope = {
+                    show_start = false,
+                    show_end = false,
+                    highlight = scope_highlights,
+                },
             })
+        end,
+    },
+
+    {
+        "https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git",
+        lazy = true,
+        config = function()
+            local scope_highlights = {
+                "Rainbow1",
+                "Rainbow2",
+                "Rainbow3",
+                "Rainbow4",
+                "Rainbow5",
+                "Rainbow6",
+                "Rainbow7",
+            }
+
+            require("rainbow-delimiters")
+            vim.g.rainbow_delimiters = {
+                highlight = scope_highlights,
+            }
         end,
     },
 

@@ -194,7 +194,9 @@ return {
     {
         "folke/trouble.nvim",
         lazy = true,
-        keys = function()
+        config = function()
+            require("trouble").setup({})
+
             vim.keymap.set(
                 "n",
                 "<leader>tx",
@@ -247,9 +249,6 @@ return {
                 "<cmd>TroubleToggle lsp_references<cr>",
                 { silent = true, noremap = true, desc = "LSP references" }
             )
-        end,
-        config = function()
-            require("trouble").setup({})
         end,
     },
 
