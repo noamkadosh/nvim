@@ -1,6 +1,5 @@
 return {
     {
-        -- TODO: change keymaps inside ChatGPT window
         "jackMort/ChatGPT.nvim",
         dependencies = {
             "MunifTanjim/nui.nvim",
