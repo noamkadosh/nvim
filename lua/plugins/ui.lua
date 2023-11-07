@@ -158,6 +158,7 @@ return {
 
             require("notify").setup({
                 background_colour = colors.bg,
+                stages = "static",
             })
 
             require("noice").setup({
@@ -228,7 +229,9 @@ return {
     {
         "lukas-reineke/indent-blankline.nvim",
         event = { "BufReadPre", "BufNewFile" },
-        dependencies = { "https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git" },
+        dependencies = {
+            "https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git",
+        },
         config = function()
             vim.opt.list = true
 
