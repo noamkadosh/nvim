@@ -5,9 +5,10 @@ return {
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
             require("tokyonight").setup({
-                -- transparent = true,
+                transparent = true,
                 lualine_bold = true,
                 on_highlights = function(highlights, colors)
+                    local NONE = "none"
                     local util = require("tokyonight.util")
 
                     highlights.Yanked =
@@ -54,11 +55,11 @@ return {
                         { bg = colors.bg, fg = colors.hint }
 
                     highlights.TelescopeNormal = {
-                        bg = colors.bg,
+                        bg = NONE,
                         fg = highlights.TelescopeNormal.fg,
                     }
                     highlights.TelescopeBorder = {
-                        bg = colors.bg,
+                        bg = NONE,
                         fg = highlights.TelescopeBorder.fg,
                     }
                     highlights.SagaLightBulb = { fg = colors.yellow }
