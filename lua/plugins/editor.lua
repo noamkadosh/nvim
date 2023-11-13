@@ -110,7 +110,7 @@ return {
             require("buffer_manager").setup({
                 line_keys = keys,
                 width = 100,
-                highlight = "BufferManagerNormal:TelescopeBorder",
+                highlight = "Normal:TelescopeBorder",
             })
 
             local buffer_manager_ui = require("buffer_manager.ui")
@@ -147,7 +147,9 @@ return {
         "lewis6991/satellite.nvim",
         event = { "BufReadPost", "BufNewFile" },
         config = function()
-            require("satellite").setup({})
+            require("satellite").setup({
+                  winblend = 0,
+            })
         end,
     },
 

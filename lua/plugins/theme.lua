@@ -23,8 +23,8 @@ return {
                     highlights.gradient7 = { fg = "#8B85D0" }
                     highlights.gradient8 = { fg = "#9D7CD8" }
 
-                    highlights.BufferManagerNormal = { fg = colors.green }
-                    highlights.BufferManagerModified = { fg = colors.red }
+                    highlights.BufferManagerModified =
+                        { fg = colors.red, bg = NONE }
 
                     highlights.CursorLineNr.fg = colors.blue
                     highlights.NormalMode = { fg = colors.blue }
@@ -36,23 +36,23 @@ return {
                     highlights.TerminalMode = { fg = colors.yellow }
                     highlights.TerminalNormalMode = { fg = colors.yellow }
 
-                    highlights.NormalFloat = { bg = colors.bg }
+                    highlights.NormalFloat = { bg = NONE }
                     highlights.FloatBorder =
-                        { bg = colors.bg, fg = highlights.FloatBorder.fg }
+                        { bg = NONE, fg = highlights.FloatBorder.fg }
 
-                    highlights.DiagnosticVirtualTextError.bg = colors.bg
-                    highlights.DiagnosticVirtualTextWarn.bg = colors.bg
-                    highlights.DiagnosticVirtualTextInfo.bg = colors.bg
-                    highlights.DiagnosticVirtualTextHint.bg = colors.bg
+                    highlights.DiagnosticVirtualTextError.bg = colors.NONE
+                    highlights.DiagnosticVirtualTextWarn.bg = colors.NONE
+                    highlights.DiagnosticVirtualTextInfo.bg = colors.NONE
+                    highlights.DiagnosticVirtualTextHint.bg = colors.NONE
 
                     highlights.DiagnosticFloatingError =
-                        { bg = colors.bg, fg = colors.error }
+                        { bg = colors.NONE, fg = colors.error }
                     highlights.DiagnosticFloatingWarn =
-                        { bg = colors.bg, fg = colors.warning }
+                        { bg = colors.NONE, fg = colors.warning }
                     highlights.DiagnosticFloatingInfo =
-                        { bg = colors.bg, fg = colors.info }
+                        { bg = colors.NONE, fg = colors.info }
                     highlights.DiagnosticFloatingHint =
-                        { bg = colors.bg, fg = colors.hint }
+                        { bg = colors.NONE, fg = colors.hint }
 
                     highlights.TelescopeNormal = {
                         bg = NONE,
@@ -87,15 +87,15 @@ return {
                     highlights.RainbowLight7 =
                         { fg = util.blend(colors.purple, colors.bg, 0.5) }
 
-                    local bg = highlights.StatusLine.bg
-
                     highlights.TreesitterContext =
-                        { bg = bg, fg = highlights.NormalFloat.fg }
+                        { bg = NONE, fg = highlights.NormalFloat.fg }
                     highlights.TreesitterContextLineNumber =
-                        { bg = bg, fg = highlights.LineNr.fg }
+                        { bg = NONE, fg = highlights.LineNr.fg }
 
-                    highlights.StatusLineSeparator =
-                        { fg = highlights.Comment.fg, bg = bg }
+                    highlights.StatusLineSeparator = {
+                        fg = highlights.Comment.fg,
+                        bg = highlights.StatusLine.bg,
+                    }
                 end,
             })
 

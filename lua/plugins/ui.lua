@@ -161,7 +161,10 @@ return {
                 stages = "static",
             })
 
-            require("noice").setup({
+            local noice = require("noice")
+            local noice_lsp = require("noice.lsp")
+
+            noice.setup({
                 lsp = {
                     hover = {
                         enabled = false,
@@ -185,19 +188,19 @@ return {
             })
 
             vim.keymap.set("n", "<leader>nl", function()
-                require("noice").cmd("last")
+                noice.cmd("last")
             end, { desc = "Last message in popup" })
 
             vim.keymap.set("n", "<leader>nh", function()
-                require("noice").cmd("history")
+                noice.cmd("history")
             end, { desc = "Message history" })
 
             vim.keymap.set("c", "<S-Enter>", function()
-                require("noice").redirect(vim.fn.getcmdline())
+                noice.redirect(vim.fn.getcmdline())
             end, { desc = "Redirect Cmdline" })
 
             vim.keymap.set({ "n", "i", "s" }, "<c-f>", function()
-                if not require("noice.lsp").scroll(4) then
+                if not noice_lsp.scroll(4) then
                     return "<c-f>"
                 end
             end, {
@@ -207,7 +210,7 @@ return {
             })
 
             vim.keymap.set({ "n", "i", "s" }, "<c-b>", function()
-                if not require("noice.lsp").scroll(-4) then
+                if not noice_lsp.scroll(-4) then
                     return "<c-b>"
                 end
             end, {
