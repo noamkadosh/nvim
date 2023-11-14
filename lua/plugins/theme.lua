@@ -8,9 +8,9 @@ return {
                 transparent = true,
                 lualine_bold = true,
                 on_highlights = function(highlights, colors)
-                    local NONE = "none"
                     local util = require("tokyonight.util")
 
+                    highlights.NoiceMini= { bg = nil }
                     highlights.Yanked =
                         { bg = util.darken(colors.orange, 0.15) }
 
@@ -24,7 +24,7 @@ return {
                     highlights.gradient8 = { fg = "#9D7CD8" }
 
                     highlights.BufferManagerModified =
-                        { fg = colors.red, bg = NONE }
+                        { fg = colors.red, bg = nil }
 
                     highlights.CursorLineNr.fg = colors.blue
                     highlights.NormalMode = { fg = colors.blue }
@@ -36,9 +36,9 @@ return {
                     highlights.TerminalMode = { fg = colors.yellow }
                     highlights.TerminalNormalMode = { fg = colors.yellow }
 
-                    highlights.NormalFloat = { bg = NONE }
+                    highlights.NormalFloat = { bg = nil }
                     highlights.FloatBorder =
-                        { bg = NONE, fg = highlights.FloatBorder.fg }
+                        { bg = nil, fg = highlights.FloatBorder.fg }
 
                     highlights.DiagnosticVirtualTextError.bg = colors.NONE
                     highlights.DiagnosticVirtualTextWarn.bg = colors.NONE
@@ -55,11 +55,11 @@ return {
                         { bg = colors.NONE, fg = colors.hint }
 
                     highlights.TelescopeNormal = {
-                        bg = NONE,
+                        bg = nil,
                         fg = highlights.TelescopeNormal.fg,
                     }
                     highlights.TelescopeBorder = {
-                        bg = NONE,
+                        bg = nil,
                         fg = highlights.TelescopeBorder.fg,
                     }
                     highlights.SagaLightBulb = { fg = colors.yellow }
@@ -88,13 +88,14 @@ return {
                         { fg = util.blend(colors.purple, colors.bg, 0.5) }
 
                     highlights.TreesitterContext =
-                        { bg = NONE, fg = highlights.NormalFloat.fg }
+                        { bg = nil, fg = highlights.NormalFloat.fg }
                     highlights.TreesitterContextLineNumber =
-                        { bg = NONE, fg = highlights.LineNr.fg }
+                        { bg = nil, fg = highlights.LineNr.fg }
 
+                    highlights.StatusLine = { bg = nil }
                     highlights.StatusLineSeparator = {
                         fg = highlights.Comment.fg,
-                        bg = highlights.StatusLine.bg,
+                        bg = nil,
                     }
                 end,
             })

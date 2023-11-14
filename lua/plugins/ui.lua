@@ -5,10 +5,14 @@ return {
         config = function()
             local noice = require("noice")
             local colors = require("tokyonight.colors").setup({})
+            local theme = require("lualine.themes.tokyonight")
+
+            -- Change the background of lualine_c section for normal mode
+            theme.normal.c.bg = nil
 
             require("lualine").setup({
                 options = {
-                    theme = "tokyonight",
+                    theme = theme,
                     component_separators = { left = "", right = "" },
                     section_separators = { left = " ", right = " " },
                     globalstatus = true,
@@ -154,10 +158,7 @@ return {
         },
         event = "VeryLazy",
         config = function()
-            local colors = require("tokyonight.colors").setup({})
-
             require("notify").setup({
-                background_colour = colors.bg,
                 stages = "static",
             })
 
@@ -185,6 +186,13 @@ return {
                     inc_rename = false,
                     lsp_doc_border = false,
                 },
+                views = {
+                    mini = {
+                        win_options = {
+                            winblend = 0
+                        }
+                    }
+                }
             })
 
             vim.keymap.set("n", "<leader>nl", function()

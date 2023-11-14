@@ -16,8 +16,7 @@ function M.lsp_breakdown()
 
     local status = {}
 
-    local bg_hl_id = vim.api.nvim_get_hl_id_by_name("StatusLine")
-    local bg = vim.fn.synIDattr(bg_hl_id, "bg")
+    local bg = nil
 
     for _, client in pairs(clients) do
         if client.config.name == "copilot" then
