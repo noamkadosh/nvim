@@ -1,5 +1,17 @@
 return {
     {
+        "theniceboy/joshuto.nvim",
+        config = function()
+            vim.keymap.set(
+                "n",
+                "<leader>pv",
+                vim.cmd.Joshuto,
+                { desc = "File browser" }
+            )
+        end,
+    },
+
+    {
         "folke/which-key.nvim",
         event = "VeryLazy",
         config = function()

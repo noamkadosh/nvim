@@ -4,7 +4,6 @@ return {
         branch = "0.1.x",
         dependencies = {
             "tsakirist/telescope-lazy.nvim",
-            "nvim-telescope/telescope-file-browser.nvim",
             "debugloop/telescope-undo.nvim",
             "nvim-telescope/telescope-ui-select.nvim",
             "jvgrootveld/telescope-zoxide",
@@ -40,12 +39,6 @@ return {
                     ["ui-select"] = {
                         require("telescope.themes").get_dropdown({}),
                     },
-                    file_browser = {
-                        hidden = true,
-                        hijack_netrw = true,
-                        path = "%:p:h",
-                        cwd_to_path = true,
-                    },
                     fzf = {
                         override_generic_sorter = true,
                         override_file_sorter = true,
@@ -64,16 +57,9 @@ return {
             telescope.load_extension("fzf")
             telescope.load_extension("ui-select")
             telescope.load_extension("lazy")
-            telescope.load_extension("file_browser")
             telescope.load_extension("undo")
             telescope.load_extension("zoxide")
 
-            vim.keymap.set(
-                "n",
-                "<leader>pv",
-                telescope.extensions.file_browser.file_browser,
-                { desc = "File browser" }
-            )
             vim.keymap.set(
                 "n",
                 "<leader>pf",
