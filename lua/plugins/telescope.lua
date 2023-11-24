@@ -91,8 +91,8 @@ return {
             vim.keymap.set(
                 "n",
                 "<leader>ps",
-                builtin.grep_string,
-                { desc = "Find file (Grep)" }
+                builtin.live_grep,
+                { desc = "Find (Live Grep)" }
             )
             vim.keymap.set(
                 "n",
