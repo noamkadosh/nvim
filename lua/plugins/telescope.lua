@@ -96,6 +96,12 @@ return {
             )
             vim.keymap.set(
                 "n",
+                "<leader>bm",
+                builtin.buffers,
+                { desc = "List open buffers" }
+            )
+            vim.keymap.set(
+                "n",
                 "<leader>cd",
                 telescope.extensions.zoxide.list,
                 { desc = "Jump list (Zoxide)" }

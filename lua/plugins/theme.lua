@@ -97,6 +97,12 @@ return {
                         fg = highlights.Comment.fg,
                         bg = nil,
                     }
+
+                    highlights.HarpoonInactive = { fg = colors.comment, bg = nil }
+                    highlights.HarpoonNumberInactive = { fg = colors.blue, bg = nil }
+                    highlights.HarpoonActive = { fg = colors.fg, bg = nil }
+                    highlights.HarpoonNumberActive = { fg = colors.blue, bg = nil }
+                    highlights.TabLineFill = { fg = colors.fg, bg = nil }
                 end,
             })
 
