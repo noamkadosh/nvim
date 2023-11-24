@@ -32,75 +32,24 @@ return {
             vim.api.nvim_set_keymap(
                 "n",
                 "<leader>h",
-                [[<cmd>lua require("harpoon.mark").add_file()<cr>]],
+                "<cmd>lua require('harpoon.mark').add_file()<cr>",
                 { desc = "Mark file with harpoon" }
             )
             vim.api.nvim_set_keymap(
                 "n",
                 "<leader>e",
-                [[<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>]],
+                "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>",
                 { desc = "Toggle Harpoon quick menu" }
             )
-            vim.api.nvim_set_keymap(
-                "n",
-                "<F2>",
-                [[<cmd>lua require('harpoon.ui').nav_file(1)<cr>]],
-                { desc = "Navigate to file 1" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
-                "<F3>",
-                [[<cmd>lua require('harpoon.ui').nav_file(2)<cr>]],
-                { desc = "Navigate to file 2" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
-                "<F4>",
-                [[<cmd>lua require('harpoon.ui').nav_file(3)<cr>]],
-                { desc = "Navigate to file 3" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
-                "<F5>",
-                [[<cmd>lua require('harpoon.ui').nav_file(4)<cr>]],
-                { desc = "Navigate to file 4" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
-                "<F6>",
-                [[<cmd>lua require('harpoon.ui').nav_file(5)<cr>]],
-                { desc = "Navigate to file 5" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
-                "<F7>",
-                [[<cmd>lua require('harpoon.ui').nav_file(6)<cr>]],
-                { desc = "Navigate to file 6" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
-                "<F8>",
-                [[<cmd>lua require('harpoon.ui').nav_file(7)<cr>]],
-                { desc = "Navigate to file 7" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
-                "<F9>",
-                [[<cmd>lua require('harpoon.ui').nav_file(8)<cr>]],
-                { desc = "Navigate to file 8" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
-                "<F10>",
-                [[<cmd>lua require('harpoon.ui').nav_file(9)<cr>]],
-                { desc = "Navigate to file 9" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
-                "<F11>",
-                [[<cmd>lua require('harpoon.ui').nav_file(10)<cr>]],
-                { desc = "Navigate to file 10" }
-            )
+
+            for i = 1, 9 do
+                vim.api.nvim_set_keymap(
+                    "n",
+                    "<F" .. i + 1 .. ">",
+                    "<cmd>lua require('harpoon.ui').nav_file(" .. i .. ")<cr>",
+                    { desc = "Navigate to file " .. i }
+                )
+            end
         end,
     },
 
