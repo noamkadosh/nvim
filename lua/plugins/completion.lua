@@ -187,6 +187,7 @@ return {
 
     {
         "L3MON4D3/LuaSnip",
+        event = { "BufReadPost", "BufNewFile" },
         dependencies = {
             "rafamadriz/friendly-snippets",
             "benfowler/telescope-luasnip.nvim",
@@ -204,6 +205,8 @@ return {
             luasnip.filetype_extend("lua", { "luadoc" })
             luasnip.filetype_extend("rust", { "rustdoc" })
             luasnip.filetype_extend("sh", { "shelldoc" })
+
+            require("telescope").load_extension("luasnip")
         end,
     },
 }

@@ -195,6 +195,8 @@ return {
                 }
             })
 
+            require("telescope").load_extension("noice")
+
             vim.keymap.set("n", "<leader>nl", function()
                 noice.cmd("last")
             end, { desc = "Last message in popup" })
@@ -216,6 +218,12 @@ return {
                 expr = true,
                 desc = "Scroll history forward (LSP)",
             })
+            vim.keymap.set(
+                "n",
+                "<leader>nt",
+                "<cmd>Telescope noice<cr>",
+                { desc = "Telescope Noice" }
+            )
 
             vim.keymap.set({ "n", "i", "s" }, "<c-b>", function()
                 if not noice_lsp.scroll(-4) then

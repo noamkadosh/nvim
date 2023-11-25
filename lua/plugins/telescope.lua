@@ -1,14 +1,13 @@
 return {
     {
         "nvim-telescope/telescope.nvim",
-        tag = '0.1.1',
+        branch = "0.1.x",
         dependencies = {
             "tsakirist/telescope-lazy.nvim",
             "nvim-telescope/telescope-file-browser.nvim",
             "debugloop/telescope-undo.nvim",
             "nvim-telescope/telescope-ui-select.nvim",
             "jvgrootveld/telescope-zoxide",
-            "benfowler/telescope-luasnip.nvim",
             {
                 "nvim-telescope/telescope-fzf-native.nvim",
                 build = "make",
@@ -33,8 +32,8 @@ return {
                         },
                     },
                     mappings = {
-                        i = { ["<leader>tr"] = trouble.open_with_trouble },
-                        n = { ["<leader>tr"] = trouble.open_with_trouble },
+                        i = { ["<C-t>"] = trouble.open_with_trouble },
+                        n = { ["<C-t>"] = trouble.open_with_trouble },
                     },
                 },
                 extensions = {
@@ -68,9 +67,6 @@ return {
             telescope.load_extension("file_browser")
             telescope.load_extension("undo")
             telescope.load_extension("zoxide")
-            telescope.load_extension("projects")
-            telescope.load_extension("noice")
-            telescope.load_extension('luasnip')
 
             vim.keymap.set(
                 "n",
@@ -100,19 +96,19 @@ return {
                 "n",
                 "<leader>bm",
                 builtin.buffers,
-                { desc = "List open buffers" }
+                { desc = "Telescope open buffers" }
             )
             vim.keymap.set(
                 "n",
                 "<leader>cd",
                 telescope.extensions.zoxide.list,
-                { desc = "Jump list (Zoxide)" }
+                { desc = "Telescope Jump list (Zoxide)" }
             )
             vim.keymap.set(
                 "n",
                 "<leader>u",
                 "<cmd>Telescope undo<cr>",
-                { desc = "Undo" }
+                { desc = "Telescope Undo" }
             )
             vim.keymap.set("n", "<leader>sb", function()
                 local opt =

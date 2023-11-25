@@ -80,10 +80,3 @@ vim.keymap.set(
     "<cmd>lprev<CR>zz",
     { desc = "Previous error in the current file" }
 )
-
-vim.keymap.set(
-    "n",
-    "<leader>x",
-    "<cmd>!chmod +x %<CR>",
-    { silent = true, desc = "Make executable" }
-)

@@ -5,6 +5,22 @@ return {
     },
 
     {
+        "AckslD/nvim-neoclip.lua",
+        event = "VeryLazy",
+        config = function()
+            require("neoclip").setup()
+            require("telescope").load_extension("neoclip")
+
+            vim.keymap.set(
+                "n",
+                "<leader>x",
+                "<cmd>Telescope neoclip<cr>",
+                { desc = "Telescope Clipboard" }
+            )
+        end,
+    },
+
+    {
         "ahmedkhalf/project.nvim",
         lazy = true,
         config = function()
@@ -23,6 +39,8 @@ return {
                 silent_chdir = false,
                 datapath = vim.fn.stdpath("data"),
             })
+
+            require("telescope").load_extension("projects")
         end,
     },
 
