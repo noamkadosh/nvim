@@ -8,6 +8,7 @@ return {
             "debugloop/telescope-undo.nvim",
             "nvim-telescope/telescope-ui-select.nvim",
             "jvgrootveld/telescope-zoxide",
+            "benfowler/telescope-luasnip.nvim",
             {
                 "nvim-telescope/telescope-fzf-native.nvim",
                 build = "make",
@@ -69,6 +70,7 @@ return {
             telescope.load_extension("zoxide")
             telescope.load_extension("projects")
             telescope.load_extension("noice")
+            telescope.load_extension('luasnip')
 
             vim.keymap.set(
                 "n",
