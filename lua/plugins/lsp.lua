@@ -10,10 +10,7 @@ return {
             { "williamboman/mason.nvim" },
             { "williamboman/mason-lspconfig.nvim" },
 
-            {
-                "jose-elias-alvarez/null-ls.nvim",
-                commit = "db09b6c691def0038c456551e4e2772186449f35",
-            }, -- NOTE: archived
+            { "nvimtools/none-ls.nvim" },
             "mfussenegger/nvim-dap",
 
             "jay-babu/mason-null-ls.nvim",
