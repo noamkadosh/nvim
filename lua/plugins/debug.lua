@@ -14,7 +14,6 @@ return {
             { "theHamsta/nvim-dap-virtual-text" },
             "mxsdev/nvim-dap-vscode-js",
             "microsoft/vscode-js-debug",
-            "Joakker/lua-json5",
             { "leoluz/nvim-dap-go" },
         },
         lazy = true,
@@ -276,12 +275,6 @@ return {
     {
         "microsoft/vscode-js-debug",
         build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
-        lazy = true,
-    },
-
-    {
-        "Joakker/lua-json5",
-        build = "./install.sh",
         lazy = true,
     },
 }
