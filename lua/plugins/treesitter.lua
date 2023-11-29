@@ -14,6 +14,8 @@ return {
             ts_update()
         end,
         config = function()
+            vim.g.skip_ts_context_commentstring_module = true
+
             require("nvim-treesitter.configs").setup({
                 -- A list of parser names, or "all"
                 ensure_installed = {
@@ -45,10 +47,6 @@ return {
                     -- Instead of true it can also be a list of languages
                     additional_vim_regex_highlighting = { "markdown" },
                 },
-                context_commentstring = {
-                    enable = true,
-                    enable_autocmd = false,
-                },
                 autotag = {
                     enable = true,
                 },
@@ -56,6 +54,8 @@ return {
                     enable = true,
                 },
             })
+
+            require("ts_context_commentstring").setup({})
         end,
     },
 
