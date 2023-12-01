@@ -164,7 +164,7 @@ return {
                         ["pwa-chrome"] = js_flavors,
                     })
                 end
-                require("dap").continue()
+                dap.continue()
             end, {
                 desc = "Run with Args",
             })

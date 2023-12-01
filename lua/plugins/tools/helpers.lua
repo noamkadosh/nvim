@@ -2,7 +2,7 @@ local M = {}
 
 -- This function is ugly but it works don't waste your time here.
 function M.lsp_breakdown()
-    local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
 
     if #clients == 0 then
         return ""
@@ -45,6 +45,7 @@ function M.lsp_breakdown()
         elseif
             client.config.name == "tsserver"
             or client.config.name == "typescript-tools"
+            ---@diagnostic disable-next-line: undefined-field
             or client.config.filetypes[1] == "typescript"
         then
             local icon = web_devicons.get_icon("ts") .. " "
@@ -88,8 +89,10 @@ function M.lsp_breakdown()
                 status,
                 "%#rainbowcol4Status# %#StatusLine#" .. client.name
             )
+        ---@diagnostic disable-next-line: undefined-field
         elseif client.config.filetypes == nil then
             table.insert(status, client.name)
+        ---@diagnostic disable-next-line: undefined-field
         elseif client.config.filetypes[1] == "rust" then
             local icon = web_devicons.get_icon("rs") .. " "
 
@@ -101,6 +104,7 @@ function M.lsp_breakdown()
                 status,
                 "%#DevIconRsStatus#" .. icon .. "%#StatusLine#" .. client.name
             )
+        ---@diagnostic disable-next-line: undefined-field
         elseif client.config.filetypes[1] == "typescriptreact" then
             local icon = web_devicons.get_icon("tsx") .. " "
 
@@ -112,6 +116,7 @@ function M.lsp_breakdown()
                 status,
                 "%#DevIconTsxStatus#" .. icon .. "%#StatusLine#" .. client.name
             )
+        ---@diagnostic disable-next-line: undefined-field
         elseif client.config.filetypes[1] == "javascript" then
             local icon = web_devicons.get_icon("js") .. " "
 
@@ -123,6 +128,7 @@ function M.lsp_breakdown()
                 status,
                 "%#DevIconJsStatus#" .. icon .. "%#StatusLine#" .. client.name
             )
+        ---@diagnostic disable-next-line: undefined-field
         elseif client.config.filetypes[1] == "javascriptreact" then
             local icon = web_devicons.get_icon("jsx") .. " "
 
@@ -135,6 +141,7 @@ function M.lsp_breakdown()
                 "%#DevIconJsxStatus#" .. icon .. "%#StatusLine#" .. client.name
             )
         else
+            ---@diagnostic disable-next-line: undefined-field
             local filetype = client.config.filetypes[1]
             local icon = web_devicons.get_icon(filetype) .. " "
             local fg_hl_name = ("DevIcon" .. filetype:gsub("^%l", string.upper))
@@ -194,8 +201,8 @@ function M.header_color(heading)
     return output
 end
 
-local function getDate()
-    local day = tonumber(os.date("%d"):match("^%d*"))
+function M.getDate()
+    local day = tonumber(os.date("%d"))
     local dateTime = " "
         .. os.date("%A, %B ")
         .. day
@@ -207,7 +214,6 @@ end
 
 function M.info_text()
     local total_plugins = require("lazy").stats().count
-    local datetime = getDate()
     local version = vim.version()
     local nvim_version_info = ""
 
@@ -220,11 +226,7 @@ function M.info_text()
             .. version.patch
     end
 
-    return datetime
-        .. "   "
-        .. total_plugins
-        .. " plugins"
-        .. nvim_version_info
+    return nvim_version_info .. "   " .. total_plugins .. " plugins"
 end
 
 function M.shortcuts()
@@ -295,7 +297,6 @@ function M.open_project(project_path)
 end
 
 function M.get_recent_projects(start, target_width)
-    local project_nvim = require("project_nvim")
     if start == nil then
         start = 1
     end
@@ -303,16 +304,15 @@ function M.get_recent_projects(start, target_width)
         target_width = 50
     end
     local buttons = {}
-    local project_paths = project_nvim.get_recent_projects()
+    local project_paths = require("project_nvim").get_recent_projects()
     local added_projects = 0
     for i = #project_paths, 1, -1 do
         if added_projects == 5 then
             break
         end
         local project_path = project_paths[i]
-        ---@diagnostic disable-next-line: undefined-field
         local stat = vim.loop.fs_stat(project_path .. "/.git")
-        if stat ~= nil and stat.type == "directory" then
+        if stat ~= nil then
             added_projects = added_projects + 1
             local shortcut = tostring(added_projects + 4)
             local display_path = "  "
@@ -363,7 +363,7 @@ function M.get_recent_projects(start, target_width)
 end
 
 function M.has_words_before()
-    if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+    if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
         return false
     end
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))

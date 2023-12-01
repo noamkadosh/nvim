@@ -25,12 +25,14 @@ return {
         lazy = true,
         config = function()
             require("project_nvim").setup({
-                manual_mode = true,
+                scope_chdir = "none",
+                manual_mode = false,
                 detection_methods = { "lsp", "pattern" },
                 patterns = {
                     "lazy-lock.json",
                     ".git",
                     "cargo.toml",
+                    "!^package.json",
                     "package.json",
                 },
                 ignore_lsp = {},

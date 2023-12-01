@@ -3,23 +3,42 @@ return {
         "goolord/alpha-nvim",
         event = "VimEnter",
         config = function()
+            local alpha = require("alpha")
+            local theme = require("alpha.themes.theta")
+            local dashboard = require("alpha.themes.dashboard")
+            local config = theme.config
+
             local helpers = require("plugins.tools.helpers")
 
-            local hero = {
-                [[  ██████   █████                   █████   █████  ███                  ]],
-                [[ ░░██████ ░░███                   ░░███   ░░███  ░░░                   ]],
-                [[  ░███░███ ░███   ██████   ██████  ░███    ░███  ████  █████████████   ]],
-                [[  ░███░░███░███  ███░░███ ███░░███ ░███    ░███ ░░███ ░░███░░███░░███  ]],
-                [[  ░███ ░░██████ ░███████ ░███ ░███ ░░███   ███   ░███  ░███ ░███ ░███  ]],
-                [[  ░███  ░░█████ ░███░░░  ░███ ░███  ░░░█████░    ░███  ░███ ░███ ░███  ]],
-                [[  █████  ░░█████░░██████ ░░██████     ░░███      █████ █████░███ █████ ]],
-                [[ ░░░░░    ░░░░░  ░░░░░░   ░░░░░░       ░░░      ░░░░░ ░░░░░ ░░░ ░░░░░  ]],
+            local padding = function(lines)
+                return { type = "padding", val = lines }
+            end
+
+            local hero_text = {
+                "  ██████   █████                   █████   █████  ███                  ",
+                " ░░██████ ░░███                   ░░███   ░░███  ░░░                   ",
+                "  ░███░███ ░███   ██████   ██████  ░███    ░███  ████  █████████████   ",
+                "  ░███░░███░███  ███░░███ ███░░███ ░███    ░███ ░░███ ░░███░░███░░███  ",
+                "  ░███ ░░██████ ░███████ ░███ ░███ ░░███   ███   ░███  ░███ ░███ ░███  ",
+                "  ░███  ░░█████ ░███░░░  ░███ ░███  ░░░█████░    ░███  ░███ ░███ ░███  ",
+                "  █████  ░░█████░░██████ ░░██████     ░░███      █████ █████░███ █████ ",
+                " ░░░░░    ░░░░░  ░░░░░░   ░░░░░░       ░░░      ░░░░░ ░░░░░ ░░░ ░░░░░  ",
             }
 
-            local heading = helpers.assignGradientColors(hero)
-            heading = helpers.header_color(heading)
+            local hero = helpers.assignGradientColors(hero_text)
+            hero = helpers.header_color(hero)
 
-            local section_info = {
+            local date = {
+                type = "text",
+                val = helpers.getDate(),
+                opts = {
+                    hl = "Comment",
+                    position = "center",
+                },
+            }
+
+            -- INFO - START --
+            local info = {
                 type = "text",
                 val = helpers.info_text(),
                 opts = {
@@ -27,22 +46,31 @@ return {
                     position = "center",
                 },
             }
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "LazyVimStarted",
+                once = true,
+                callback = function()
+                    local lazy = require("lazy")
 
-            local section_shortcuts =
-                { type = "group", val = helpers.shortcuts }
+                    local stats = lazy.stats()
+                    local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
 
-            local padding = { type = "padding", val = 1 }
-            local double_padding = { type = "padding", val = 2 }
+                    info.val = info.val .. "   " .. ms .. "ms"
 
-            local theme = require("alpha.themes.theta")
-            local dashboard = require("alpha.themes.dashboard")
-            local config = theme.config
+                    pcall(function()
+                        vim.cmd("AlphaRedraw")
+                    end)
+                end,
+            })
+            -- INFO - END --
 
+            local shortcuts = { type = "group", val = helpers.shortcuts }
+
+            -- RECENT FILES - START --
             local recent_files = config.layout[4]
-            local quick_links = config.layout[6]
 
             recent_files.val[1].val = "󱋡  Recent Files"
-            recent_files.val[2] = padding
+            recent_files.val[2] = padding(1)
             recent_files.val[3] = {
                 type = "group",
                 val = function()
@@ -50,24 +78,57 @@ return {
                 end,
                 opts = { shrink_margin = false },
             }
-            quick_links.val[1].val = "  Quick Actions"
-            quick_links.val[4] = dashboard.button("SPC p f", "󰈞  Find file")
-            quick_links.val[5] = dashboard.button("SPC p s", "󰊄  Live grep")
-            quick_links.val[6] = dashboard.button("c", "󰒓  Configuration")
-            quick_links.val[7] = dashboard.button(
+            -- RECENT FILES - END --
+
+            -- RECENT PROJECTS - START --
+            local recent_projects = {
+                type = "group",
+                val = {
+                    {
+                        type = "text",
+                        val = "󰪺  Recent Projects",
+                        opts = {
+                            hl = "SpecialComment",
+                            shrink_margin = false,
+                            position = "center",
+                        },
+                    },
+                    padding(1),
+                    {
+                        type = "group",
+                        val = helpers.get_recent_projects,
+                    },
+                },
+            }
+            -- RECENT PROJECTS - END --
+
+            -- QUICK ACTIONS - START --
+            local quick_actions = config.layout[6]
+
+            quick_actions.val[1].val = "  Quick Actions"
+            quick_actions.val[4] =
+                dashboard.button("SPC p f", "󰈞  Find file")
+            quick_actions.val[5] =
+                dashboard.button("SPC p s", "󰊄  Live grep")
+            quick_actions.val[6] = dashboard.button("c", "󰒓  Configuration")
+            quick_actions.val[7] = dashboard.button(
                 "u",
                 "󰚰  Update plugins",
                 "<cmd>Lazy update<CR>",
                 { desc = "Update plugins" }
             )
-            table.remove(quick_links.val, 8)
+
+            ---@diagnostic disable-next-line: param-type-mismatch
+            table.remove(quick_actions.val, 8)
             table.insert(
-                quick_links.val,
+                ---@diagnostic disable-next-line: param-type-mismatch
+                quick_actions.val,
                 3,
                 dashboard.button("SPC p v", "󰥨  File explorer")
             )
             table.insert(
-                quick_links.val,
+                ---@diagnostic disable-next-line: param-type-mismatch
+                quick_actions.val,
                 3,
                 dashboard.button(
                     "SPC o s",
@@ -75,44 +136,30 @@ return {
                 )
             )
             table.insert(
-                quick_links.val,
+                ---@diagnostic disable-next-line: param-type-mismatch
+                quick_actions.val,
                 3,
                 dashboard.button("SPC o l", "󰅒  Restore last session")
             )
+            -- QUICK ACTIONS - END --
 
-            local section_projects = {
-                type = "group",
-                val = {
-                    {
-                        type = "text",
-                        val = "󰪺   Recent Projects",
-                        opts = {
-                            hl = "SpecialComment",
-                            shrink_margin = false,
-                            position = "center",
-                        },
-                    },
-                    padding,
-                    {
-                        type = "group",
-                        val = helpers.get_recent_projects,
-                    },
-                },
+            config.layout = {
+                padding(1),
+                hero,
+                padding(2),
+                shortcuts,
+                padding(1),
+                date,
+                info,
+                padding(2),
+                recent_files,
+                padding(1),
+                recent_projects,
+                padding(1),
+                quick_actions,
             }
 
-            config.layout[2] = heading
-            config.layout[3] = double_padding
-            config.layout[4] = section_shortcuts
-            config.layout[5] = padding
-            config.layout[6] = section_info
-            config.layout[7] = double_padding
-            config.layout[8] = recent_files
-            config.layout[9] = padding
-            config.layout[10] = section_projects
-            config.layout[11] = padding
-            config.layout[12] = quick_links
-
-            require("alpha").setup(config)
+            alpha.setup(config)
         end,
     },
 }

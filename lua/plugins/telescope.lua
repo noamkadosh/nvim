@@ -13,6 +13,7 @@ return {
                 build = "make",
             },
             { "tzachar/fuzzy.nvim" },
+            "ahmedkhalf/project.nvim",
         },
         config = function()
             local telescope = require("telescope")
