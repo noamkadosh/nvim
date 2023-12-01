@@ -9,23 +9,22 @@ return {
     {
         "mfussenegger/nvim-dap",
         dependencies = {
-            { "rcarriga/nvim-dap-ui" },
+            "rcarriga/nvim-dap-ui",
             { "nvim-telescope/telescope-dap.nvim" },
             { "theHamsta/nvim-dap-virtual-text" },
             "mxsdev/nvim-dap-vscode-js",
             "microsoft/vscode-js-debug",
-            { "leoluz/nvim-dap-go" },
+            "leoluz/nvim-dap-go",
+            "jbyuki/one-small-step-for-vimkind",
         },
         lazy = true,
         config = function()
             local dap = require("dap")
-            local dapui = require("dapui")
-            dapui.setup()
             require("telescope").load_extension("dap")
             require("nvim-dap-virtual-text").setup({})
 
             require("mason-nvim-dap").setup({
-                ensure_installed = { "codelldb", "delve" },
+                ensure_installed = { "chrome", "codelldb", "delve" },
             })
 
             for _, language in pairs(js_flavors) do
@@ -91,19 +90,6 @@ return {
                         userDataDir = false,
                     },
                 }
-            end
-
-            local dap_go = require("dap-go")
-            dap_go.setup({})
-
-            dap.listeners.after.event_initialized["dapui_config"] = function()
-                dapui.open()
-            end
-            dap.listeners.before.event_terminated["dapui_config"] = function()
-                dapui.close()
-            end
-            dap.listeners.before.event_exited["dapui_config"] = function()
-                dapui.close()
             end
 
             local colors = require("tokyonight.colors").setup()
@@ -231,21 +217,36 @@ return {
             )
             vim.keymap.set(
                 "n",
-                "<leader>du",
-                dapui.toggle,
-                { desc = "Toggle Debugger UI" }
-            )
-            vim.keymap.set(
-                "n",
                 "<leader>dh",
                 require("dap.ui.widgets").hover,
                 { desc = "Debugger Hover" }
             )
+        end,
+    },
+
+    {
+        "rcarriga/nvim-dap-ui",
+        lazy = true,
+        config = function()
+            local dap = require("dap")
+            local dapui = require("dapui")
+            dapui.setup()
+
+            dap.listeners.after.event_initialized["dapui_config"] = function()
+                dapui.open()
+            end
+            dap.listeners.before.event_terminated["dapui_config"] = function()
+                dapui.close()
+            end
+            dap.listeners.before.event_exited["dapui_config"] = function()
+                dapui.close()
+            end
+
             vim.keymap.set(
                 "n",
-                "<leader>dt",
-                dap_go.debug_test,
-                { desc = "Go Debug Test" }
+                "<leader>du",
+                dapui.toggle,
+                { desc = "Toggle Debugger UI" }
             )
         end,
     },
@@ -276,5 +277,60 @@ return {
         "microsoft/vscode-js-debug",
         build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
         lazy = true,
+    },
+
+    {
+        "leoluz/nvim-dap-go",
+        config = function()
+            local dap_go = require("dap-go")
+            dap_go.setup({})
+
+            vim.keymap.set(
+                "n",
+                "<leader>dt",
+                dap_go.debug_test,
+                { desc = "Go Debug Test" }
+            )
+        end,
+    },
+
+    {
+        "jbyuki/one-small-step-for-vimkind",
+        lazy = true,
+      -- stylua: ignore
+      config = function()
+        local dap = require("dap")
+        dap.adapters.nlua = function(callback, conf)
+          local adapter = {
+            type = "server",
+            host = conf.host or "127.0.0.1",
+            port = conf.port or 8086,
+          }
+          if conf.start_neovim then
+            local dap_run = dap.run
+            dap.run = function(c)
+              adapter.port = c.port
+              adapter.host = c.host
+            end
+            require("osv").run_this()
+            dap.run = dap_run
+          end
+          callback(adapter)
+        end
+        dap.configurations.lua = {
+          {
+            type = "nlua",
+            request = "attach",
+            name = "Run this file",
+            start_neovim = {},
+          },
+          {
+            type = "nlua",
+            request = "attach",
+            name = "Attach to running Neovim instance (port = 8086)",
+            port = 8086,
+          },
+        }
+      end,
     },
 }
