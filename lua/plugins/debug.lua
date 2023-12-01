@@ -256,7 +256,7 @@ return {
         config = function()
             require("dap-vscode-js").setup({
                 debugger_path = vim.fn.glob(
-                    vim.fn.stdpath("data") .. "/lazy/vscode-js-debug/"
+                    vim.fn.stdpath("data") .. "/lazy/vscode-js-debug"
                 ),
                 log_file_level = vim.log.levels.TRACE,
                 adapters = {
