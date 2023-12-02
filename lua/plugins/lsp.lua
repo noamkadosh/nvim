@@ -1,41 +1,21 @@
 return {
     {
         "VonHeikemen/lsp-zero.nvim",
-        branch = "v2.x",
+        branch = "v3.x",
+        event = { "BufReadPre", "BufNewFile", "InsertEnter", "CmdlineEnter" },
         dependencies = {
             "folke/neoconf.nvim",
             "folke/neodev.nvim",
 
-            { "neovim/nvim-lspconfig" },
-            { "williamboman/mason.nvim" },
-            { "williamboman/mason-lspconfig.nvim" },
+            "williamboman/mason.nvim",
+            "neovim/nvim-lspconfig",
 
-            { "nvimtools/none-ls.nvim" },
-            "mfussenegger/nvim-dap",
-
-            "jay-babu/mason-null-ls.nvim",
-            "jay-babu/mason-nvim-dap.nvim",
-
-            { "hrsh7th/nvim-cmp" },
-            { "hrsh7th/cmp-nvim-lsp" },
+            -- Completion
+            "hrsh7th/nvim-cmp",
+            "hrsh7th/cmp-nvim-lsp",
 
             -- Snippets
             "L3MON4D3/LuaSnip",
-
-            -- Language tools
-            { "simrat39/rust-tools.nvim" },
-            { "pmizio/typescript-tools.nvim" },
-            {
-                "jose-elias-alvarez/typescript.nvim",
-                commit = "de304087e6e49981fde01af8ccc5b21e8519306f",
-            }, -- NOTE: archived, used only for null-ls code actions
-            {
-                "ray-x/go.nvim",
-                dependencies = { "ray-x/guihua.lua" },
-                ft = { "go", "gomod" },
-                build = ":lua require('go.install').update_all_sync()",
-            },
-            { "b0o/schemastore.nvim" },
 
             -- LspSaga
             "glepnir/lspsaga.nvim",
@@ -43,9 +23,8 @@ return {
             -- LSP Diagnostics
             "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
 
-            { "RRethy/vim-illuminate" },
+            "RRethy/vim-illuminate",
         },
-        event = { "BufReadPre", "BufNewFile", "InsertEnter", "CmdlineEnter" },
         config = function()
             local lsp = require("lsp-zero").preset({
                 manage_nvim_cmp = {
@@ -53,22 +32,6 @@ return {
                     set_sources = "recommended",
                 },
                 configure_diagnostics = false,
-            })
-
-            lsp.ensure_installed({
-                "cssls",
-                "dockerls",
-                "docker_compose_language_service",
-                "gopls",
-                "html",
-                "jsonls",
-                "lua_ls",
-                "marksman",
-                "nil_ls",
-                "rust_analyzer",
-                "tailwindcss",
-                -- "tsserver",
-                "yamlls",
             })
 
             lsp.set_sign_icons({
@@ -95,25 +58,7 @@ return {
                 end, { buffer = bufnr, desc = "Format" })
             end)
 
-            lsp.skip_server_setup({
-                "rust_analyzer",
-                "tsserver",
-                "gopls",
-                "lua_ls",
-            })
-
-            lsp.configure("jsonls", {
-                settings = {
-                    json = {
-                        schemas = require("schemastore").json.schemas(),
-                        validate = { enable = true },
-                    },
-                },
-            })
-
             lsp.setup()
-
-            require("plugins.tools.language_tools").setup_language_tools(lsp)
 
             require("noice").setup({
                 lsp = {
@@ -142,94 +87,177 @@ return {
     },
 
     {
+        "williamboman/mason.nvim",
+        lazy = true,
+        cmd = {
+            "Mason",
+            "MasonUninstall",
+            "MasonUninstallAll",
+            "MasonInstall",
+            "MasonLog",
+            "MasonUpdate",
+        },
+        dependencies = {
+            "williamboman/mason-lspconfig.nvim",
+            "jay-babu/mason-null-ls.nvim",
+            "jay-babu/mason-nvim-dap.nvim",
+        },
+        config = function()
+            local lsp_zero = require("lsp-zero")
+
+            require("mason").setup()
+
+            require("mason-lspconfig").setup({
+                ensure_installed = {
+                    "cssls",
+                    "dockerls",
+                    "docker_compose_language_service",
+                    "gopls",
+                    "html",
+                    "jsonls",
+                    "lua_ls",
+                    "marksman",
+                    "nil_ls",
+                    "rust_analyzer",
+                    "tailwindcss",
+                    "tsserver",
+                    "yamlls",
+                },
+                handlers = {
+                    lsp_zero.default_setup,
+                    lua_ls = function()
+                        local lua_opts = lsp_zero.nvim_lua_ls({
+                            settings = {
+                                Lua = {
+                                    hint = {
+                                        enable = true,
+                                    },
+                                },
+                            },
+                        })
+                        require("lspconfig").lua_ls.setup(lua_opts)
+                    end,
+                    jsonls = lsp_zero.noop,
+                    tsserver = lsp_zero.noop,
+                    tailwindcss = function()
+                        local root_pattern =
+                            require("lspconfig").util.root_pattern(
+                                "tailwind.config.cjs",
+                                "tailwind.config.js",
+                                "postcss.config.js"
+                            )
+
+                        require("lspconfig").tailwindcss.setup({
+                            hovers = true,
+                            suggestions = true,
+                            root_dir = root_pattern,
+                        })
+                    end,
+                    rust_analyzer = lsp_zero.noop,
+                    gopls = lsp_zero.noop,
+                },
+            })
+
+            require("mason-null-ls").setup({
+                ensure_installed = {
+                    "actionlint",
+                    "eslint_d",
+                    "golangci_lint",
+                    "prettierd",
+                    "rustfmt",
+                    "selene",
+                    "stylua",
+                    "yamlfmt",
+                    "yamllint",
+                },
+            })
+
+            require("mason-nvim-dap").setup({
+                ensure_installed = { "chrome", "codelldb", "delve" },
+            })
+        end,
+    },
+
+    {
         "glepnir/lspsaga.nvim",
         event = "LspAttach",
         dependencies = {
             "nvim-tree/nvim-web-devicons",
             "nvim-treesitter/nvim-treesitter",
         },
-        config = function()
-            require("lspsaga").setup({
-                lightbulb = {
-                    virtual_text = false,
-                },
-                outline = {
-                    win_width = 40,
-                },
-                symbol_in_winbar = {
-                    show_file = false,
-                },
-                ui = {
-                    code_action = "󱠂",
-                },
-            })
-
-            vim.keymap.set(
-                "n",
+        keys = {
+            {
                 "gh",
                 "<cmd>Lspsaga lsp_finder<CR>",
-                { desc = "Find symbol's definition" }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "Find symbol's definition",
+            },
+            {
                 "gr",
                 "<cmd>Lspsaga rename<CR>",
-                { desc = "Rename occurrences of hovered word for current file" }
-            )
-            vim.keymap.set("n", "gR", "<cmd>Lspsaga rename ++project<CR>", {
+                desc = "Rename occurrences of hovered word for current file",
+            },
+            {
+                "gR",
+                "<cmd>Lspsaga rename ++project<CR>",
                 desc = "Rename occurrences of hovered word for selected files",
-            })
-            vim.keymap.set(
-                { "n", "v" },
+            },
+            {
                 "<leader>ca",
                 "<cmd>Lspsaga code_action<CR>",
-                { desc = "Line code actions" }
-            )
-            vim.keymap.set(
-                "n",
+                mode = { "n", "v" },
+                desc = "Line code actions",
+            },
+            {
                 "gp",
                 "<cmd>Lspsaga peek_definition<CR>",
-                { desc = "Peek definition" }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "Peek definition",
+            },
+            {
                 "gd",
                 "<cmd>Lspsaga goto_definition<CR>",
-                { desc = "Go to definition" }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "Go to definition",
+            },
+            {
                 "gP",
                 "<cmd>Lspsaga peek_type_definition<CR>",
-                { desc = "Peek type definition" }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "Peek type definition",
+            },
+            {
                 "gD",
                 "<cmd>Lspsaga goto_type_definition<CR>",
-                { desc = "Go to type definition" }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "Go to type definition",
+            },
+            {
                 "go",
                 "<cmd>Lspsaga outline<CR>",
-                { desc = "Toggle outline" }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "Toggle outline",
+            },
+            {
                 "gk",
                 "<cmd>Lspsaga hover_doc<CR>",
-                { desc = "Hover documentation" }
-            )
-        end,
+                desc = "Hover documentation",
+            },
+        },
+        opts = {
+            lightbulb = {
+                virtual_text = false,
+            },
+            outline = {
+                win_width = 40,
+            },
+            symbol_in_winbar = {
+                show_file = false,
+            },
+            ui = {
+                code_action = "󱠂",
+            },
+        },
     },
 
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         lazy = true,
-        config = function()
-            require("lsp_lines").setup({})
-        end,
+        config = true,
     },
 
     {
@@ -261,9 +289,25 @@ return {
 
                     local bufnr = args.buf
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
-                    require("lsp-inlayhints").on_attach(client, bufnr)
+                    inlayhints.on_attach(client, bufnr)
                 end,
             })
         end,
+    },
+
+    {
+        "folke/neoconf.nvim",
+        lazy = true,
+        cmd = "Neoconf",
+        config = true,
+    },
+
+    {
+        "folke/neodev.nvim",
+        lazy = true,
+        opts = {
+            experimental = { pathStrict = true },
+            library = { plugins = { "nvim-dap-ui" }, types = true },
+        },
     },
 }

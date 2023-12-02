@@ -3,10 +3,10 @@ return {
         "nvim-treesitter/nvim-treesitter",
         event = { "BufReadPost", "BufNewFile" },
         dependencies = {
-            { "nvim-treesitter/nvim-treesitter-context" },
-            { "nvim-treesitter/playground" },
-            "JoosepAlviste/nvim-ts-context-commentstring",
+            "nvim-treesitter/nvim-treesitter-context",
+            "nvim-treesitter/playground",
             "windwp/nvim-ts-autotag",
+            "JoosepAlviste/nvim-ts-context-commentstring",
         },
         build = function()
             local ts_update =
@@ -54,9 +54,13 @@ return {
                     enable = true,
                 },
             })
-
-            require("ts_context_commentstring").setup({})
         end,
+    },
+
+    {
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        lazy = true,
+        config = true,
     },
 
     {

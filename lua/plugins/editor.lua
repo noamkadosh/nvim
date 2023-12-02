@@ -2,17 +2,11 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
-        config = function()
+        init = function()
             vim.o.timeout = true
             vim.o.timeoutlen = 300
-            require("which-key").setup({})
         end,
-    },
-
-    {
-        "m4xshen/hardtime.nvim",
-        event = "VeryLazy",
-        opts = {},
+        config = true,
     },
 
     {
@@ -21,130 +15,120 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
-        config = function()
-            require("harpoon").setup({
-                -- enable tabline with harpoon marks
-                tabline = true,
-                tabline_prefix = "   ",
-                tabline_suffix = "   ",
-            })
-
-            vim.api.nvim_set_keymap(
-                "n",
-                "<leader>h",
-                "<cmd>lua require('harpoon.mark').add_file()<cr>",
-                { desc = "Mark file with harpoon" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
-                "<leader>e",
-                "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>",
-                { desc = "Toggle Harpoon quick menu" }
-            )
+        keys = function()
+            local keys = {
+                {
+                    "<leader>h",
+                    "<cmd>lua require('harpoon.mark').add_file()<cr>",
+                    desc = "Mark file with harpoon",
+                },
+                {
+                    "<leader>e",
+                    "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>",
+                    desc = "Toggle Harpoon quick menu",
+                },
+            }
 
             for i = 1, 9 do
-                vim.api.nvim_set_keymap(
-                    "n",
+                table.insert(keys, {
                     "<F" .. i + 1 .. ">",
                     "<cmd>lua require('harpoon.ui').nav_file(" .. i .. ")<cr>",
-                    { desc = "Navigate to file " .. i }
-                )
+                    desc = "Navigate to file " .. i,
+                })
             end
+
+            return keys
         end,
+        opts = {
+            -- enable tabline with harpoon marks
+            tabline = true,
+            tabline_prefix = "   ",
+            tabline_suffix = "   ",
+        },
     },
 
     {
         "folke/persistence.nvim",
-        config = function()
-            require("persistence").setup({})
-
-            vim.api.nvim_set_keymap(
-                "n",
+        event = "BufReadPre",
+        keys = {
+            {
                 "<leader>os",
                 [[<cmd>lua require("persistence").load()<cr>]],
-                { desc = "Restore session (Current Dir)" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
+                desc = "Restore session (Current Dir)",
+            },
+            {
                 "<leader>ol",
                 [[<cmd>lua require("persistence").load({ last = true })<cr>]],
-                { desc = "Restore last session" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
+                desc = "Restore last session",
+            },
+            {
                 "<leader>od",
                 [[<cmd>lua require("persistence").stop()<cr>]],
-                { desc = "Stop Persistence" }
-            )
-        end,
-    },
-
-    {
-        "Lilja/zellij.nvim",
-        config = function()
-            require("zellij").setup({
-                vimTmuxNavigatorKeybinds = true,
-            })
-        end,
+                desc = "Stop Persistence",
+            },
+        },
+        config = true,
     },
 
     {
         "windwp/nvim-spectre",
-        lazy = true,
         opts = {
+            is_block_ui_break = true,
             live_update = true,
             is_insert_mode = true,
         },
-        keys = {
-            {
-                "<leader>sr",
-                function()
-                    require("spectre").open()
-                    vim.api.nvim_win_set_width(0, 60)
-                end,
-                desc = "Search and replace",
-            },
-            {
-                "<leader>sw",
-                function()
-                    require("spectre").open_visual({
-                        select_word = true,
-                        is_insert_mode = false,
-                    })
-                    vim.api.nvim_win_set_width(0, 60)
-                end,
-                desc = "Search current word",
-            },
-            {
-                "<leader>sw",
-                function()
-                    require("spectre").open_visual({
-                        is_insert_mode = false,
-                    })
-                    vim.api.nvim_win_set_width(0, 60)
-                end,
-                mode = "v",
-                desc = "Search current word",
-            },
-            {
-                "<leader>sp",
-                function()
-                    require("spectre").open_file_search()
-                    vim.api.nvim_win_set_width(0, 60)
-                end,
-                desc = "Search in current file",
-            },
-        },
+        keys = function()
+            local spectre = require("spectre")
+
+            return {
+                {
+                    "<leader>sr",
+                    function()
+                        spectre.open()
+                        vim.api.nvim_win_set_width(0, 60)
+                    end,
+                    desc = "Search and replace",
+                },
+                {
+                    "<leader>sw",
+                    function()
+                        spectre.open_visual({
+                            select_word = true,
+                            is_insert_mode = false,
+                        })
+                        vim.api.nvim_win_set_width(0, 60)
+                    end,
+                    desc = "Search current word",
+                },
+                {
+                    "<leader>sw",
+                    function()
+                        spectre.open_visual({
+                            is_insert_mode = false,
+                        })
+                        vim.api.nvim_win_set_width(0, 60)
+                    end,
+                    mode = "v",
+                    desc = "Search current word",
+                },
+                {
+                    "<leader>sp",
+                    function()
+                        spectre.open_file_search()
+                        vim.api.nvim_win_set_width(0, 60)
+                    end,
+                    desc = "Search in current file",
+                },
+            }
+        end,
     },
 
     {
         "lewis6991/satellite.nvim",
         event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            require("satellite").setup({
-                winblend = 0,
-            })
-        end,
+        opts = {
+            winblend = 0,
+        },
     },
 
     {
@@ -154,10 +138,18 @@ return {
             "nvim-treesitter/nvim-treesitter",
             "smoka7/hydra.nvim",
         },
-        opts = function()
+        keys = {
+            {
+                "<Leader>m",
+                "<cmd>MCstart<cr>",
+                desc = "Create a selection for word under the cursor",
+            },
+        },
+        config = function()
             local N = require("multicursors.normal_mode")
             local I = require("multicursors.insert_mode")
-            return {
+
+            require("multicursors").setup({
                 normal_keys = {
                     -- to change default lhs of key mapping change the key
                     [","] = {
@@ -176,76 +168,57 @@ return {
                         opts = { desc = "New line" },
                     },
                 },
-            }
+            })
         end,
-        keys = {
-            {
-                "<Leader>m",
-                "<cmd>MCstart<cr>",
-                desc = "Create a selection for word under the cursor",
-            },
-        },
     },
 
     {
         "folke/trouble.nvim",
-        lazy = true,
-        config = function()
-            require("trouble").setup({})
-
-            vim.keymap.set(
-                "n",
+        keys = {
+            {
                 "<leader>tx",
                 "<cmd>TroubleToggle<cr>",
-                { silent = true, noremap = true, desc = "Toggle diagnostics" }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "Toggle diagnostics",
+                silent = true,
+                noremap = true,
+            },
+            {
                 "<leader>tw",
                 "<cmd>TroubleToggle workspace_diagnostics<cr>",
-                {
-                    silent = true,
-                    noremap = true,
-                    desc = "Workspace diagnostics",
-                }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "Workspace diagnostics",
+                silent = true,
+                noremap = true,
+            },
+            {
                 "<leader>td",
                 "<cmd>TroubleToggle document_diagnostics<cr>",
-                {
-                    silent = true,
-                    noremap = true,
-                    desc = "Document diagnostics",
-                }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "Document diagnostics",
+                silent = true,
+                noremap = true,
+            },
+            {
                 "<leader>tl",
                 "<cmd>TroubleToggle loclist<cr>",
-                {
-                    silent = true,
-                    noremap = true,
-                    desc = "Location list",
-                }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "Location list",
+                silent = true,
+                noremap = true,
+            },
+            {
                 "<leader>tq",
                 "<cmd>TroubleToggle quickfix<cr>",
-                {
-                    silent = true,
-                    noremap = true,
-                    desc = "Quickfix list",
-                }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "Quickfix list",
+                silent = true,
+                noremap = true,
+            },
+            {
                 "<leader>tR",
                 "<cmd>TroubleToggle lsp_references<cr>",
-                { silent = true, noremap = true, desc = "LSP references" }
-            )
-        end,
+                desc = "LSP references",
+                silent = true,
+                noremap = true,
+            },
+        },
+        config = true,
     },
 
     {
@@ -263,41 +236,86 @@ return {
     {
         "zbirenbaum/neodim",
         event = "LspAttach",
-        config = function()
-            require("neodim").setup({
-                alpha = 0.4,
-                blend_color = "#1A1B26",
-            })
-        end,
+        opts = {
+            alpha = 0.4,
+            blend_color = "#1A1B26",
+        },
     },
 
     {
         "echasnovski/mini.bufremove",
         event = { "BufReadPost", "BufNewFile" },
-        config = function()
+        keys = function()
             local bufremove = require("mini.bufremove")
-            bufremove.setup({})
 
-            vim.keymap.set("n", "<leader>bd", function()
-                require("mini.bufremove").delete(0, false)
-            end, { desc = "Delete Buffer" })
-            vim.keymap.set("n", "<leader>bD", function()
-                require("mini.bufremove").delete(0, true)
-            end, { desc = "Delete Buffer (Force)" })
+            return {
+                {
+                    "<leader>bd",
+                    function()
+                        bufremove.delete(0, false)
+                    end,
+                    desc = "Delete Buffer",
+                },
+                {
+                    "<leader>bD",
+                    function()
+                        bufremove.delete(0, true)
+                    end,
+                    desc = "Delete Buffer (Force)",
+                },
+            }
+        end,
+        config = true,
+    },
+
+    {
+        "AckslD/nvim-neoclip.lua",
+        event = { "BufReadPre", "BufNewFile" },
+        keys = {
+            {
+                "<leader>x",
+                "<cmd>Telescope neoclip<cr>",
+                desc = "Telescope Clipboard",
+            },
+        },
+        config = function()
+            require("neoclip").setup()
         end,
     },
 
     {
         "kevinhwang91/nvim-fundo",
-        event = "VeryLazy",
+        event = { "BufReadPre", "BufNewFile" },
         dependencies = { "kevinhwang91/promise-async" },
         run = function()
             require("fundo").install()
         end,
+        opts = {
+            archives_dir = vim.fn.stdpath("cache") .. "/fundo",
+            limit_archives_size = 128,
+        },
+    },
+
+    {
+        "ahmedkhalf/project.nvim",
+        lazy = true,
         config = function()
-            require("fundo").setup({
-                archives_dir = vim.fn.stdpath("cache") .. "/fundo",
-                limit_archives_size = 128,
+            require("project_nvim").setup({
+                scope_chdir = "none",
+                manual_mode = false,
+                detection_methods = { "lsp", "pattern" },
+                patterns = {
+                    "lazy-lock.json",
+                    ".git",
+                    "cargo.toml",
+                    "!^package.json",
+                    "package.json",
+                },
+                ignore_lsp = {},
+                exclude_dirs = {},
+                show_hidden = false,
+                silent_chdir = false,
+                datapath = vim.fn.stdpath("data"),
             })
         end,
     },
