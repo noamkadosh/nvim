@@ -1,32 +1,22 @@
 return {
-    {
-        "tpope/vim-fugitive",
-        event = "VeryLazy",
-        init = function()
-            vim.keymap.set("n", "<leader>gs", vim.cmd.Git, { desc = "Git" })
-        end,
-    },
-
-    {
+        {
         "sindrets/diffview.nvim",
-        event = "VeryLazy",
-        opts = {},
+        cmd = "DiffviewOpen",
+        config = true,
     },
 
     {
         "lewis6991/gitsigns.nvim",
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPost", "BufNewFile" },
         opts = {
             current_line_blame = true,
             current_line_blame_opts = {
                 delay = 0,
             },
             current_line_blame_formatter = function(_, blame_info, _)
-                local helpers = require("plugins.tools.helpers")
+                local helpers = require("helpers")
 
-                local day = tonumber(
-                    os.date("%d", blame_info.author_time):match("^%d*")
-                )
+                local day = tonumber(os.date("%d", blame_info.author_time))
                 local hour = tonumber(os.date("%I", blame_info.author_time))
                 local dateTime = os.date("%a, %b ", blame_info.author_time)
                     .. day

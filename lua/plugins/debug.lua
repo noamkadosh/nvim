@@ -10,22 +10,89 @@ return {
         "mfussenegger/nvim-dap",
         dependencies = {
             "rcarriga/nvim-dap-ui",
-            { "nvim-telescope/telescope-dap.nvim" },
-            { "theHamsta/nvim-dap-virtual-text" },
+            "nvim-telescope/telescope-dap.nvim",
+            "theHamsta/nvim-dap-virtual-text",
             "mxsdev/nvim-dap-vscode-js",
             "microsoft/vscode-js-debug",
-            "leoluz/nvim-dap-go",
-            "jbyuki/one-small-step-for-vimkind",
+            "williamboman/mason.nvim",
         },
         lazy = true,
+        keys = function()
+            local dap = require("dap")
+            require("dapui")
+
+            return {
+                {
+                    "<leader>da",
+                    function()
+                        if vim.fn.filereadable(".vscode/launch.json") then
+                            local dap_vscode = require("dap.ext.vscode")
+                            dap_vscode.load_launchjs(nil, {
+                                ["pwa-node"] = js_flavors,
+                                ["node"] = js_flavors,
+                                ["chrome"] = js_flavors,
+                                ["pwa-chrome"] = js_flavors,
+                            })
+                        end
+                        dap.continue()
+                    end,
+                    desc = "Run with Args",
+                },
+                {
+                    "<leader>db",
+                    dap.toggle_breakpoint,
+                    desc = "toggle breakpoint",
+                },
+                {
+                    "<leader>db",
+                    dap.clear_breakpoints,
+                    desc = "clear breakpoints",
+                },
+                {
+                    "<leader>dc",
+                    dap.continue,
+                    desc = "start/continue",
+                },
+                {
+                    "<leader>di",
+                    dap.step_into,
+                    desc = "step into",
+                },
+                {
+                    "<leader>do",
+                    dap.step_over,
+                    desc = "step over",
+                },
+                {
+                    "<leader>do",
+                    dap.step_out,
+                    desc = "step out",
+                },
+                {
+                    "<leader>dq",
+                    dap.close,
+                    desc = "close session",
+                },
+                {
+                    "<leader>dq",
+                    dap.terminate,
+                    desc = "terminate session",
+                },
+                { "<leader>dp", dap.pause, desc = "pause" },
+                {
+                    "<leader>dr",
+                    dap.restart_frame,
+                    desc = "restart",
+                },
+                {
+                    "<leader>dr",
+                    dap.repl.toggle,
+                    desc = "toggle repl",
+                },
+            }
+        end,
         config = function()
             local dap = require("dap")
-            require("telescope").load_extension("dap")
-            require("nvim-dap-virtual-text").setup({})
-
-            require("mason-nvim-dap").setup({
-                ensure_installed = { "chrome", "codelldb", "delve" },
-            })
 
             for _, language in pairs(js_flavors) do
                 dap.configurations[language] = {
@@ -139,94 +206,29 @@ return {
                 linehl = "DapStopped",
                 numhl = "DapStopped",
             })
-
-            vim.keymap.set("n", "<leader>da", function()
-                if vim.fn.filereadable(".vscode/launch.json") then
-                    local dap_vscode = require("dap.ext.vscode")
-                    dap_vscode.load_launchjs(nil, {
-                        ["pwa-node"] = js_flavors,
-                        ["node"] = js_flavors,
-                        ["chrome"] = js_flavors,
-                        ["pwa-chrome"] = js_flavors,
-                    })
-                end
-                dap.continue()
-            end, {
-                desc = "Run with Args",
-            })
-            vim.keymap.set(
-                "n",
-                "<leader>db",
-                dap.toggle_breakpoint,
-                { desc = "Toggle Breakpoint" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>dB",
-                dap.clear_breakpoints,
-                { desc = "Clear Breakpoints" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>dc",
-                dap.continue,
-                { desc = "Start/Continue" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>di",
-                dap.step_into,
-                { desc = "Step Into" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>do",
-                dap.step_over,
-                { desc = "Step Over" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>dO",
-                dap.step_out,
-                { desc = "Step Out" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>dq",
-                dap.close,
-                { desc = "Close Session" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>dQ",
-                dap.terminate,
-                { desc = "Terminate Session" }
-            )
-            vim.keymap.set("n", "<leader>dp", dap.pause, { desc = "Pause" })
-            vim.keymap.set(
-                "n",
-                "<leader>dr",
-                dap.restart_frame,
-                { desc = "Restart" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>dR",
-                dap.repl.toggle,
-                { desc = "Toggle REPL" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>dh",
-                require("dap.ui.widgets").hover,
-                { desc = "Debugger Hover" }
-            )
         end,
     },
 
     {
         "rcarriga/nvim-dap-ui",
         lazy = true,
+        keys = function()
+            require("dap")
+            local dapui = require("dapui")
+
+            return {
+                {
+                    "<leader>du",
+                    dapui.toggle,
+                    desc = "Toggle Debugger UI",
+                },
+                {
+                    "<leader>dh",
+                    require("dap.ui.widgets").hover,
+                    desc = "Debugger Hover",
+                },
+            }
+        end,
         config = function()
             local dap = require("dap")
             local dapui = require("dapui")
@@ -241,36 +243,41 @@ return {
             dap.listeners.before.event_exited["dapui_config"] = function()
                 dapui.close()
             end
+        end,
+    },
 
-            vim.keymap.set(
-                "n",
-                "<leader>du",
-                dapui.toggle,
-                { desc = "Toggle Debugger UI" }
-            )
+    {
+        "theHamsta/nvim-dap-virtual-text",
+        lazy = true,
+        config = true,
+    },
+
+    {
+        "nvim-telescope/telescope-dap.nvim",
+        lazy = true,
+        config = function()
+            require("telescope").load_extension("dap")
         end,
     },
 
     {
         "mxsdev/nvim-dap-vscode-js",
         lazy = true,
-        config = function()
-            require("dap-vscode-js").setup({
-                debugger_path = vim.fn.glob(
-                    vim.fn.stdpath("data") .. "/lazy/vscode-js-debug"
-                ),
-                log_file_level = vim.log.levels.TRACE,
-                adapters = {
-                    "chrome",
-                    "pwa-node",
-                    "pwa-chrome",
-                    "pwa-msedge",
-                    "pwa-extensionHost",
-                    "node-terminal",
-                    "node",
-                },
-            })
-        end,
+        opts = {
+            debugger_path = vim.fn.glob(
+                vim.fn.stdpath("data") .. "/lazy/vscode-js-debug"
+            ),
+            log_file_level = vim.log.levels.TRACE,
+            adapters = {
+                "chrome",
+                "pwa-node",
+                "pwa-chrome",
+                "pwa-msedge",
+                "pwa-extensionHost",
+                "node-terminal",
+                "node",
+            },
+        },
     },
 
     {
@@ -281,56 +288,67 @@ return {
 
     {
         "leoluz/nvim-dap-go",
-        config = function()
-            local dap_go = require("dap-go")
-            dap_go.setup({})
+        lazy = true,
+        dependencies = {
+            "mfussenegger/nvim-dap",
+        },
+        ft = { "go", "gomod" },
+        keys = function()
+            require("dap")
 
-            vim.keymap.set(
-                "n",
-                "<leader>dt",
-                dap_go.debug_test,
-                { desc = "Go Debug Test" }
-            )
+            return {
+                {
+                    "<leader>dt",
+                    require("dap-go").debug_test,
+                    desc = "Go Debug Test",
+                },
+            }
         end,
+        config = true,
     },
 
     {
         "jbyuki/one-small-step-for-vimkind",
         lazy = true,
-      -- stylua: ignore
-      config = function()
-        local dap = require("dap")
-        dap.adapters.nlua = function(callback, conf)
-          local adapter = {
-            type = "server",
-            host = conf.host or "127.0.0.1",
-            port = conf.port or 8086,
-          }
-          if conf.start_neovim then
-            local dap_run = dap.run
-            dap.run = function(c)
-              adapter.port = c.port
-              adapter.host = c.host
+        dependencies = {
+            "mfussenegger/nvim-dap",
+        },
+        event = { "BufReadPre " .. vim.fn.expand("~") .. "/.config/nvim/**" },
+        config = function()
+            local dap = require("dap")
+
+            dap.adapters.nlua = function(callback, conf)
+                local adapter = {
+                    type = "server",
+                    host = conf.host or "127.0.0.1",
+                    port = conf.port or 8086,
+                }
+                if conf.start_neovim then
+                    local dap_run = dap.run
+                    dap.run = function(c)
+                        adapter.port = c.port
+                        adapter.host = c.host
+                    end
+                    require("osv").run_this()
+                    dap.run = dap_run
+                end
+                callback(adapter)
             end
-            require("osv").run_this()
-            dap.run = dap_run
-          end
-          callback(adapter)
-        end
-        dap.configurations.lua = {
-          {
-            type = "nlua",
-            request = "attach",
-            name = "Run this file",
-            start_neovim = {},
-          },
-          {
-            type = "nlua",
-            request = "attach",
-            name = "Attach to running Neovim instance (port = 8086)",
-            port = 8086,
-          },
-        }
-      end,
+
+            dap.configurations.lua = {
+                {
+                    type = "nlua",
+                    request = "attach",
+                    name = "Run this file",
+                    start_neovim = {},
+                },
+                {
+                    type = "nlua",
+                    request = "attach",
+                    name = "Attach to running Neovim instance (port = 8086)",
+                    port = 8086,
+                },
+            }
+        end,
     },
 }

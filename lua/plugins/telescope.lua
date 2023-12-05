@@ -1,23 +1,71 @@
 return {
     {
+
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
+        lazy = true,
         dependencies = {
             "tsakirist/telescope-lazy.nvim",
             "nvim-telescope/telescope-file-browser.nvim",
             "debugloop/telescope-undo.nvim",
             "nvim-telescope/telescope-ui-select.nvim",
-            "jvgrootveld/telescope-zoxide",
-            {
-                "nvim-telescope/telescope-fzf-native.nvim",
-                build = "make",
-            },
-            { "tzachar/fuzzy.nvim" },
+            "nvim-telescope/telescope-fzf-native.nvim",
+            "tzachar/fuzzy.nvim",
+            "AckslD/nvim-neoclip.lua",
+            "folke/noice.nvim",
             "ahmedkhalf/project.nvim",
         },
-        config = function()
+        keys = function()
             local telescope = require("telescope")
             local builtin = require("telescope.builtin")
+            local themes = require("telescope.themes")
+
+            return {
+                {
+                    "<leader>pv",
+                    telescope.extensions.file_browser.file_browser,
+                    desc = "File browser",
+                },
+                {
+                    "<leader>pf",
+                    builtin.find_files,
+                    desc = "Find file",
+                },
+                {
+                    "<leader>pg",
+                    builtin.git_files,
+                    desc = "Find file (Git)",
+                },
+                {
+                    "<leader>ps",
+                    builtin.live_grep,
+                    desc = "Find (Live Grep)",
+                },
+                {
+                    "<leader>bm",
+                    builtin.buffers,
+                    desc = "Telescope open buffers",
+                },
+                {
+                    "<leader>u",
+                    "<cmd>Telescope undo<cr>",
+                    desc = "Telescope Undo",
+                },
+                {
+                    "<leader>sb",
+                    function()
+                        local opt = themes.get_dropdown({
+                            height = 10,
+                            previewer = false,
+                        })
+                        builtin.current_buffer_fuzzy_find(opt)
+                    end,
+                    desc = "Fuzzy find current buffer",
+                },
+            }
+        end,
+        config = function()
+            local telescope = require("telescope")
             local themes = require("telescope.themes")
             local trouble = require("trouble.providers.telescope")
 
@@ -39,7 +87,7 @@ return {
                 },
                 extensions = {
                     ["ui-select"] = {
-                        require("telescope.themes").get_dropdown({}),
+                        themes.get_dropdown({}),
                     },
                     file_browser = {
                         hidden = true,
@@ -62,64 +110,14 @@ return {
                 },
             })
 
-            telescope.load_extension("fzf")
-            telescope.load_extension("ui-select")
-            telescope.load_extension("lazy")
             telescope.load_extension("file_browser")
+            telescope.load_extension("fzf")
+            telescope.load_extension("lazy")
+            telescope.load_extension("neoclip")
+            telescope.load_extension("noice")
+            telescope.load_extension("projects")
+            telescope.load_extension("ui-select")
             telescope.load_extension("undo")
-            telescope.load_extension("zoxide")
-
-            vim.keymap.set(
-                "n",
-                "<leader>pv",
-                telescope.extensions.file_browser.file_browser,
-                { desc = "File browser" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>pf",
-                builtin.find_files,
-                { desc = "Find file" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>pg",
-                builtin.git_files,
-                { desc = "Find file (Git)" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>ps",
-                builtin.live_grep,
-                { desc = "Find (Live Grep)" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>bm",
-                builtin.buffers,
-                { desc = "Telescope open buffers" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>cd",
-                telescope.extensions.zoxide.list,
-                { desc = "Telescope Jump list (Zoxide)" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>u",
-                "<cmd>Telescope undo<cr>",
-                { desc = "Telescope Undo" }
-            )
-            vim.keymap.set("n", "<leader>sb", function()
-                local opt =
-                    themes.get_dropdown({ height = 10, previewer = false })
-                builtin.current_buffer_fuzzy_find(opt)
-            end, { desc = "Fuzzy find current buffer" })
-
-            require("which-key").register({
-                ["<leader>tr"] = "Open file with issues",
-            })
         end,
     },
 }

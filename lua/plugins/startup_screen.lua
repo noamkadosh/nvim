@@ -8,7 +8,7 @@ return {
             local dashboard = require("alpha.themes.dashboard")
             local config = theme.config
 
-            local helpers = require("plugins.tools.helpers")
+            local helpers = require("helpers")
 
             local padding = function(lines)
                 return { type = "padding", val = lines }
@@ -27,6 +27,20 @@ return {
 
             local hero = helpers.assignGradientColors(hero_text)
             hero = helpers.header_color(hero)
+
+            -- require("alpha.term")
+            -- local hero = {
+            --     type = "terminal",
+            --     command = vim.fn.stdpath("config") .. "/assets/logo.sh -c",
+            --     width = 70,
+            --     height = 10,
+            --     opts = {
+            --         redraw = true,
+            --         window_config = {
+            --             zindex = 1,
+            --         },
+            --     },
+            -- }
 
             local date = {
                 type = "text",
@@ -160,6 +174,13 @@ return {
             }
 
             alpha.setup(config)
+
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "AlphaReady",
+                callback = function(event)
+                    require("helpers.alpha-fancy-select").setup(event.buf, "square")
+                end,
+            })
         end,
     },
 }

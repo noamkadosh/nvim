@@ -4,50 +4,24 @@ return {
         lazy = true,
         event = "InsertEnter",
         dependencies = {
-            { "hrsh7th/cmp-buffer" },
-            { "hrsh7th/cmp-path" },
-            { "hrsh7th/cmp-cmdline" },
-            { "petertriho/cmp-git" },
-            { "saadparwaiz1/cmp_luasnip" },
-            { "hrsh7th/cmp-nvim-lua" },
-            { "tzachar/cmp-fuzzy-buffer" },
-            { "tzachar/cmp-fuzzy-path" },
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+            "petertriho/cmp-git",
+            "saadparwaiz1/cmp_luasnip",
+            "hrsh7th/cmp-nvim-lua",
+            "tzachar/cmp-fuzzy-buffer",
+            "tzachar/cmp-fuzzy-path",
             "zbirenbaum/copilot.lua",
 
             -- LSP Icons
-            { "onsails/lspkind.nvim" },
+            "onsails/lspkind.nvim",
         },
         config = function()
             local cmp = require("cmp")
             local compare = require("cmp.config.compare")
             local copilot_cmp_comparators = require("copilot_cmp.comparators")
-            local helpers = require("plugins.tools.helpers")
-
-            local cmp_select = {
-                behavior = cmp.SelectBehavior.Select,
-            }
-
-            local cmp_mappings = {
-                ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-                ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-                ["<CR>"] = cmp.mapping.confirm({
-                    behavior = cmp.ConfirmBehavior.Replace,
-                    select = false,
-                }),
-                ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                ["<C-e>"] = cmp.mapping.abort(),
-                ["<C-Space>"] = cmp.mapping.complete({}),
-                ["<Tab>"] = vim.schedule_wrap(function(fallback)
-                    if cmp.visible() and helpers.has_words_before() then
-                        cmp.select_next_item({
-                            behavior = cmp.SelectBehavior.Select,
-                        })
-                    else
-                        fallback()
-                    end
-                end),
-            }
+            local helpers = require("helpers")
 
             cmp.setup({
                 snippet = {
@@ -67,7 +41,31 @@ return {
                         winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
                     }),
                 },
-                mapping = cmp_mappings,
+                mapping = {
+                    ["<C-p>"] = cmp.mapping.select_prev_item({
+                        behavior = cmp.SelectBehavior.Select,
+                    }),
+                    ["<C-n>"] = cmp.mapping.select_next_item({
+                        behavior = cmp.SelectBehavior.Select,
+                    }),
+                    ["<CR>"] = cmp.mapping.confirm({
+                        behavior = cmp.ConfirmBehavior.Replace,
+                        select = false,
+                    }),
+                    ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+                    ["<C-d>"] = cmp.mapping.scroll_docs(4),
+                    ["<C-e>"] = cmp.mapping.abort(),
+                    ["<C-Space>"] = cmp.mapping.complete({}),
+                    ["<Tab>"] = vim.schedule_wrap(function(fallback)
+                        if cmp.visible() and helpers.has_words_before() then
+                            cmp.select_next_item({
+                                behavior = cmp.SelectBehavior.Select,
+                            })
+                        else
+                            fallback()
+                        end
+                    end),
+                },
                 sources = cmp.config.sources({
                     {
                         name = "copilot",
@@ -92,7 +90,7 @@ return {
                         name = "path",
                     },
                 }),
-                formatting = {
+                formatting = require("lsp-zero").cmp_format({
                     fields = { "abbr", "kind", "menu" },
                     format = require("lspkind").cmp_format({
                         mode = "symbol_text",
@@ -109,7 +107,7 @@ return {
                             Copilot = "",
                         },
                     }),
-                },
+                }),
                 sorting = {
                     priority_weight = 2,
                     comparators = {
@@ -194,7 +192,7 @@ return {
         },
         config = function()
             local luasnip = require("luasnip")
-            luasnip.config.setup({})
+            luasnip.config.setup()
 
             vim.tbl_map(function(type)
                 require("luasnip.loaders.from_" .. type).lazy_load()
@@ -205,8 +203,20 @@ return {
             luasnip.filetype_extend("lua", { "luadoc" })
             luasnip.filetype_extend("rust", { "rustdoc" })
             luasnip.filetype_extend("sh", { "shelldoc" })
+        end,
+    },
 
+    {
+        "benfowler/telescope-luasnip.nvim",
+        lazy = true,
+        config = function()
             require("telescope").load_extension("luasnip")
         end,
+    },
+
+    {
+        "zbirenbaum/copilot-cmp",
+        lazy = true,
+        config = true,
     },
 }

@@ -10,7 +10,7 @@ return {
                 on_highlights = function(highlights, colors)
                     local util = require("tokyonight.util")
 
-                    highlights.NoiceMini= { bg = nil }
+                    highlights.NoiceMini = { bg = nil }
                     highlights.Yanked =
                         { bg = util.darken(colors.orange, 0.15) }
 
@@ -98,16 +98,26 @@ return {
                         bg = nil,
                     }
 
-                    highlights.HarpoonInactive = { fg = colors.comment, bg = nil }
-                    highlights.HarpoonNumberInactive = { fg = colors.blue, bg = nil }
+                    highlights.HarpoonInactive =
+                        { fg = colors.comment, bg = nil }
+                    highlights.HarpoonNumberInactive =
+                        { fg = colors.blue, bg = nil }
                     highlights.HarpoonActive = { fg = colors.fg, bg = nil }
-                    highlights.HarpoonNumberActive = { fg = colors.blue, bg = nil }
+                    highlights.HarpoonNumberActive =
+                        { fg = colors.blue, bg = nil }
                     highlights.TabLineFill = { fg = colors.fg, bg = nil }
+
+                    highlights.SpectreHeader = highlights.Comment
+                    highlights.SpectreBody = highlights.String
+                    highlights.SpectreFile = highlights.Keyword
+                    highlights.SpectreDir = highlights.Comment
+                    highlights.SpectreSearch = highlights.DiffDelete
+                    highlights.SpectreBorder = highlights.Comment
+                    highlights.SpectreReplace = highlights.DiffAdd
                 end,
             })
-
             -- load the colorscheme here
-            vim.cmd([[colorscheme tokyonight-night]])
+            vim.cmd.colorscheme("tokyonight-night")
         end,
     },
 
@@ -119,8 +129,6 @@ return {
             vim.o.number = true
             vim.o.termguicolors = true
         end,
-        config = function()
-            require("modicator").setup({})
-        end,
+        config = true,
     },
 }
