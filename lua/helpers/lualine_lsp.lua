@@ -143,12 +143,20 @@ function M.map_lsp_to_info()
         else
             ---@diagnostic disable-next-line: undefined-field
             local filetype = client.config.filetypes[1]
-            local icon = web_devicons.get_icon(filetype) .. " "
+            local client_name = client.name
+            local icon
             local fg_hl_name = ("DevIcon" .. filetype:gsub("^%l", string.upper))
                 or ""
             local fg_hl_id = vim.api.nvim_get_hl_id_by_name(fg_hl_name)
             local fg = vim.fn.synIDattr(fg_hl_id, "fg")
             vim.api.nvim_set_hl(0, fg_hl_name .. "Status", { fg = fg, bg = bg })
+
+            if client.config.name == "emmet_language_server" then
+                client_name = "emmet"
+                icon = web_devicons.get_icon("html") .. " "
+            else
+                icon = web_devicons.get_icon(filetype) .. " "
+            end
 
             table.insert(
                 status,
@@ -157,7 +165,7 @@ function M.map_lsp_to_info()
                     .. "Status#"
                     .. icon
                     .. "%#StatusLine#"
-                    .. client.name
+                    .. client_name
             )
         end
     end

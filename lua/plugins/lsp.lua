@@ -12,7 +12,6 @@ return {
 
             -- Completion
             "hrsh7th/nvim-cmp",
-            "hrsh7th/cmp-nvim-lsp",
 
             -- Snippets
             "L3MON4D3/LuaSnip",
@@ -113,6 +112,7 @@ return {
                     "cssls",
                     "dockerls",
                     "docker_compose_language_service",
+                    "emmet_language_server",
                     "gopls",
                     "html",
                     "jsonls",
