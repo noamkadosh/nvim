@@ -178,7 +178,7 @@ return {
             vim.api.nvim_create_autocmd("User", {
                 pattern = "AlphaReady",
                 callback = function(event)
-                    require("helpers.alpha-fancy-select").setup(event.buf, "square")
+                    require("helpers.alpha-fancy-select").setup(event.buf, "rounded")
                 end,
             })
         end,
