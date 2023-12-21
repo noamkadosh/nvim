@@ -1,3 +1,4 @@
+
 return {
     {
         "hrsh7th/nvim-cmp",
@@ -13,6 +14,7 @@ return {
             "hrsh7th/cmp-nvim-lua",
             "tzachar/cmp-fuzzy-buffer",
             "tzachar/cmp-fuzzy-path",
+            "uga-rosa/cmp-dictionary",
             "zbirenbaum/copilot.lua",
 
             -- LSP Icons
@@ -42,6 +44,7 @@ return {
                         winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
                     }),
                 },
+
                 mapping = {
                     ["<C-p>"] = cmp.mapping.select_prev_item({
                         behavior = cmp.SelectBehavior.Select,
@@ -81,6 +84,10 @@ return {
                     {
                         name = "fuzzy_path",
                     },
+                    {
+                        name = "dictionary",
+                        keyword_length = 2,
+                    },
                 }, {
                     {
                         name = "buffer",
@@ -89,16 +96,21 @@ return {
                         name = "path",
                     },
                 }),
-                formatting = require("lsp-zero").cmp_format({
+                formatting = {
                     fields = { "abbr", "kind", "menu" },
                     format = require("lspkind").cmp_format({
                         mode = "symbol_text",
                         menu = {
                             buffer = "[Buffer]",
-                            nvim_lsp = "[LSP]",
-                            luasnip = "[LuaSnip]",
-                            nvim_lua = "[Lua]",
+                            copilot = "[AI]",
+                            fuzzy_buffer = "[Fuzzy Buffer]",
+                            fuzzy_path = "[Fuzzy Path]",
                             latex_symbols = "[Latex]",
+                            luasnip = "[LuaSnip]",
+                            nvim_lsp = "[LSP]",
+                            nvim_lua = "[Lua]",
+                            path = "[Path]",
+                            spell = "[Spell]",
                         },
                         maxwidth = 50,
                         ellipsis_char = "...",
@@ -106,7 +118,7 @@ return {
                             Copilot = "",
                         },
                     }),
-                }),
+                },
                 sorting = {
                     priority_weight = 2,
                     comparators = {
@@ -180,6 +192,12 @@ return {
                         },
                     },
                 }),
+            })
+
+            require("cmp_dictionary").switcher({
+                spelllang = {
+                    en = vim.fn.expand("~/.local/share/hunspell"),
+                },
             })
         end,
     },

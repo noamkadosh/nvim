@@ -4,9 +4,21 @@ return {
         event = "LspAttach",
         dependencies = {
             "williamboman/mason.nvim",
+            "davidmh/cspell.nvim",
         },
         config = function()
             local null_ls = require("null-ls")
+            local cspell = require("cspell")
+            local cspell_config = {
+                config = {
+                    find_json = function()
+                        return vim.fn.stdpath("data") .. "/cspell.json"
+                    end,
+                },
+                diagnostics_postprocess = function(diagnostic)
+                    diagnostic.severity = vim.diagnostic.severity["HINT"]
+                end,
+            }
 
             null_ls.setup({
                 sources = {
@@ -58,8 +70,8 @@ return {
                     null_ls.builtins.diagnostics.markdownlint,
 
                     -- Spellcheck
-                    -- null_ls.builtins.diagnostics.cspell,
-                    -- null_ls.builtins.code_actions.cspell,
+                    cspell.diagnostics.with(cspell_config),
+                    cspell.code_actions.with(cspell_config),
                 },
             })
         end,

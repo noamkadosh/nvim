@@ -77,7 +77,9 @@ return {
                     priority = 30,
                 },
                 virtual_text = false,
-                virtual_lines = true,
+                virtual_lines = {
+                    only_current_line = true,
+                },
                 underline = true,
                 severity_sort = true,
                 update_in_insert = true,

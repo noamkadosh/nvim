@@ -3,7 +3,7 @@ return {
 
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
-        lazy = true,
+        lazy = false,
         dependencies = {
             "tsakirist/telescope-lazy.nvim",
             "nvim-telescope/telescope-file-browser.nvim",
@@ -91,6 +91,7 @@ return {
                     },
                     file_browser = {
                         hidden = true,
+                        -- NOTE: lazy loading Telescope will cause the following setting not to work when opening folders in nvim
                         hijack_netrw = true,
                         path = "%:p:h",
                         cwd_to_path = true,
