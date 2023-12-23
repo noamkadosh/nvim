@@ -25,13 +25,7 @@ return {
             "RRethy/vim-illuminate",
         },
         config = function()
-            local lsp = require("lsp-zero").preset({
-                manage_nvim_cmp = {
-                    set_format = false,
-                    set_sources = "recommended",
-                },
-                configure_diagnostics = false,
-            })
+            local lsp = require("lsp-zero")
 
             lsp.set_sign_icons({
                 error = " ",
@@ -56,8 +50,6 @@ return {
                     })
                 end, { buffer = bufnr, desc = "Format" })
             end)
-
-            lsp.setup()
 
             require("noice").setup({
                 lsp = {
@@ -84,6 +76,14 @@ return {
                 severity_sort = true,
                 update_in_insert = true,
             })
+        end,
+    },
+
+    {
+        "neovim/nvim-lspconfig",
+        lazy = true,
+        config = function()
+            require("lspconfig.ui.windows").default_options.border = "rounded"
         end,
     },
 

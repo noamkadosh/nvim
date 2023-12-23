@@ -10,7 +10,7 @@ return {
                 on_highlights = function(highlights, colors)
                     local util = require("tokyonight.util")
 
-                    highlights.NoiceMini = { bg = nil }
+                    highlights.NoiceMini = { bg = colors.NONE }
                     highlights.Yanked =
                         { bg = util.darken(colors.orange, 0.15) }
 
@@ -24,7 +24,7 @@ return {
                     highlights.gradient8 = { fg = "#9D7CD8" }
 
                     highlights.BufferManagerModified =
-                        { fg = colors.red, bg = nil }
+                        { fg = colors.red, bg = colors.NONE }
 
                     highlights.CursorLineNr.fg = colors.blue
                     highlights.NormalMode = { fg = colors.blue }
@@ -36,9 +36,10 @@ return {
                     highlights.TerminalMode = { fg = colors.yellow }
                     highlights.TerminalNormalMode = { fg = colors.yellow }
 
-                    highlights.NormalFloat = { bg = nil }
+                    highlights.NormalFloat = { bg = colors.NONE }
                     highlights.FloatBorder =
-                        { bg = nil, fg = highlights.FloatBorder.fg }
+                        { bg = colors.NONE, fg = highlights.FloatBorder.fg }
+                    highlights.LspInfoBorder.bg = colors.NONE
 
                     highlights.DiagnosticVirtualTextError.bg = colors.NONE
                     highlights.DiagnosticVirtualTextWarn.bg = colors.NONE
@@ -55,11 +56,11 @@ return {
                         { bg = colors.NONE, fg = colors.hint }
 
                     highlights.TelescopeNormal = {
-                        bg = nil,
+                        bg = colors.NONE,
                         fg = highlights.TelescopeNormal.fg,
                     }
                     highlights.TelescopeBorder = {
-                        bg = nil,
+                        bg = colors.NONE,
                         fg = highlights.TelescopeBorder.fg,
                     }
                     highlights.SagaLightBulb = { fg = colors.yellow }
@@ -88,24 +89,26 @@ return {
                         { fg = util.blend(colors.purple, colors.bg, 0.5) }
 
                     highlights.TreesitterContext =
-                        { bg = nil, fg = highlights.NormalFloat.fg }
+                        { bg = colors.NONE, fg = highlights.NormalFloat.fg }
                     highlights.TreesitterContextLineNumber =
-                        { bg = nil, fg = highlights.LineNr.fg }
+                        { bg = colors.NONE, fg = highlights.LineNr.fg }
 
-                    highlights.StatusLine = { bg = nil }
+                    highlights.StatusLine = { bg = colors.NONE }
                     highlights.StatusLineSeparator = {
                         fg = highlights.Comment.fg,
-                        bg = nil,
+                        bg = colors.NONE,
                     }
 
                     highlights.HarpoonInactive =
-                        { fg = colors.comment, bg = nil }
+                        { fg = colors.comment, bg = colors.NONE }
                     highlights.HarpoonNumberInactive =
-                        { fg = colors.blue, bg = nil }
-                    highlights.HarpoonActive = { fg = colors.fg, bg = nil }
+                        { fg = colors.blue, bg = colors.NONE }
+                    highlights.HarpoonActive =
+                        { fg = colors.fg, bg = colors.NONE }
                     highlights.HarpoonNumberActive =
-                        { fg = colors.blue, bg = nil }
-                    highlights.TabLineFill = { fg = colors.fg, bg = nil }
+                        { fg = colors.blue, bg = colors.NONE }
+                    highlights.TabLineFill =
+                        { fg = colors.fg, bg = colors.NONE }
 
                     highlights.SpectreHeader = highlights.Comment
                     highlights.SpectreBody = highlights.String
