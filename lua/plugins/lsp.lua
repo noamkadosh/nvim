@@ -24,6 +24,34 @@ return {
 
             "RRethy/vim-illuminate",
         },
+        init = function()
+            vim.diagnostic.config({
+                float = {
+                    border = "rounded",
+                },
+                severity_sort = true,
+                signs = {
+                    severity = {
+                        min = vim.diagnostic.severity.HINT,
+                    },
+                    priority = 30,
+                },
+                underline = true,
+                update_in_insert = true,
+                virtual_lines = {
+                    only_current_line = true,
+                },
+                virtual_text = false,
+            })
+
+            vim.lsp.handlers["textDocument/hover"] =
+                vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+
+            vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+                vim.lsp.handlers.signature_help,
+                { border = "rounded" }
+            )
+        end,
         config = function()
             local lsp = require("lsp-zero")
 
@@ -59,22 +87,6 @@ return {
                         ["cmp.entry.get_documentation"] = true,
                     },
                 },
-            })
-
-            vim.diagnostic.config({
-                signs = {
-                    severity = {
-                        min = vim.diagnostic.severity.HINT,
-                    },
-                    priority = 30,
-                },
-                virtual_text = false,
-                virtual_lines = {
-                    only_current_line = true,
-                },
-                underline = true,
-                severity_sort = true,
-                update_in_insert = true,
             })
         end,
     },
