@@ -170,7 +170,12 @@ return {
         "jose-elias-alvarez/typescript.nvim",
         commit = "de304087e6e49981fde01af8ccc5b21e8519306f",
         lazy = true,
-        ft = { "ts", "tsx", "js", "jsx" },
+        ft = {
+            "typescript",
+            "typescriptreact",
+            "javascript",
+            "javascriptreact",
+        },
     }, -- NOTE: archived, used only for none-ls code actions
 
     {

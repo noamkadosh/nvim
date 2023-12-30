@@ -1,7 +1,7 @@
 require("manager")
 
-require("remap")
-require("set")
+require("remaps")
+require("settings")
 
 local options = require("options")
 
