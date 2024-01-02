@@ -10,7 +10,6 @@ return {
                 on_highlights = function(highlights, colors)
                     local util = require("tokyonight.util")
 
-                    highlights.NoiceMini = { bg = colors.NONE }
                     highlights.Yanked =
                         { bg = util.darken(colors.orange, 0.15) }
 
@@ -103,12 +102,10 @@ return {
                         { fg = colors.comment, bg = colors.NONE }
                     highlights.HarpoonNumberInactive =
                         { fg = colors.blue, bg = colors.NONE }
-                    highlights.HarpoonActive =
-                        { fg = colors.fg, bg = colors.NONE }
+                    highlights.HarpoonActive = { fg = colors.fg, bg = colors.NONE }
                     highlights.HarpoonNumberActive =
                         { fg = colors.blue, bg = colors.NONE }
-                    highlights.TabLineFill =
-                        { fg = colors.fg, bg = colors.NONE }
+                    highlights.TabLineFill = { fg = colors.fg, bg = colors.NONE }
 
                     highlights.SpectreHeader = highlights.Comment
                     highlights.SpectreBody = highlights.String

@@ -228,13 +228,18 @@ return {
                 },
             },
             presets = {
-                bottom_search = true,
-                command_palette = true,
-                long_message_to_split = true,
+                bottom_search = false,
+                command_palette = false,
+                long_message_to_split = false,
                 inc_rename = false,
                 lsp_doc_border = "rounded",
             },
             views = {
+                cmdline_popup = {
+                    position = {
+                        row = 10,
+                    },
+                },
                 mini = {
                     win_options = {
                         winblend = 0,

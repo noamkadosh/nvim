@@ -48,6 +48,12 @@ return {
     },
 
     {
+        "chentoast/marks.nvim",
+        event = "BufReadPre",
+        config = true,
+    },
+
+    {
         "folke/persistence.nvim",
         event = "BufReadPre",
         keys = {
