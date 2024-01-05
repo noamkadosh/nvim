@@ -114,6 +114,9 @@ return {
                     highlights.SpectreSearch = highlights.DiffDelete
                     highlights.SpectreBorder = highlights.Comment
                     highlights.SpectreReplace = highlights.DiffAdd
+
+                    highlights.WhichKeyFloat.bg = colors.NONE
+                    highlights.TroubleNormal.bg = colors.NONE
                 end,
             })
             -- load the colorscheme here
