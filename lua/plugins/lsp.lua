@@ -115,12 +115,14 @@ return {
 
             require("mason-lspconfig").setup({
                 ensure_installed = {
+                    "astro",
                     "cssls",
                     "dockerls",
                     "docker_compose_language_service",
                     "emmet_language_server",
                     "gopls",
                     "html",
+                    "htmx",
                     "jsonls",
                     "lua_ls",
                     "marksman",
