@@ -1,99 +1,40 @@
 return {
     {
-        "jackMort/ChatGPT.nvim",
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim",
-        },
+        "CopilotC-Nvim/CopilotChat.nvim",
+        event = "VeryLazy",
+        build = function()
+            vim.notify(
+            "Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim."
+            )
+        end,
         keys = {
             {
-                "<leader>cc",
-                "<cmd>ChatGPT<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT",
+                "<leader>cce",
+                "<cmd>CopilotChatExplain<cr>",
+                desc = "CopilotChat - Explain code",
             },
             {
-                "<leader>ce",
-                "<cmd>ChatGPTEditWithInstruction<CR>",
-                mode = { "v" },
-                desc = "ChatGPT - Edit with instruction",
+                "<leader>cct",
+                "<cmd>CopilotChatTests<cr>",
+                desc = "CopilotChat - Generate tests",
             },
             {
-                "<leader>cw",
-                "<cmd>ChatGPTActAs<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT - Act as",
+                "<leader>ccv",
+                ":CopilotChatVisual",
+                mode = "x",
+                desc = "CopilotChat - Open in vertical split",
             },
             {
-                "<leader>cg",
-                "<cmd>ChatGPTRun grammar_correction<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT - Grammar correction",
-            },
-            {
-                "<leader>ct",
-                "<cmd>ChatGPTRun translate<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT - Translate",
-            },
-            {
-                "<leader>ck",
-                "<cmd>ChatGPTRun keywords<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT - Keywords",
-            },
-            {
-                "<leader>ci",
-                "<cmd>ChatGPTRun docstring<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT - Docstring",
-            },
-            {
-                "<leader>cb",
-                "<cmd>ChatGPTRun add_tests<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT - Add tests",
-            },
-            {
-                "<leader>co",
-                "<cmd>ChatGPTRun optimize_code<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT - Optimize code",
-            },
-            {
-                "<leader>cs",
-                "<cmd>ChatGPTRun summarize<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT - Summarize",
-            },
-            {
-                "<leader>cf",
-                "<cmd>ChatGPTRun fix_bugs<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT - Fix bugs",
-            },
-            {
-                "<leader>cx",
-                "<cmd>ChatGPTRun explain_code<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT - Explain code",
-            },
-            {
-                "<leader>cr",
-                "<cmd>ChatGPTRun roxygen_edit<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT - Roxygen edit",
-            },
-            {
-                "<leader>cl",
-                "<cmd>ChatGPTRun code_readability_analysis<CR>",
-                mode = { "n", "v" },
-                desc = "ChatGPT - Code readability analysis",
+                "<leader>ccx",
+                ":CopilotChatInPlace<cr>",
+                mode = "x",
+                desc = "CopilotChat - Run in-place code",
             },
         },
         opts = {
-            api_key_cmd = "op read op://jr3x5psimf7mlj7mcrur4fymuu/5vj4colm4csyymp3soihvju4ii/password --no-newline",
+            show_help = "yes",
+            debug = false, -- log file will be in ~/.local/state/nvim/CopilotChat.nvim.log
+            disable_extra_info = "no",
         },
     },
 

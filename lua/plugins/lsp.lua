@@ -66,6 +66,8 @@ return {
                         filter = function(server)
                             -- Only use null-ls
                             return server.name == "null-ls"
+                                or server.name == "eslint"
+                                or server.name == "rust_analyzer"
                         end,
                     })
                 end, { buffer = bufnr, desc = "Format" })
@@ -111,7 +113,11 @@ return {
             local lsp_zero = require("lsp-zero")
             local lspconfig = require("lspconfig")
 
-            require("mason").setup()
+            require("mason").setup({
+                ui = {
+                    border = "rounded",
+                },
+            })
 
             require("mason-lspconfig").setup({
                 ensure_installed = {
@@ -119,13 +125,20 @@ return {
                     "cssls",
                     "dockerls",
                     "docker_compose_language_service",
+                    "eslint",
                     "emmet_language_server",
                     "gopls",
+                    "graphql",
                     "html",
                     "htmx",
                     "jsonls",
                     "lua_ls",
                     "marksman",
+                    "mdx_analyzer",
+                    "prismals",
+                    -- "snyk_ls",
+                    -- "stylelint_lsp",
+                    "sqlls",
                     "nil_ls",
                     "rust_analyzer",
                     "tailwindcss",
@@ -166,12 +179,13 @@ return {
             require("mason-null-ls").setup({
                 ensure_installed = {
                     "actionlint",
-                    "eslint_d",
                     "golangci_lint",
+                    "hadolint",
                     "prettierd",
-                    "rustfmt",
                     "selene",
+                    "stylelint",
                     "stylua",
+                    "sqlfluff",
                     "yamlfmt",
                     "yamllint",
                 },

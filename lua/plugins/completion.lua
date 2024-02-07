@@ -13,7 +13,6 @@ return {
             "hrsh7th/cmp-nvim-lua",
             "tzachar/cmp-fuzzy-buffer",
             "tzachar/cmp-fuzzy-path",
-            "uga-rosa/cmp-dictionary",
             "zbirenbaum/copilot.lua",
 
             -- LSP Icons
@@ -83,10 +82,6 @@ return {
                     {
                         name = "fuzzy_path",
                     },
-                    {
-                        name = "dictionary",
-                        keyword_length = 2,
-                    },
                 }, {
                     {
                         name = "buffer",
@@ -109,7 +104,6 @@ return {
                             nvim_lsp = "[LSP]",
                             nvim_lua = "[Lua]",
                             path = "[Path]",
-                            spell = "[Spell]",
                         },
                         maxwidth = 50,
                         ellipsis_char = "...",
@@ -191,12 +185,6 @@ return {
                         },
                     },
                 }),
-            })
-
-            require("cmp_dictionary").switcher({
-                spelllang = {
-                    en = vim.fn.expand("~/.local/share/hunspell"),
-                },
             })
         end,
     },

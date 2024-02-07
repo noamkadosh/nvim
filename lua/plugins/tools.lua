@@ -4,41 +4,17 @@ return {
         event = "LspAttach",
         dependencies = {
             "williamboman/mason.nvim",
-            "davidmh/cspell.nvim",
         },
         config = function()
             local null_ls = require("null-ls")
-            local cspell = require("cspell")
-            local cspell_config = {
-                config = {
-                    find_json = function()
-                        return vim.fn.stdpath("data") .. "/cspell.json"
-                    end,
-                },
-                diagnostics_postprocess = function(diagnostic)
-                    diagnostic.severity = vim.diagnostic.severity["HINT"]
-                end,
-            }
 
             null_ls.setup({
                 sources = {
                     -- Git
                     null_ls.builtins.code_actions.gitsigns,
 
-                    -- Rust
-                    null_ls.builtins.formatting.rustfmt,
-
                     -- TS, JS
-                    null_ls.builtins.code_actions.eslint_d,
-                    null_ls.builtins.diagnostics.eslint_d,
-                    require("typescript.extensions.null-ls.code-actions"),
-                    null_ls.builtins.formatting.eslint_d,
                     null_ls.builtins.formatting.prettierd,
-                    null_ls.builtins.formatting.rustywind,
-
-                    -- HTML
-                    null_ls.builtins.diagnostics.tidy,
-                    null_ls.builtins.formatting.tidy,
 
                     -- CSS
                     null_ls.builtins.diagnostics.stylelint,
@@ -56,6 +32,14 @@ return {
                     -- Docker
                     null_ls.builtins.diagnostics.hadolint,
 
+                    -- SQL
+                    null_ls.builtins.diagnostics.sqlfluff.with({
+                        extra_args = { "--dialect", "postgres" },
+                    }),
+                    null_ls.builtins.formatting.sqlfluff.with({
+                        extra_args = { "--dialect", "postgres" },
+                    }),
+
                     -- Nix
                     null_ls.builtins.code_actions.statix,
                     null_ls.builtins.diagnostics.statix,
@@ -65,38 +49,25 @@ return {
                     null_ls.builtins.diagnostics.actionlint,
                     null_ls.builtins.diagnostics.yamllint,
                     null_ls.builtins.formatting.yamlfmt,
-
-                    -- Markdown
-                    null_ls.builtins.diagnostics.markdownlint,
-
-                    -- Spellcheck
-                    cspell.diagnostics.with(cspell_config),
-                    cspell.code_actions.with(cspell_config),
                 },
             })
         end,
     },
 
     {
-        "simrat39/rust-tools.nvim",
+        "mrcjkb/rustaceanvim",
         lazy = true,
+        version = "^4",
         ft = "rust",
-        config = function()
-            local rt = require("rust-tools")
-
+        init = function()
             local path = vim.fn.glob(
                 vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/"
             ) or ""
             local codelldb_path = path .. "adapter/codelldb"
             local liblldb_path = path .. "lldb/lib/liblldb.dylib"
 
-            rt.setup({
+            vim.g.rustaceanvim = {
                 tools = {
-                    inlay_hints = {
-                        parameter_hints_prefix = " <- ",
-                        other_hints_prefix = " => ",
-                        auto = false,
-                    },
                     hover_actions = {
                         max_width = nil,
                         max_height = nil,
@@ -111,29 +82,39 @@ return {
                         },
                     },
                     on_attach = function(_, bufnr)
-                        -- Hover actions
-                        vim.keymap.set(
-                            "n",
-                            "<leader>rh",
-                            rt.hover_actions.hover_actions,
-                            { desc = "Rust hover actions", buffer = bufnr }
-                        )
-                        -- Code action groups
-                        vim.keymap.set(
-                            "n",
-                            "<leader>rc",
-                            rt.code_action_group.code_action_group,
-                            { desc = "Rust code actions", buffer = bufnr }
-                        )
+                        vim.keymap.set("n", "<leader>rh", function()
+                            vim.cmd.RustLsp({ "hover", "actions" })
+                        end, {
+                            desc = "Rust hover actions",
+                            buffer = bufnr,
+                        })
+                        vim.keymap.set("n", "<leader>rc", function()
+                            vim.cmd.RustLsp("codeAction")
+                        end, {
+                            desc = "Rust code actions",
+                            buffer = bufnr,
+                        })
+                        vim.keymap.set("n", "<leader>rd", function()
+                            vim.cmd.RustLsp("renderDiagnostic")
+                        end, {
+                            desc = "Rust diagnostics",
+                            buffer = bufnr,
+                        })
+                        vim.keymap.set("n", "<leader>re", function()
+                            vim.cmd.RustLsp("explainError")
+                        end, {
+                            desc = "Rust explain error",
+                            buffer = bufnr,
+                        })
                     end,
                 },
                 dap = {
-                    adapter = require("rust-tools.dap").get_codelldb_adapter(
+                    adapter = require("rustaceanvim.config").get_codelldb_adapter(
                         codelldb_path,
                         liblldb_path
                     ),
                 },
-            })
+            }
         end,
     },
 
@@ -165,18 +146,6 @@ return {
             },
         },
     },
-
-    {
-        "jose-elias-alvarez/typescript.nvim",
-        commit = "de304087e6e49981fde01af8ccc5b21e8519306f",
-        lazy = true,
-        ft = {
-            "typescript",
-            "typescriptreact",
-            "javascript",
-            "javascriptreact",
-        },
-    }, -- NOTE: archived, used only for none-ls code actions
 
     {
         "ray-x/go.nvim",
