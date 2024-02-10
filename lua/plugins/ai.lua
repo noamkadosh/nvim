@@ -1,10 +1,10 @@
 return {
     {
         "CopilotC-Nvim/CopilotChat.nvim",
-        event = "VeryLazy",
+        lazy = true,
         build = function()
             vim.notify(
-            "Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim."
+                "Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim."
             )
         end,
         keys = {
@@ -20,13 +20,13 @@ return {
             },
             {
                 "<leader>ccv",
-                ":CopilotChatVisual",
+                "<cmd>CopilotChatVisual<cr>",
                 mode = "x",
                 desc = "CopilotChat - Open in vertical split",
             },
             {
                 "<leader>ccx",
-                ":CopilotChatInPlace<cr>",
+                "<cmd>CopilotChatInPlace<cr>",
                 mode = "x",
                 desc = "CopilotChat - Run in-place code",
             },

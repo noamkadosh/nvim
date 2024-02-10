@@ -81,6 +81,7 @@ return {
                             enabled = true,
                         },
                     },
+                    capabilities = require("lsp-zero").get_capabilities(),
                     on_attach = function(_, bufnr)
                         vim.keymap.set("n", "<leader>rh", function()
                             vim.cmd.RustLsp({ "hover", "actions" })
