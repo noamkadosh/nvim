@@ -173,6 +173,17 @@ return {
                     end,
                     rust_analyzer = lsp_zero.noop,
                     gopls = lsp_zero.noop,
+                                        graphql = function()
+                        lspconfig.graphql.setup({
+                            filetypes = {
+                                "graphql",
+                                "typescript",
+                                "typescriptreact",
+                                "javascript",
+                                "javascriptreact",
+                            },
+                        })
+                    end,
                 },
             })
 
