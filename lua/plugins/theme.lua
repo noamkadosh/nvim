@@ -58,10 +58,12 @@ return {
                         bg = colors.NONE,
                         fg = highlights.TelescopeNormal.fg,
                     }
+                    highlights.TelescopePromptTitle = highlights.TelescopeTitle
                     highlights.TelescopeBorder = {
                         bg = colors.NONE,
                         fg = highlights.TelescopeBorder.fg,
                     }
+                    highlights.TelescopePromptBorder = highlights.TelescopeBorder
                     highlights.SagaLightBulb = { fg = colors.yellow }
 
                     highlights.Rainbow1 = { fg = colors.red }
