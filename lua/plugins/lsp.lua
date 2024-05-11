@@ -35,6 +35,12 @@ return {
                         min = vim.diagnostic.severity.HINT,
                     },
                     priority = 30,
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = " ",
+                        [vim.diagnostic.severity.WARN] = " ",
+                        [vim.diagnostic.severity.HINT] = " ",
+                        [vim.diagnostic.severity.INFO] = " ",
+                    },
                 },
                 underline = true,
                 update_in_insert = true,
@@ -46,13 +52,6 @@ return {
         end,
         config = function()
             local lsp = require("lsp-zero")
-
-            lsp.set_sign_icons({
-                error = " ",
-                warn = " ",
-                hint = " ",
-                info = " ",
-            })
 
             lsp.on_attach(function(client, bufnr)
                 require("lsp-inlayhints").on_attach(client, bufnr)
@@ -173,7 +172,7 @@ return {
                     end,
                     rust_analyzer = lsp_zero.noop,
                     gopls = lsp_zero.noop,
-                                        graphql = function()
+                    graphql = function()
                         lspconfig.graphql.setup({
                             filetypes = {
                                 "graphql",
