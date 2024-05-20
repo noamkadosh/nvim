@@ -346,12 +346,6 @@ return {
     },
 
     {
-        "nvim-tree/nvim-web-devicons",
-        lazy = true,
-        config = true,
-    },
-
-    {
         "tzachar/highlight-undo.nvim",
         event = { "BufReadPost", "BufNewFile" },
         opts = {

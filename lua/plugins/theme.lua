@@ -63,7 +63,8 @@ return {
                         bg = colors.NONE,
                         fg = highlights.TelescopeBorder.fg,
                     }
-                    highlights.TelescopePromptBorder = highlights.TelescopeBorder
+                    highlights.TelescopePromptBorder =
+                        highlights.TelescopeBorder
                     highlights.SagaLightBulb = { fg = colors.yellow }
 
                     highlights.Rainbow1 = { fg = colors.red }
@@ -104,10 +105,12 @@ return {
                         { fg = colors.comment, bg = colors.NONE }
                     highlights.HarpoonNumberInactive =
                         { fg = colors.blue, bg = colors.NONE }
-                    highlights.HarpoonActive = { fg = colors.fg, bg = colors.NONE }
+                    highlights.HarpoonActive =
+                        { fg = colors.fg, bg = colors.NONE }
                     highlights.HarpoonNumberActive =
                         { fg = colors.blue, bg = colors.NONE }
-                    highlights.TabLineFill = { fg = colors.fg, bg = colors.NONE }
+                    highlights.TabLineFill =
+                        { fg = colors.fg, bg = colors.NONE }
 
                     highlights.SpectreHeader = highlights.Comment
                     highlights.SpectreBody = highlights.String
@@ -123,6 +126,25 @@ return {
             })
             -- load the colorscheme here
             vim.cmd.colorscheme("tokyonight-night")
+        end,
+    },
+
+    {
+        "nvim-tree/nvim-web-devicons",
+        lazy = true,
+        dependencies = {
+            "rachartier/tiny-devicons-auto-colors.nvim",
+        },
+        config = true,
+    },
+
+    {
+        "rachartier/tiny-devicons-auto-colors.nvim",
+        lazy = true,
+        config = function()
+            require("tiny-devicons-auto-colors").setup({
+                colors = require("tokyonight.colors").setup(),
+            })
         end,
     },
 
