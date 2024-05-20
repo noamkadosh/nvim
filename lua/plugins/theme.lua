@@ -39,6 +39,7 @@ return {
                     highlights.FloatBorder =
                         { bg = colors.NONE, fg = highlights.FloatBorder.fg }
                     highlights.LspInfoBorder.bg = colors.NONE
+                    highlights.LspInlayHint.bg = colors.NONE
 
                     highlights.DiagnosticVirtualTextError.bg = colors.NONE
                     highlights.DiagnosticVirtualTextWarn.bg = colors.NONE

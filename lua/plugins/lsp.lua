@@ -54,8 +54,6 @@ return {
             local lsp = require("lsp-zero")
 
             lsp.on_attach(function(client, bufnr)
-                require("lsp-inlayhints").on_attach(client, bufnr)
-
                 lsp.default_keymaps({ buffer = bufnr })
 
                 vim.keymap.set({ "n", "x" }, "<leader>f", function()
@@ -71,6 +69,8 @@ return {
                     })
                 end, { buffer = bufnr, desc = "Format" })
             end)
+
+            vim.lsp.inlay_hint.enable()
 
             require("noice").setup({
                 lsp = {
@@ -288,41 +288,6 @@ return {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         lazy = true,
         config = true,
-    },
-
-    {
-        "lvimuser/lsp-inlayhints.nvim",
-        branch = "anticonceal",
-        event = "LspAttach",
-        config = function()
-            local inlayhints = require("lsp-inlayhints")
-
-            inlayhints.setup({
-                inlay_hints = {
-                    parameter_hints = {
-                        prefix = " <- ",
-                    },
-                    type_hints = {
-                        prefix = " => ",
-                    },
-                    highlight = "Comment",
-                },
-            })
-
-            vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-            vim.api.nvim_create_autocmd("LspAttach", {
-                group = "LspAttach_inlayhints",
-                callback = function(args)
-                    if not (args.data and args.data.client_id) then
-                        return
-                    end
-
-                    local bufnr = args.buf
-                    local client = vim.lsp.get_client_by_id(args.data.client_id)
-                    inlayhints.on_attach(client, bufnr)
-                end,
-            })
-        end,
     },
 
     {
