@@ -6,7 +6,7 @@ return {
             "nvim-treesitter/nvim-treesitter-context",
             "nvim-treesitter/playground",
             "windwp/nvim-ts-autotag",
-            "JoosepAlviste/nvim-ts-context-commentstring",
+            "folke/ts-comments.nvim",
         },
         build = function()
             local ts_update =
@@ -58,7 +58,7 @@ return {
     },
 
     {
-        "JoosepAlviste/nvim-ts-context-commentstring",
+        "folke/ts-comments.nvim",
         lazy = true,
         config = true,
     },
