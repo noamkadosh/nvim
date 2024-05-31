@@ -1,41 +1,34 @@
 return {
+
     {
         "CopilotC-Nvim/CopilotChat.nvim",
         lazy = true,
-        build = function()
-            vim.notify(
-                "Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim."
-            )
-        end,
-        keys = {
-            {
-                "<leader>cce",
-                "<cmd>CopilotChatExplain<cr>",
-                desc = "CopilotChat - Explain code",
-            },
-            {
-                "<leader>cct",
-                "<cmd>CopilotChatTests<cr>",
-                desc = "CopilotChat - Generate tests",
-            },
-            {
-                "<leader>ccv",
-                "<cmd>CopilotChatVisual<cr>",
-                mode = "x",
-                desc = "CopilotChat - Open in vertical split",
-            },
-            {
-                "<leader>ccx",
-                "<cmd>CopilotChatInPlace<cr>",
-                mode = "x",
-                desc = "CopilotChat - Run in-place code",
-            },
+        branch = "canary",
+        dependencies = {
+            "zbirenbaum/copilot.lua",
+            "nvim-lua/plenary.nvim",
         },
-        opts = {
-            show_help = "yes",
-            debug = false, -- log file will be in ~/.local/state/nvim/CopilotChat.nvim.log
-            disable_extra_info = "no",
+        cmd = {
+            "CopilotChat",
+            "CopilotChatOpen",
+            "CopilotChatClose",
+            "CopilotChatToggle",
+            "CopilotChatStop",
+            "CopilotChatReset",
+            "CopilotChatSave",
+            "CopilotChatLoad",
+            "CopilotChatDebugInfo",
+            "CopilotChatExplain",
+            "CopilotChatReview",
+            "CopilotChatFix",
+            "CopilotChatOptimize",
+            "CopilotChatDocs",
+            "CopilotChatTests",
+            "CopilotChatFixDiagnostic",
+            "CopilotChatCommit",
+            "CopilotChatCommitStaged",
         },
+        config = true,
     },
 
     {
