@@ -6,7 +6,42 @@ return {
             vim.o.timeout = true
             vim.o.timeoutlen = 300
         end,
-        config = true,
+        config = function()
+            local which_key = require("which-key")
+
+            which_key.setup()
+
+            which_key.register({
+                b = {
+
+                    name = "Buffer",
+                },
+                c = {
+                    name = "Code actions",
+                },
+                d = {
+                    name = "Debug",
+                },
+                g = {
+                    name = "Git",
+                },
+                n = {
+                    name = "Notifications",
+                },
+                o = {
+                    name = "Session",
+                },
+                p = {
+                    name = "File browser",
+                },
+                s = {
+                    name = "Search",
+                },
+                t = {
+                    name = "Diagnostics",
+                },
+            }, { prefix = "<leader>" })
+        end,
     },
 
     {

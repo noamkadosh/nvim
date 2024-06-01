@@ -268,6 +268,9 @@ return {
             },
         },
         opts = {
+            code_action = {
+                extend_gitsigns = true,
+            },
             lightbulb = {
                 virtual_text = false,
             },
