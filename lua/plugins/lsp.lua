@@ -5,7 +5,7 @@ return {
         event = { "BufReadPre", "BufNewFile", "InsertEnter", "CmdlineEnter" },
         dependencies = {
             "folke/neoconf.nvim",
-            "folke/neodev.nvim",
+            "folke/lazydev.nvim",
 
             "williamboman/mason.nvim",
             "neovim/nvim-lspconfig",
@@ -301,11 +301,14 @@ return {
     },
 
     {
-        "folke/neodev.nvim",
-        lazy = true,
+        "folke/lazydev.nvim",
+        ft = "lua",
         opts = {
-            experimental = { pathStrict = true },
-            library = { plugins = { "nvim-dap-ui" }, types = true },
+            library = {
+                vim.fn.stdpath("data") .. "/lazy/luvit-meta/library",
+            },
         },
     },
+
+    { "Bilal2453/luvit-meta", lazy = true },
 }
