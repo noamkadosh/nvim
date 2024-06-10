@@ -2,6 +2,11 @@ return {
     {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
+        dependencies = {
+            { "dokwork/lualine-ex" },
+            "nvim-lua/plenary.nvim",
+            "kyazdani42/nvim-web-devicons",
+        },
         config = function()
             local noice = require("noice")
             local colors = require("tokyonight.colors").setup()
@@ -14,12 +19,12 @@ return {
                 options = {
                     theme = theme,
                     component_separators = { left = "", right = "" },
-                    section_separators = { left = " ", right = " " },
+                    section_separators = { left = "", right = " " },
                     globalstatus = true,
                 },
                 sections = {
                     lualine_b = {
-                        "branch",
+                        "ex.git.branch",
                         "diff",
                     },
                     lualine_c = {
@@ -32,11 +37,13 @@ return {
                                 info = " ",
                             },
                             update_in_insert = true,
-                            separator = "%#StatusLineSeparator#·%#StatusLine#",
                         },
                         {
                             require("helpers.lualine_lsp").map_lsp_to_info,
-                            separator = "    ",
+                        },
+                        {
+                            "ex.lsp.none_ls",
+                            source_names_separator = "·",
                         },
                         {
                             noice.api.status.search.get,
@@ -47,7 +54,6 @@ return {
                     lualine_x = {
                         {
                             "encoding",
-                            separator = "%#StatusLineSeparator#·%#StatusLine#",
                             padding = 1,
                             cond = function()
                                 return vim.api.nvim_get_current_buf() > 1
@@ -55,7 +61,6 @@ return {
                         },
                         {
                             "fileformat",
-                            separator = "%#StatusLineSeparator#·%#StatusLine#",
                             cond = function()
                                 return vim.api.nvim_get_current_buf() > 1
                             end,
@@ -77,18 +82,15 @@ return {
                     },
                     lualine_z = {
                         {
-                            "progress",
-                            separator = "·",
+                            "ex.progress",
                             padding = { right = 0, left = 1 },
                             cond = function()
                                 return vim.api.nvim_get_current_buf() > 1
                             end,
                         },
                         {
-                            "location",
-                            fmt = function(str)
-                                return str:match("^%s*(.-)%s*$")
-                            end,
+                            "ex.location",
+                            pattern = "%2C:%-3L/%T",
                             padding = { left = 0, right = 1 },
                             cond = function()
                                 return vim.api.nvim_get_current_buf() > 1
@@ -108,6 +110,9 @@ return {
                         },
                         {
                             "filename",
+                            shorten = {
+                                length = 3,
+                            },
                             file_status = true,
                             path = 1,
                             cond = function()

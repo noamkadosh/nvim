@@ -40,7 +40,7 @@ function M.map_lsp_to_info()
 
             table.insert(
                 status,
-                "%#ConstantStatus#󰦬 %#StatusLine#" .. client.name
+                "%#ConstantStatus#󱌣 %#StatusLine#" .. client.name
             )
         elseif
             client.config.name == "tsserver"
@@ -50,7 +50,7 @@ function M.map_lsp_to_info()
         then
             local icon = web_devicons.get_icon("ts") .. " "
 
-            local fg_hl_id = vim.api.nvim_get_hl_id_by_name("DevIconTs")
+            local fg_hl_id = vim.api.nvim_get_hl_id_by_name("DevIconTypeScript")
             local fg = vim.fn.synIDattr(fg_hl_id, "fg")
             vim.api.nvim_set_hl(0, "DevIconTsStatus", { fg = fg, bg = bg })
 
