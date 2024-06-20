@@ -136,7 +136,7 @@ return {
                     "mdx_analyzer",
                     "prismals",
                     -- "snyk_ls",
-                    -- "stylelint_lsp",
+                    "stylelint_lsp",
                     "sqlls",
                     "nil_ls",
                     "rust_analyzer",
@@ -170,6 +170,22 @@ return {
                             ),
                         })
                     end,
+                    stylelint_lsp = function()
+                        lspconfig.stylelint_lsp.setup({
+                            root_dir = lspconfig.util.root_pattern(
+                                "stylelint.config.js",
+                                ".stylelintrc.js",
+                                "stylelint.config.mjs",
+                                ".stylelintrc.mjs",
+                                "stylelint.config.cjs",
+                                ".stylelintrc.cjs",
+                                ".stylelintrc",
+                                ".stylelintrc.json",
+                                ".stylelintrc.yml",
+                                ".stylelintrc.yaml"
+                            ),
+                        })
+                    end,
                     rust_analyzer = lsp_zero.noop,
                     gopls = lsp_zero.noop,
                     graphql = function()
@@ -193,7 +209,7 @@ return {
                     "hadolint",
                     "prettierd",
                     "selene",
-                    "stylelint",
+                    -- "stylelint",
                     "stylua",
                     "sqlfluff",
                     "yamlfmt",
