@@ -30,7 +30,7 @@ function M.map_lsp_to_info()
         local client_name = client.name
         local icon, highlight
 
-        if client.config.name == "copilot" then
+        if client.name == "copilot" then
             local fg_hl_id =
                 vim.api.nvim_get_hl_id_by_name("CmpItemKindCopilot")
             local fg = vim.fn.synIDattr(fg_hl_id, "fg")
@@ -42,17 +42,17 @@ function M.map_lsp_to_info()
 
             icon = ""
             highlight = "CmpItemKindCopilotStatus"
-        elseif client.config.name == "null-ls" then
+        elseif client.name == "null-ls" then
             local fg = colors.orange
             vim.api.nvim_set_hl(0, "ConstantStatus", { fg = fg, bg = bg })
 
             icon = "󱌣"
             highlight = "ConstantStatus"
-        elseif client.config.name == "eslint" then
+        elseif client.name == "eslint" then
             icon, highlight = web_devicons.get_icon(".eslintrc")
-        elseif client.config.name == "tailwindcss" then
+        elseif client.name == "tailwindcss" then
             icon, highlight = web_devicons.get_icon("tailwind.config.ts")
-        elseif client.config.name == "stylelint_lsp" then
+        elseif client.name == "stylelint_lsp" then
             ---@diagnostic disable-next-line: undefined-field
             local fg = colors.white
             vim.api.nvim_set_hl(0, "rainbowcol4Status", { fg = fg, bg = bg })
@@ -60,13 +60,13 @@ function M.map_lsp_to_info()
             icon = ""
             highlight = "rainbowcol4Status"
         ---@diagnostic disable-next-line: undefined-field
-        elseif client.config.name == "emmet_language_server" then
+        elseif client.name == "emmet_language_server" then
             client_name = "emmet"
             icon, highlight = web_devicons.get_icon("html")
         ---@diagnostic disable-next-line: undefined-field
         elseif
-            client.config.name == "tsserver"
-            or client.config.name == "typescript-tools"
+            client.name == "tsserver"
+            or client.name == "typescript-tools"
         then
             client_name = "tsserver"
             icon, highlight = web_devicons.get_icon(filetypesMap[filetype])
