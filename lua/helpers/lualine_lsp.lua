@@ -1,6 +1,13 @@
 local M = {}
+local utils = require("helpers.utils")
 
--- This function is ugly but it works don't waste your time here.
+local filetypesMap = {
+    typescript = "ts",
+    typescriptreact = "ts",
+    javascript = "js",
+    javascriptreact = "js",
+}
+
 function M.map_lsp_to_info()
     local clients = vim.lsp.get_clients({ bufnr = 0 })
 
@@ -14,11 +21,15 @@ function M.map_lsp_to_info()
         return ""
     end
 
+    local filetype = vim.bo.filetype
     local status = {}
-
+    local colors = require("tokyonight.colors").setup()
     local bg = nil
 
     for _, client in pairs(clients) do
+        local client_name = client.name
+        local icon, highlight
+
         if client.config.name == "copilot" then
             local fg_hl_id =
                 vim.api.nvim_get_hl_id_by_name("CmpItemKindCopilot")
@@ -29,145 +40,48 @@ function M.map_lsp_to_info()
                 { fg = fg, bg = bg }
             )
 
-            table.insert(
-                status,
-                "%#CmpItemKindCopilotStatus# %#StatusLine#" .. client.name
-            )
+            icon = ""
+            highlight = "CmpItemKindCopilotStatus"
         elseif client.config.name == "null-ls" then
-            local fg_hl_id = vim.api.nvim_get_hl_id_by_name("Constant")
-            local fg = vim.fn.synIDattr(fg_hl_id, "fg")
+            local fg = colors.orange
             vim.api.nvim_set_hl(0, "ConstantStatus", { fg = fg, bg = bg })
 
-            table.insert(
-                status,
-                "%#ConstantStatus#󱌣 %#StatusLine#" .. client.name
-            )
+            icon = "󱌣"
+            highlight = "ConstantStatus"
+        elseif client.config.name == "eslint" then
+            icon, highlight = web_devicons.get_icon(".eslintrc")
+        elseif client.config.name == "tailwindcss" then
+            icon, highlight = web_devicons.get_icon("tailwind.config.ts")
+        elseif client.config.name == "stylelint_lsp" then
+            ---@diagnostic disable-next-line: undefined-field
+            local fg = colors.white
+            vim.api.nvim_set_hl(0, "rainbowcol4Status", { fg = fg, bg = bg })
+
+            icon = ""
+            highlight = "rainbowcol4Status"
+        ---@diagnostic disable-next-line: undefined-field
+        elseif client.config.name == "emmet_language_server" then
+            client_name = "emmet"
+            icon, highlight = web_devicons.get_icon("html")
+        ---@diagnostic disable-next-line: undefined-field
         elseif
             client.config.name == "tsserver"
             or client.config.name == "typescript-tools"
-            ---@diagnostic disable-next-line: undefined-field
-            or client.config.filetypes[1] == "typescript"
         then
-            local icon = web_devicons.get_icon("ts") .. " "
-
-            local fg_hl_id = vim.api.nvim_get_hl_id_by_name("DevIconTypeScript")
-            local fg = vim.fn.synIDattr(fg_hl_id, "fg")
-            vim.api.nvim_set_hl(0, "DevIconTsStatus", { fg = fg, bg = bg })
-
-            table.insert(
-                status,
-                "%#DevIconTsStatus#" .. icon .. "%#StatusLine#" .. "tsserver" -- client.name
-            )
-        elseif client.config.name == "eslint" then
-            local fg_hl_id = vim.api.nvim_get_hl_id_by_name("TSRainbowViolet")
-            local fg = vim.fn.synIDattr(fg_hl_id, "fg")
-            vim.api.nvim_set_hl(
-                0,
-                "TSRainbowVioletStatus",
-                { fg = fg, bg = bg }
-            )
-
-            table.insert(
-                status,
-                "%#TSRainbowVioletStatus#󰱺 %#StatusLine#" .. client.name
-            )
-        elseif client.config.name == "tailwindcss" then
-            local fg_hl_id = vim.api.nvim_get_hl_id_by_name("rainbowcol4")
-            local fg = vim.fn.synIDattr(fg_hl_id, "fg")
-            vim.api.nvim_set_hl(0, "rainbowcol4Status", { fg = fg, bg = bg })
-
-            table.insert(
-                status,
-                "%#rainbowcol4Status#󱏿 %#StatusLine#" .. client.name
-            )
-        elseif client.config.name == "stylelint_lsp" then
-            local fg_hl_id = vim.api.nvim_get_hl_id_by_name("rainbowcol4")
-            local fg = vim.fn.synIDattr(fg_hl_id, "fg")
-            vim.api.nvim_set_hl(0, "rainbowcol4Status", { fg = fg, bg = bg })
-
-            table.insert(
-                status,
-                "%#rainbowcol4Status# %#StatusLine#" .. client.name
-            )
+            client_name = "tsserver"
+            icon, highlight = web_devicons.get_icon(filetypesMap[filetype])
         ---@diagnostic disable-next-line: undefined-field
-        elseif client.config.filetypes == nil then
-            table.insert(status, client.name)
-        ---@diagnostic disable-next-line: undefined-field
-        elseif client.config.filetypes[1] == "rust" then
-            local icon = web_devicons.get_icon("rs") .. " "
-
-            local fg_hl_id = vim.api.nvim_get_hl_id_by_name("DevIconRs")
-            local fg = vim.fn.synIDattr(fg_hl_id, "fg")
-            vim.api.nvim_set_hl(0, "DevIconRsStatus", { fg = fg, bg = bg })
-
-            table.insert(
-                status,
-                "%#DevIconRsStatus#" .. icon .. "%#StatusLine#" .. client.name
-            )
-        ---@diagnostic disable-next-line: undefined-field
-        elseif client.config.filetypes[1] == "typescriptreact" then
-            local icon = web_devicons.get_icon("tsx") .. " "
-
-            local fg_hl_id = vim.api.nvim_get_hl_id_by_name("DevIconTsx")
-            local fg = vim.fn.synIDattr(fg_hl_id, "fg")
-            vim.api.nvim_set_hl(0, "DevIconTsxStatus", { fg = fg, bg = bg })
-
-            table.insert(
-                status,
-                "%#DevIconTsxStatus#" .. icon .. "%#StatusLine#" .. client.name
-            )
-        ---@diagnostic disable-next-line: undefined-field
-        elseif client.config.filetypes[1] == "javascript" then
-            local icon = web_devicons.get_icon("js") .. " "
-
-            local fg_hl_id = vim.api.nvim_get_hl_id_by_name("DevIconJs")
-            local fg = vim.fn.synIDattr(fg_hl_id, "fg")
-            vim.api.nvim_set_hl(0, "DevIconJsStatus", { fg = fg, bg = bg })
-
-            table.insert(
-                status,
-                "%#DevIconJsStatus#" .. icon .. "%#StatusLine#" .. client.name
-            )
-        ---@diagnostic disable-next-line: undefined-field
-        elseif client.config.filetypes[1] == "javascriptreact" then
-            local icon = web_devicons.get_icon("jsx") .. " "
-
-            local fg_hl_id = vim.api.nvim_get_hl_id_by_name("DevIconJsx")
-            local fg = vim.fn.synIDattr(fg_hl_id, "fg")
-            vim.api.nvim_set_hl(0, "DevIconJsxStatus", { fg = fg, bg = bg })
-
-            table.insert(
-                status,
-                "%#DevIconJsxStatus#" .. icon .. "%#StatusLine#" .. client.name
-            )
+        elseif utils.tableContains(client.config.filetypes, filetype) then
+            icon, highlight = web_devicons.get_icon(filetype)
         else
             ---@diagnostic disable-next-line: undefined-field
-            local filetype = client.config.filetypes[1]
-            local client_name = client.name
-            local icon
-            local fg_hl_name = ("DevIcon" .. filetype:gsub("^%l", string.upper))
-                or ""
-            local fg_hl_id = vim.api.nvim_get_hl_id_by_name(fg_hl_name)
-            local fg = vim.fn.synIDattr(fg_hl_id, "fg")
-            vim.api.nvim_set_hl(0, fg_hl_name .. "Status", { fg = fg, bg = bg })
-
-            if client.config.name == "emmet_language_server" then
-                client_name = "emmet"
-                icon = web_devicons.get_icon("html") .. " "
-            else
-                icon = web_devicons.get_icon(filetype) .. " "
-            end
-
-            table.insert(
-                status,
-                "%#"
-                    .. fg_hl_name
-                    .. "Status#"
-                    .. icon
-                    .. "%#StatusLine#"
-                    .. client_name
-            )
+            icon, highlight = web_devicons.get_icon(client.config.filetypes[1])
         end
+
+        table.insert(
+            status,
+            "%#" .. highlight .. "#" .. icon .. " %#StatusLine#" .. client_name
+        )
     end
 
     return table.concat(status, "%#StatusLineSeparator# · %#StatusLine#")

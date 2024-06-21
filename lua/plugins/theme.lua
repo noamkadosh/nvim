@@ -123,6 +123,11 @@ return {
 
                     highlights.WhichKeyFloat.bg = colors.NONE
                     highlights.TroubleNormal.bg = colors.NONE
+
+                    highlights.CmpItemKindCopilot = {
+                        fg = "#4cb4a5",
+                        bg = colors.NONE,
+                    }
                 end,
             })
             -- load the colorscheme here
