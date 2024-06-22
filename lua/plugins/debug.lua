@@ -323,11 +323,15 @@ return {
             dap.adapters.nlua = function(callback, conf)
                 local adapter = {
                     type = "server",
+                    ---@diagnostic disable-next-line: undefined-field
                     host = conf.host or "127.0.0.1",
+                    ---@diagnostic disable-next-line: undefined-field
                     port = conf.port or 8086,
                 }
+                ---@diagnostic disable-next-line: undefined-field
                 if conf.start_neovim then
                     local dap_run = dap.run
+                    ---@diagnostic disable-next-line: duplicate-set-field
                     dap.run = function(c)
                         adapter.port = c.port
                         adapter.host = c.host

@@ -204,6 +204,7 @@ return {
                     -- to change default lhs of key mapping change the key
                     ["<CR>"] = {
                         -- assigning nil to method exits from multi cursor mode
+                        ---@diagnostic disable-next-line: undefined-field
                         method = I.Cr_method,
                         -- you can pass :map-arguments here
                         opts = { desc = "New line" },

@@ -30,7 +30,7 @@ return {
                         require("luasnip").lsp_expand(args.body)
                     end,
                 },
-                preselect = "none",
+                preselect = "None",
                 completion = {
                     completeopt = "menu,menuone,noinsert,noselect",
                 },
@@ -111,6 +111,7 @@ return {
                             Copilot = "",
                         },
                     }),
+                    expandable_indicator = true,
                 },
                 sorting = {
                     priority_weight = 2,

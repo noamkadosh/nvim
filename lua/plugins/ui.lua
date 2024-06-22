@@ -46,7 +46,9 @@ return {
                             source_names_separator = "·",
                         },
                         {
+                            ---@diagnostic disable-next-line: undefined-field
                             noice.api.status.search.get,
+                            ---@diagnostic disable-next-line: undefined-field
                             cond = noice.api.status.search.has,
                             color = { fg = colors.orange },
                         },
@@ -75,7 +77,9 @@ return {
                     },
                     lualine_y = {
                         {
+                            ---@diagnostic disable-next-line: undefined-field
                             noice.api.status.command.get,
+                            ---@diagnostic disable-next-line: undefined-field
                             cond = noice.api.status.command.has,
                             padding = { right = 0, left = 1 },
                         },

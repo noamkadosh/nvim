@@ -9,6 +9,8 @@ return {
                 lualine_bold = true,
                 on_highlights = function(highlights, colors)
                     local util = require("tokyonight.util")
+                    ---@diagnostic disable-next-line: undefined-field
+                    local NONE = colors.NONE
 
                     highlights.Yanked =
                         { bg = util.darken(colors.orange, 0.15) }
@@ -23,7 +25,7 @@ return {
                     highlights.gradient8 = { fg = "#9D7CD8" }
 
                     highlights.BufferManagerModified =
-                        { fg = colors.red, bg = colors.NONE }
+                        { fg = colors.red, bg = NONE }
 
                     highlights.CursorLineNr.fg = colors.blue
                     highlights.NormalMode = { fg = colors.blue }
@@ -35,33 +37,33 @@ return {
                     highlights.TerminalMode = { fg = colors.yellow }
                     highlights.TerminalNormalMode = { fg = colors.yellow }
 
-                    highlights.NormalFloat = { bg = colors.NONE }
+                    highlights.NormalFloat = { bg = NONE }
                     highlights.FloatBorder =
-                        { bg = colors.NONE, fg = highlights.FloatBorder.fg }
-                    highlights.LspInfoBorder.bg = colors.NONE
-                    highlights.LspInlayHint.bg = colors.NONE
+                        { bg = NONE, fg = highlights.FloatBorder.fg }
+                    highlights.LspInfoBorder.bg = NONE
+                    highlights.LspInlayHint.bg = NONE
 
-                    highlights.DiagnosticVirtualTextError.bg = colors.NONE
-                    highlights.DiagnosticVirtualTextWarn.bg = colors.NONE
-                    highlights.DiagnosticVirtualTextInfo.bg = colors.NONE
-                    highlights.DiagnosticVirtualTextHint.bg = colors.NONE
+                    highlights.DiagnosticVirtualTextError.bg = NONE
+                    highlights.DiagnosticVirtualTextWarn.bg = NONE
+                    highlights.DiagnosticVirtualTextInfo.bg = NONE
+                    highlights.DiagnosticVirtualTextHint.bg = NONE
 
                     highlights.DiagnosticFloatingError =
-                        { bg = colors.NONE, fg = colors.error }
+                        { bg = NONE, fg = colors.error }
                     highlights.DiagnosticFloatingWarn =
-                        { bg = colors.NONE, fg = colors.warning }
+                        { bg = NONE, fg = colors.warning }
                     highlights.DiagnosticFloatingInfo =
-                        { bg = colors.NONE, fg = colors.info }
+                        { bg = NONE, fg = colors.info }
                     highlights.DiagnosticFloatingHint =
-                        { bg = colors.NONE, fg = colors.hint }
+                        { bg = NONE, fg = colors.hint }
 
                     highlights.TelescopeNormal = {
-                        bg = colors.NONE,
+                        bg = NONE,
                         fg = highlights.TelescopeNormal.fg,
                     }
                     highlights.TelescopePromptTitle = highlights.TelescopeTitle
                     highlights.TelescopeBorder = {
-                        bg = colors.NONE,
+                        bg = NONE,
                         fg = highlights.TelescopeBorder.fg,
                     }
                     highlights.TelescopePromptBorder =
@@ -92,26 +94,24 @@ return {
                         { fg = util.blend(colors.purple, colors.bg, 0.5) }
 
                     highlights.TreesitterContext =
-                        { bg = colors.NONE, fg = highlights.NormalFloat.fg }
+                        { bg = NONE, fg = highlights.NormalFloat.fg }
                     highlights.TreesitterContextLineNumber =
-                        { bg = colors.NONE, fg = highlights.LineNr.fg }
+                        { bg = NONE, fg = highlights.LineNr.fg }
 
-                    highlights.StatusLine = { bg = colors.NONE }
+                    highlights.StatusLine = { bg = NONE }
                     highlights.StatusLineSeparator = {
                         fg = highlights.Comment.fg,
-                        bg = colors.NONE,
+                        bg = NONE,
                     }
 
                     highlights.HarpoonInactive =
-                        { fg = colors.comment, bg = colors.NONE }
+                        { fg = colors.comment, bg = NONE }
                     highlights.HarpoonNumberInactive =
-                        { fg = colors.blue, bg = colors.NONE }
-                    highlights.HarpoonActive =
-                        { fg = colors.fg, bg = colors.NONE }
+                        { fg = colors.blue, bg = NONE }
+                    highlights.HarpoonActive = { fg = colors.fg, bg = NONE }
                     highlights.HarpoonNumberActive =
-                        { fg = colors.blue, bg = colors.NONE }
-                    highlights.TabLineFill =
-                        { fg = colors.fg, bg = colors.NONE }
+                        { fg = colors.blue, bg = NONE }
+                    highlights.TabLineFill = { fg = colors.fg, bg = NONE }
 
                     highlights.SpectreHeader = highlights.Comment
                     highlights.SpectreBody = highlights.String
@@ -121,12 +121,12 @@ return {
                     highlights.SpectreBorder = highlights.Comment
                     highlights.SpectreReplace = highlights.DiffAdd
 
-                    highlights.WhichKeyFloat.bg = colors.NONE
-                    highlights.TroubleNormal.bg = colors.NONE
+                    highlights.WhichKeyFloat.bg = NONE
+                    highlights.TroubleNormal.bg = NONE
 
                     highlights.CmpItemKindCopilot = {
                         fg = "#4cb4a5",
-                        bg = colors.NONE,
+                        bg = NONE,
                     }
                 end,
             })

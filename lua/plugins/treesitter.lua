@@ -33,6 +33,8 @@ return {
                     "typescript",
                     "vimdoc",
                 },
+                ignore_install = {},
+                modules = {},
                 -- Install parsers synchronously (only applied to `ensure_installed`)
                 sync_install = false,
                 -- Automatically install missing parsers when entering buffer

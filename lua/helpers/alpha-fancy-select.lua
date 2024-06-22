@@ -25,7 +25,7 @@ local pairs = {
 ---@field hl_mark string Current item mark highlight group name
 ---@field last_selected integer Last selected row index
 
----@type Fancy
+---@class Fancy
 local M = {
     ns = 0,
     buf = 0,
@@ -41,11 +41,14 @@ function M:update_hl()
     local bg
 
     if M.preset == "square" then
+        ---@diagnostic disable-next-line: undefined-field
         bg = visual.guibg or visual.bg
     end
 
     local hl_mark = {
+        ---@diagnostic disable-next-line: undefined-field
         fg = visual.reverse and (visual.guifg or visual.fg)
+            ---@diagnostic disable-next-line: undefined-field
             or (visual.guibg or visual.bg),
         bg = bg,
     }
