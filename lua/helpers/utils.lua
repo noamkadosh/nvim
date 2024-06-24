@@ -12,9 +12,10 @@ end
 
 function M.getTableKeys(table)
     local keys = {}
+    local index = 0
 
     for key, _ in pairs(table) do
-        table.insert(keys, key)
+        keys[index] = key
     end
 
     return keys
