@@ -15,6 +15,7 @@ function M.getTableKeys(table)
     local index = 0
 
     for key, _ in pairs(table) do
+        index = index + 1
         keys[index] = key
     end
 
