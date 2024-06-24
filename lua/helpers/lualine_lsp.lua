@@ -70,8 +70,14 @@ function M.map_lsp_to_info()
         then
             client_name = "tsserver"
             icon, highlight = web_devicons.get_icon(filetypesMap[filetype])
-        ---@diagnostic disable-next-line: undefined-field
-        elseif utils.tableContains(client.config.filetypes, filetype) then
+        elseif
+            ---@diagnostic disable-next-line: undefined-field
+            utils.tableContains(client.config.filetypes, filetype)
+            and not utils.tableContains(
+                utils.getTableKeys(filetypesMap),
+                filetype
+            )
+        then
             icon, highlight = web_devicons.get_icon(filetype)
         else
             ---@diagnostic disable-next-line: undefined-field

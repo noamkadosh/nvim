@@ -10,4 +10,14 @@ function M.tableContains(table, value)
     return false
 end
 
+function M.getTableKeys(table)
+    local keys = {}
+
+    for key, _ in pairs(table) do
+        table.insert(keys, key)
+    end
+
+    return keys
+end
+
 return M

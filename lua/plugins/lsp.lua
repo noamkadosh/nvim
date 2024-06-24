@@ -53,7 +53,7 @@ return {
         config = function()
             local lsp = require("lsp-zero")
 
-            lsp.on_attach(function(client, bufnr)
+            lsp.on_attach(function(_, bufnr)
                 lsp.default_keymaps({ buffer = bufnr })
 
                 vim.keymap.set({ "n", "x" }, "<leader>f", function()
@@ -215,10 +215,12 @@ return {
                     "yamlfmt",
                     "yamllint",
                 },
+                automatic_installation = true,
             })
 
             require("mason-nvim-dap").setup({
                 ensure_installed = { "chrome", "codelldb", "delve" },
+                automatic_installation = true,
             })
         end,
     },
