@@ -38,3 +38,7 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 vim.opt.fillchars = { eob = " " }
 vim.opt.foldlevel = 99
+
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.inccommand = "split"
