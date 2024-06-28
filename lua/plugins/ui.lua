@@ -372,6 +372,10 @@ return {
                 autoresize = {
                     minwidth = 50,
                 },
+                ui = {
+                    cursorline = false,
+                    signcolumn = false,
+                },
             })
 
             vim.o.splitkeep = "cursor"
@@ -382,9 +386,9 @@ return {
         "levouh/tint.nvim",
         lazy = true,
         event = { "BufReadPost", "BufNewFile" },
-        opts ={
+        opts = {
             tint = -60,
-        }
+        },
     },
 
     {
