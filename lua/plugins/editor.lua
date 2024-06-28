@@ -13,7 +13,6 @@ return {
 
             which_key.register({
                 b = {
-
                     name = "Buffer",
                 },
                 c = {
@@ -89,26 +88,39 @@ return {
     },
 
     {
-        "folke/persistence.nvim",
-        event = "BufReadPre",
+        "olimorris/persisted.nvim",
         keys = {
             {
                 "<leader>os",
-                [[<cmd>lua require("persistence").load()<cr>]],
-                desc = "Restore session (Current Dir)",
+                "<cmd>:SessionSave<cr>",
+                desc = "Save session",
             },
             {
                 "<leader>ol",
-                [[<cmd>lua require("persistence").load({ last = true })<cr>]],
-                desc = "Restore last session",
+                "<cmd>:SessionLoad<cr>",
+                desc = "Load session",
             },
             {
-                "<leader>od",
-                [[<cmd>lua require("persistence").stop()<cr>]],
-                desc = "Stop Persistence",
+                "<leader>oa",
+                "<cmd>:SessionLoadLast<cr>",
+                desc = "Load last session",
             },
         },
-        config = true,
+        config = function()
+            require("persisted").setup({
+                use_git_branch = true,
+                telescope = {
+                    icons = {
+                        branch = require("nvim-web-devicons").get_icon("git") .. " ",
+                        dir = "󰝰 ",
+                        selected = " ",
+                    },
+                },
+            })
+
+            vim.o.sessionoptions =
+                "buffers,curdir,folds,tabpages,winpos,winsize"
+        end,
     },
 
     {

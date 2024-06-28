@@ -8,7 +8,7 @@ return {
             local dashboard = require("alpha.themes.dashboard")
             local config = theme.config
 
-            local helpers = require("helpers")
+            local helpers = require("helpers.dashboard-ui")
 
             local padding = function(lines)
                 return { type = "padding", val = lines }
@@ -178,7 +178,10 @@ return {
             vim.api.nvim_create_autocmd("User", {
                 pattern = "AlphaReady",
                 callback = function(event)
-                    require("helpers.alpha-fancy-select").setup(event.buf, "rounded")
+                    require("helpers.alpha-fancy-select").setup(
+                        event.buf,
+                        "rounded"
+                    )
                 end,
             })
         end,

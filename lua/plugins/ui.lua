@@ -355,6 +355,39 @@ return {
     },
 
     {
+        "nvim-focus/focus.nvim",
+        lazy = true,
+        event = { "BufReadPost", "BufNewFile" },
+        keys = {
+            {
+                "<c-l>",
+                function()
+                    require("focus").split_nicely()
+                end,
+                desc = "Split windows nicely",
+            },
+        },
+        config = function()
+            require("focus").setup({
+                autoresize = {
+                    minwidth = 50,
+                },
+            })
+
+            vim.o.splitkeep = "cursor"
+        end,
+    },
+
+    {
+        "levouh/tint.nvim",
+        lazy = true,
+        event = { "BufReadPost", "BufNewFile" },
+        opts ={
+            tint = -60,
+        }
+    },
+
+    {
         "tzachar/highlight-undo.nvim",
         event = { "BufReadPost", "BufNewFile" },
         opts = {

@@ -67,7 +67,7 @@ return {
         config = function()
             local telescope = require("telescope")
             local themes = require("telescope.themes")
-            local trouble = require ("trouble.sources.telescope")
+            local trouble = require("trouble.sources.telescope")
 
             telescope.setup({
                 defaults = {
@@ -95,6 +95,8 @@ return {
                         hijack_netrw = true,
                         path = "%:p:h",
                         cwd_to_path = true,
+                        dir_icon = "󰝰 ",
+                        dir_icon_hl = "TelescopePersistedDir",
                     },
                     fzf = {
                         override_generic_sorter = true,
@@ -116,6 +118,7 @@ return {
             telescope.load_extension("lazy")
             telescope.load_extension("neoclip")
             telescope.load_extension("noice")
+            telescope.load_extension("persisted")
             telescope.load_extension("projects")
             telescope.load_extension("ui-select")
             telescope.load_extension("undo")
