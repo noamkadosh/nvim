@@ -1,6 +1,6 @@
 local M = {}
 
-function M.tableContains(table, value)
+function M.table_contains(table, value)
     for _, cellValue in ipairs(table) do
         if value == cellValue then
             return true
@@ -10,7 +10,7 @@ function M.tableContains(table, value)
     return false
 end
 
-function M.getTableKeys(table)
+function M.get_table_keys(table)
     local keys = {}
     local index = 0
 

@@ -343,7 +343,6 @@ return {
         lazy = true,
         config = function()
             require("project_nvim").setup({
-                scope_chdir = "none",
                 manual_mode = false,
                 detection_methods = { "lsp", "pattern" },
                 patterns = {

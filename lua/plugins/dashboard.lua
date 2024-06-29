@@ -25,7 +25,7 @@ return {
                 " ░░░░░    ░░░░░  ░░░░░░   ░░░░░░       ░░░      ░░░░░ ░░░░░ ░░░ ░░░░░  ",
             }
 
-            local hero = helpers.assignGradientColors(hero_text)
+            local hero = helpers.assign_gradient_colors(hero_text)
             hero = helpers.header_color(hero)
 
             -- require("alpha.term")
@@ -44,7 +44,7 @@ return {
 
             local date = {
                 type = "text",
-                val = helpers.getDate(),
+                val = helpers.get_date(),
                 opts = {
                     hl = "Comment",
                     position = "center",
@@ -77,6 +77,15 @@ return {
                 end,
             })
             -- INFO - END --
+
+            local current_project = {
+                type = "text",
+                val = helpers.get_current_project,
+                opts = {
+                    position = "center",
+                    hl = "SpecialComment",
+                },
+            }
 
             local shortcuts = { type = "group", val = helpers.shortcuts }
 
@@ -144,16 +153,13 @@ return {
                 ---@diagnostic disable-next-line: param-type-mismatch
                 quick_actions.val,
                 3,
-                dashboard.button(
-                    "SPC o s",
-                    "󰪺  Restore current cwd last session"
-                )
+                dashboard.button("SPC o l", "󰪺  Restore session")
             )
             table.insert(
                 ---@diagnostic disable-next-line: param-type-mismatch
                 quick_actions.val,
                 3,
-                dashboard.button("SPC o l", "󰅒  Restore last session")
+                dashboard.button("SPC o a", "󰅒  Restore last session")
             )
             -- QUICK ACTIONS - END --
 
@@ -165,7 +171,9 @@ return {
                 padding(1),
                 date,
                 info,
-                padding(2),
+                padding(1),
+                current_project,
+                padding(1),
                 recent_files,
                 padding(1),
                 recent_projects,

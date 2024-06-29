@@ -1,6 +1,6 @@
 local M = {}
 
-function M.assignGradientColors(lines)
+function M.assign_gradient_colors(lines)
     local out = {}
     for i, line in ipairs(lines) do
         local hi = "gradient"
@@ -36,7 +36,7 @@ function M.header_color(heading)
     return output
 end
 
-function M.getDate()
+function M.get_date()
     local day = tonumber(os.date("%d"))
     local dateTime = " "
         .. os.date("%A, %B ")
@@ -113,17 +113,6 @@ function M.shortcuts()
     }
 end
 
-function M.open_project(project_path)
-    local project_nvim = require("project_nvim.project")
-    local success = project_nvim.set_pwd(project_path, "alpha")
-    if not success then
-        return
-    end
-    require("telescope.builtin").find_files({
-        cwd = project_path,
-    })
-end
-
 function M.get_recent_projects(start, target_width)
     if start == nil then
         start = 1
@@ -158,7 +147,10 @@ function M.get_recent_projects(start, target_width)
                 type = "button",
                 val = display_path,
                 on_press = function()
-                    M.open_project(project_path)
+                    require("project_nvim.project").set_pwd(
+                        project_path,
+                        "alpha"
+                    )
                 end,
                 opts = {
                     position = "center",
@@ -178,9 +170,9 @@ function M.get_recent_projects(start, target_width)
                     keymap = {
                         "n",
                         shortcut,
-                        "<cmd>lua require('helpers.dashboard-ui').open_project('"
+                        "<cmd>lua require('project_nvim.project').set_pwd('"
                             .. project_path
-                            .. "')<CR>",
+                            .. "', 'alpha')<CR>",
                         { noremap = true, silent = true, nowait = true },
                     },
                 },
@@ -188,6 +180,17 @@ function M.get_recent_projects(start, target_width)
         end
     end
     return buttons
+end
+
+function M.get_current_project()
+    local current_project = require("project_nvim.project").get_project_root()
+
+    if current_project == nil then
+        return "  No project"
+    end
+
+    return "  Current project: "
+        .. require("project_nvim.project").get_project_root():match("([^/]+)$")
 end
 
 return M
