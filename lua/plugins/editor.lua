@@ -343,7 +343,7 @@ return {
         lazy = true,
         config = function()
             require("project_nvim").setup({
-                manual_mode = false,
+                manual_mode = true,
                 detection_methods = { "lsp", "pattern" },
                 patterns = {
                     "lazy-lock.json",

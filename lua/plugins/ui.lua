@@ -416,9 +416,20 @@ return {
     },
 
     {
-        "NvChad/nvim-colorizer.lua",
+        "mehalter/nvim-colorizer.lua",
         event = { "BufReadPost", "BufNewFile" },
-        config = true,
+        opts = {
+            user_default_options = {
+                RRGGBBAA = true,
+                css = true,
+                css_fn = true,
+                mode = "inline",
+                tailwind = "lsp",
+                sass = { enable = true, parsers = { "css" } }, -- Enable sass colors
+                virtualtext = " ⬤  ",
+                always_update = true,
+            },
+        },
     },
 
     {
