@@ -426,7 +426,7 @@ return {
                 mode = "inline",
                 tailwind = "lsp",
                 sass = { enable = true, parsers = { "css" } }, -- Enable sass colors
-                virtualtext = " ⬤  ",
+                virtualtext = "  ",
                 always_update = true,
             },
         },

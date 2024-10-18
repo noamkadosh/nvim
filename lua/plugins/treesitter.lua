@@ -69,4 +69,11 @@ return {
         "chr4/nginx.vim",
         event = { "BufReadPost", "BufNewFile" },
     },
+
+    {
+        "davidmh/mdx.nvim",
+        ft = "mdx",
+        config = true,
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+    },
 }

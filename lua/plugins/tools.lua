@@ -14,7 +14,7 @@ return {
                     null_ls.builtins.code_actions.gitsigns,
 
                     -- TS, JS
-                    null_ls.builtins.formatting.prettierd,
+                    null_ls.builtins.formatting.prettier,
 
                     -- Go
                     null_ls.builtins.diagnostics.golangci_lint,

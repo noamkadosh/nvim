@@ -5,8 +5,13 @@ return {
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
             require("tokyonight").setup({
+                style = "night",
                 transparent = true,
                 lualine_bold = true,
+                plugins = {
+                    auto = true,
+                },
+                on_colors = function(_colors) end,
                 on_highlights = function(highlights, colors)
                     local util = require("tokyonight.util")
                     ---@diagnostic disable-next-line: undefined-field
@@ -38,6 +43,7 @@ return {
                     highlights.TerminalNormalMode = { fg = colors.yellow }
 
                     highlights.NormalFloat = { bg = NONE }
+                    highlights.FloatTitle = { bg = NONE }
                     highlights.FloatBorder =
                         { bg = NONE, fg = highlights.FloatBorder.fg }
                     highlights.LspInfoBorder.bg = NONE
@@ -79,19 +85,19 @@ return {
                     highlights.Rainbow7 = { fg = colors.purple }
 
                     highlights.RainbowLight1 =
-                        { fg = util.blend(colors.red, colors.bg, 0.5) }
+                        { fg = util.blend(colors.red, 0.5, colors.bg) }
                     highlights.RainbowLight2 =
-                        { fg = util.blend(colors.yellow, colors.bg, 0.5) }
+                        { fg = util.blend(colors.yellow, 0.5, colors.bg) }
                     highlights.RainbowLight3 =
-                        { fg = util.blend(colors.green, colors.bg, 0.5) }
+                        { fg = util.blend(colors.green, 0.5, colors.bg) }
                     highlights.RainbowLight4 =
-                        { fg = util.blend(colors.teal, colors.bg, 0.5) }
+                        { fg = util.blend(colors.teal, 0.5, colors.bg) }
                     highlights.RainbowLight5 =
-                        { fg = util.blend(colors.blue, colors.bg, 0.5) }
+                        { fg = util.blend(colors.blue, 0.5, colors.bg) }
                     highlights.RainbowLight6 =
-                        { fg = util.blend(colors.magenta, colors.bg, 0.5) }
+                        { fg = util.blend(colors.magenta, 0.5, colors.bg) }
                     highlights.RainbowLight7 =
-                        { fg = util.blend(colors.purple, colors.bg, 0.5) }
+                        { fg = util.blend(colors.purple, 0.5, colors.bg) }
 
                     highlights.TreesitterContext =
                         { bg = NONE, fg = highlights.NormalFloat.fg }
@@ -121,7 +127,7 @@ return {
                     highlights.SpectreBorder = highlights.Comment
                     highlights.SpectreReplace = highlights.DiffAdd
 
-                    highlights.WhichKeyFloat.bg = NONE
+                    highlights.WhichKeyNormal.bg = NONE
                     highlights.TroubleNormal.bg = NONE
 
                     highlights.CmpItemKindCopilot = {

@@ -122,6 +122,7 @@ return {
                 ensure_installed = {
                     "astro",
                     "cssls",
+                    "denols",
                     "dockerls",
                     "docker_compose_language_service",
                     "eslint",
@@ -141,7 +142,7 @@ return {
                     "nil_ls",
                     "rust_analyzer",
                     "tailwindcss",
-                    "tsserver",
+                    "ts_ls",
                     "yamlls",
                 },
                 handlers = {
@@ -159,7 +160,7 @@ return {
                         lspconfig.lua_ls.setup(lua_opts)
                     end,
                     jsonls = lsp_zero.noop,
-                    tsserver = lsp_zero.noop,
+                    ts_ls = lsp_zero.noop,
                     tailwindcss = function()
                         lspconfig.tailwindcss.setup({
                             root_dir = lspconfig.util.root_pattern(

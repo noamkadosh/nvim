@@ -6,40 +6,33 @@ return {
             vim.o.timeout = true
             vim.o.timeoutlen = 300
         end,
+        keys = {
+            {
+                "<leader>?",
+                function()
+                    require("which-key").show({ global = false })
+                end,
+                desc = "Buffer Local Keymaps (which-key)",
+            },
+        },
         config = function()
             local which_key = require("which-key")
 
-            which_key.setup()
+            which_key.setup({
+                preset = "helix",
+            })
 
-            which_key.register({
-                b = {
-                    name = "Buffer",
-                },
-                c = {
-                    name = "Code actions",
-                },
-                d = {
-                    name = "Debug",
-                },
-                g = {
-                    name = "Git",
-                },
-                n = {
-                    name = "Notifications",
-                },
-                o = {
-                    name = "Session",
-                },
-                p = {
-                    name = "File browser",
-                },
-                s = {
-                    name = "Search",
-                },
-                t = {
-                    name = "Diagnostics",
-                },
-            }, { prefix = "<leader>" })
+            which_key.add({
+                { "<leader>b", group = "Buffer" },
+                { "<leader>c", group = "Code actions" },
+                { "<leader>d", group = "Debug" },
+                { "<leader>g", group = "Git" },
+                { "<leader>n", group = "Notifications" },
+                { "<leader>o", group = "Session" },
+                { "<leader>p", group = "File browser" },
+                { "<leader>s", group = "Search" },
+                { "<leader>t", group = "Diagnostics" },
+            })
         end,
     },
 
@@ -111,7 +104,8 @@ return {
                 use_git_branch = true,
                 telescope = {
                     icons = {
-                        branch = require("nvim-web-devicons").get_icon("git") .. " ",
+                        branch = require("nvim-web-devicons").get_icon("git")
+                            .. " ",
                         dir = "󰝰 ",
                         selected = " ",
                     },
@@ -189,7 +183,7 @@ return {
         event = { "BufReadPost", "BufNewFile" },
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
-            "smoka7/hydra.nvim",
+            "nvimtools/hydra.nvim",
         },
         keys = {
             {
