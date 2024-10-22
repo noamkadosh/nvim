@@ -100,6 +100,51 @@ return {
     },
 
     {
+        "kevinhwang91/nvim-ufo",
+        event = { "BufReadPost", "BufNewFile" },
+        dependencies = "kevinhwang91/promise-async",
+        init = function()
+            vim.o.foldcolumn = "1"
+            vim.o.foldlevel = 99
+            vim.o.foldlevelstart = 99
+            vim.o.foldenable = true
+            vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+        end,
+        keys = function()
+            local ufo = require("ufo")
+
+            return {
+                {
+                    "zR",
+                    ufo.openAllFolds,
+                    desc = "Open all folds",
+                },
+                {
+                    "zM",
+                    ufo.closeAllFolds,
+                    desc = "Close all folds",
+                },
+                {
+                    "zK",
+                    function()
+                        local winid =
+                            require("ufo").peekFoldedLinesUnderCursor()
+                        if not winid then
+                            vim.lsp.buf.hover()
+                        end
+                    end,
+                    desc = "Peek folds",
+                },
+            }
+        end,
+        opts = {
+            provider_selector = function()
+                return { "lsp", "indent" }
+            end,
+        },
+    },
+
+    {
         "chentoast/marks.nvim",
         event = "BufReadPre",
         config = true,
