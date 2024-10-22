@@ -32,6 +32,31 @@ return {
                 { "<leader>p", group = "File browser" },
                 { "<leader>s", group = "Search" },
                 { "<leader>t", group = "Diagnostics" },
+                {
+                    "<leader>k",
+                    mode = "v",
+                    icon = { icon = "", color = "red" },
+                },
+                {
+                    "<leader>j",
+                    mode = "v",
+                    icon = { icon = "", color = "red" },
+                },
+                {
+                    "<leader>Y",
+                    mode = "n",
+                    icon = { icon = "󱉧", color = "yellow" },
+                },
+                {
+                    "<leader>y",
+                    mode = { "n", "v" },
+                    icon = { icon = "󱉧", color = "yellow" },
+                },
+                {
+                    "<leader>m",
+                    mode = "n",
+                    icon = { icon = "󱒄", color = "yellow" },
+                },
             })
         end,
     },

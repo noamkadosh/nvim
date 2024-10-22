@@ -161,6 +161,14 @@ return {
                     end,
                     jsonls = lsp_zero.noop,
                     ts_ls = lsp_zero.noop,
+                    denols = function()
+                        lspconfig.denols.setup({
+                            root_dir = lspconfig.util.root_pattern(
+                                "deno.json",
+                                "deno.jsonc"
+                            ),
+                        })
+                    end,
                     tailwindcss = function()
                         lspconfig.tailwindcss.setup({
                             root_dir = lspconfig.util.root_pattern(

@@ -436,4 +436,39 @@ return {
         "Bekaboo/deadcolumn.nvim",
         event = { "BufReadPost", "BufNewFile" },
     },
+
+    {
+        "OXY2DEV/helpview.nvim",
+        lazy = false,
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+        },
+    },
+
+    {
+        "OXY2DEV/markview.nvim",
+        lazy = false,
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons",
+        },
+    },
+
+    {
+        "ray-x/yamlmatter.nvim",
+        opts = {
+            icon_mappings = {
+                title = "",
+                idea = "",
+                default = "󰦨",
+            },
+            highlight_groups = {
+                icon = "MyIconHighlight",
+                key = "MyKeyHighlight",
+                value = "MyValueHighlight",
+            },
+            key_value_padding = 4, -- Less space
+            conceallevel = 1, -- on what level start conceal the yaml text
+        },
+    },
 }
