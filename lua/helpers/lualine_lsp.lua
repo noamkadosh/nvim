@@ -40,7 +40,7 @@ function M.map_lsp_to_info()
                 { fg = fg, bg = bg }
             )
 
-            icon = ""
+            icon = ""
             highlight = "CmpItemKindCopilotStatus"
         elseif client.name:find("null") or client.name:find("nil") then
             local fg = colors.orange

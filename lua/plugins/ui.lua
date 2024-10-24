@@ -11,6 +11,7 @@ return {
             local noice = require("noice")
             local colors = require("tokyonight.colors").setup()
             local theme = require("lualine.themes.tokyonight")
+            local code_companion = require("helpers.lualine_codecompanion")
 
             -- Change the background of lualine_c section for normal mode
             theme.normal.c.bg = nil
@@ -54,6 +55,14 @@ return {
                         },
                     },
                     lualine_x = {
+                        {
+                            icon_enabled = true,
+                            icon = {
+                                code_companion.icon,
+                                color = { fg = colors.teal },
+                            },
+                            code_companion,
+                        },
                         {
                             "encoding",
                             padding = 1,
@@ -285,26 +294,26 @@ return {
             require("ibl").setup({
                 indent = {
                     highlight = {
-                        "RainbowLight1",
-                        "RainbowLight2",
-                        "RainbowLight3",
-                        "RainbowLight4",
-                        "RainbowLight5",
-                        "RainbowLight6",
-                        "RainbowLight7",
+                        "RainbowLightRed",
+                        "RainbowLightYellow",
+                        "RainbowLightGreen",
+                        "RainbowLightTeal",
+                        "RainbowLightBlue",
+                        "RainbowLightMagenta",
+                        "RainbowLightPurple",
                     },
                 },
                 scope = {
                     show_start = false,
                     show_end = false,
                     highlight = {
-                        "Rainbow1",
-                        "Rainbow2",
-                        "Rainbow3",
-                        "Rainbow4",
-                        "Rainbow5",
-                        "Rainbow6",
-                        "Rainbow7",
+                        "RainbowRed",
+                        "RainbowYellow",
+                        "RainbowGreen",
+                        "RainbowTeal",
+                        "RainbowBlue",
+                        "RainbowMagenta",
+                        "RainbowPurple",
                     },
                 },
             })
@@ -318,13 +327,13 @@ return {
             require("rainbow-delimiters")
             vim.g.rainbow_delimiters = {
                 highlight = {
-                    "Rainbow1",
-                    "Rainbow2",
-                    "Rainbow3",
-                    "Rainbow4",
-                    "Rainbow5",
-                    "Rainbow6",
-                    "Rainbow7",
+                    "RainbowRed",
+                    "RainbowYellow",
+                    "RainbowGreen",
+                    "RainbowTeal",
+                    "RainbowBlue",
+                    "RainbowMagenta",
+                    "RainbowPurple",
                 },
             }
         end,

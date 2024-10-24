@@ -6,22 +6,12 @@ return {
         dependencies = {
             "folke/neoconf.nvim",
             "folke/lazydev.nvim",
-
             "williamboman/mason.nvim",
             "neovim/nvim-lspconfig",
-
-            -- Completion
             "hrsh7th/nvim-cmp",
-
-            -- Snippets
             "L3MON4D3/LuaSnip",
-
-            -- LspSaga
             "glepnir/lspsaga.nvim",
-
-            -- LSP Diagnostics
             "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-
             "RRethy/vim-illuminate",
         },
         init = function()

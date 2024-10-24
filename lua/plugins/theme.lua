@@ -32,7 +32,11 @@ return {
                     highlights.BufferManagerModified =
                         { fg = colors.red, bg = NONE }
 
+                    highlights.LineNr.fg = highlights.FoldColumn.fg
+                    highlights.LineNrAbove.fg = highlights.FoldColumn.fg
+                    highlights.LineNrBelow.fg = highlights.FoldColumn.fg
                     highlights.CursorLineNr.fg = colors.blue
+
                     highlights.NormalMode = { fg = colors.blue }
                     highlights.InsertMode = { fg = colors.green }
                     highlights.VisualMode = { fg = colors.magenta }
@@ -76,27 +80,27 @@ return {
                         highlights.TelescopeBorder
                     highlights.SagaLightBulb = { fg = colors.yellow }
 
-                    highlights.Rainbow1 = { fg = colors.red }
-                    highlights.Rainbow2 = { fg = colors.yellow }
-                    highlights.Rainbow3 = { fg = colors.green }
-                    highlights.Rainbow4 = { fg = colors.teal }
-                    highlights.Rainbow5 = { fg = colors.blue }
-                    highlights.Rainbow6 = { fg = colors.magenta }
-                    highlights.Rainbow7 = { fg = colors.purple }
+                    highlights.RainbowRed = { fg = colors.red }
+                    highlights.RainbowYellow = { fg = colors.yellow }
+                    highlights.RainbowGreen = { fg = colors.green }
+                    highlights.RainbowTeal = { fg = colors.teal }
+                    highlights.RainbowBlue = { fg = colors.blue }
+                    highlights.RainbowMagenta = { fg = colors.magenta }
+                    highlights.RainbowPurple = { fg = colors.purple }
 
-                    highlights.RainbowLight1 =
+                    highlights.RainbowLightRed =
                         { fg = util.blend(colors.red, 0.5, colors.bg) }
-                    highlights.RainbowLight2 =
+                    highlights.RainbowLightYellow =
                         { fg = util.blend(colors.yellow, 0.5, colors.bg) }
-                    highlights.RainbowLight3 =
+                    highlights.RainbowLightGreen =
                         { fg = util.blend(colors.green, 0.5, colors.bg) }
-                    highlights.RainbowLight4 =
+                    highlights.RainbowLightTeal =
                         { fg = util.blend(colors.teal, 0.5, colors.bg) }
-                    highlights.RainbowLight5 =
+                    highlights.RainbowLightBlue =
                         { fg = util.blend(colors.blue, 0.5, colors.bg) }
-                    highlights.RainbowLight6 =
+                    highlights.RainbowLightMagenta =
                         { fg = util.blend(colors.magenta, 0.5, colors.bg) }
-                    highlights.RainbowLight7 =
+                    highlights.RainbowLightPurple =
                         { fg = util.blend(colors.purple, 0.5, colors.bg) }
 
                     highlights.TreesitterContext =
