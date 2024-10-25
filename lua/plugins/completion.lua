@@ -108,7 +108,7 @@ return {
                         maxwidth = 50,
                         ellipsis_char = "...",
                         symbol_map = {
-                            Copilot = "",
+                            Copilot = "",
                         },
                     }),
                     expandable_indicator = true,
