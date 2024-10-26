@@ -419,8 +419,15 @@ return {
     {
         "tzachar/highlight-undo.nvim",
         event = { "BufReadPost", "BufNewFile" },
-        opts = {
-            duration = 150,
+        config = {
+            keymaps = {
+                Paste = {
+                    hlgroup = "HighlightRedo",
+                },
+                paste = {
+                    hlgroup = "HighlightRedo",
+                },
+            },
         },
     },
 
@@ -455,11 +462,14 @@ return {
     },
 
     {
-        "OXY2DEV/markview.nvim",
-        lazy = false,
+        "MeanderingProgrammer/render-markdown.nvim",
+        ft = { "markdown", "mdx", "codcompanion" },
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
             "nvim-tree/nvim-web-devicons",
+        },
+        opts = {
+            render_modes = true,
         },
     },
 

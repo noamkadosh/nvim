@@ -19,6 +19,8 @@ return {
 
                     highlights.Yanked =
                         { bg = util.darken(colors.orange, 0.15) }
+                    highlights.HighlightUndo = { bg = highlights.DiffDelete.bg }
+                    highlights.HighlightRedo = { bg = highlights.DiffAdd.bg }
 
                     highlights.gradient1 = { fg = "#1ABC9C" }
                     highlights.gradient2 = { fg = "#2EB3A5" }

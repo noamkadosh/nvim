@@ -1,7 +1,7 @@
 vim.opt.autoread = true
 vim.cmd([[autocmd CursorHold * checktime]])
 vim.cmd(
-    [[autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup="Yanked"})]]
+    [[autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup="Yanked", timeout=300})]]
 )
 
 vim.opt.nu = true
