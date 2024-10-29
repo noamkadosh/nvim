@@ -198,6 +198,18 @@ return {
                             },
                         })
                     end,
+                    yamlls = function()
+                        require("lspconfig").yamlls.setup({
+                            capabilities = {
+                                textDocument = {
+                                    foldingRange = {
+                                        dynamicRegistration = false,
+                                        lineFoldingOnly = true,
+                                    },
+                                },
+                            },
+                        })
+                    end,
                 },
             })
 
