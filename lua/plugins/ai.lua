@@ -119,15 +119,53 @@ return {
             },
         },
         opts = {
+            adapters = {
+                anthropic = function()
+                    return require("codecompanion.adapters").extend(
+                        "anthropic",
+                        {
+                            env = {
+                                api_key = "cmd:op read op://personal/Anthropic\\ API/credential --no-newline",
+                            },
+                        }
+                    )
+                end,
+                openrouter = function()
+                    return require("codecompanion.adapters").extend("openai", {
+                        env = {
+                            api_key = "cmd:op read op://personal/OpenRouter\\ API/credential --no-newline",
+                        },
+                        url = "https://openrouter.ai/api/v1/chat/completions",
+                        schema = {
+                            model = {
+                                default = "anthropic/claude-3.5-sonnet",
+                                choices = {
+                                    "anthropic/claude-3.5-sonnet",
+                                    "meta-llama/llama-3.2-3b-instruct",
+                                    "meta-llama/llama-3.2-1b-instruct",
+                                    "meta-llama/llama-3.2-90b-vision-instruct",
+                                    "meta-llama/llama-3.2-11b-vision-instruct:free",
+                                    "meta-llama/llama-3.2-11b-vision-instruct",
+                                    "qwen/qwen-2.5-72b-instruct",
+                                    "mistral/pixtral-12b",
+                                    "cohere/command-r-plus-08-2024",
+                                    "ai21/jamba-21.5-large",
+                                    "perplexity/llama-3.1-sonar-huge-128k-online",
+                                },
+                            },
+                        },
+                    })
+                end,
+            },
             strategies = {
                 chat = {
-                    adapter = "copilot",
+                    adapter = "openrouter",
                 },
                 inline = {
-                    adapter = "copilot",
+                    adapter = "openrouter",
                 },
                 agent = {
-                    adapter = "copilot",
+                    adapter = "openrouter",
                 },
             },
             display = {

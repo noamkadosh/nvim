@@ -42,7 +42,7 @@ function M.map_lsp_to_info()
 
             icon = ""
             highlight = "CmpItemKindCopilotStatus"
-        elseif client.name:find("null") or client.name:find("nil") then
+        elseif client.name:find("null") then
             local fg = colors.orange
             vim.api.nvim_set_hl(0, "ConstantStatus", { fg = fg, bg = bg })
 
