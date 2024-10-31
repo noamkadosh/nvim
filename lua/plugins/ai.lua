@@ -157,23 +157,45 @@ return {
                     })
                 end,
             },
-            strategies = {
-                chat = {
-                    adapter = "openrouter",
-                },
-                inline = {
-                    adapter = "openrouter",
-                },
-                agent = {
-                    adapter = "openrouter",
-                },
-            },
             display = {
                 action_palette = {
                     provider = "telescope",
                 },
                 diff = {
                     provider = "mini_diff",
+                },
+            },
+            strategies = {
+                chat = {
+                    adapter = "openrouter",
+                    slash_commands = {
+                        ["buffer"] = {
+                            opts = {
+                                provider = "telescope",
+                            },
+                        },
+                        ["file"] = {
+                            opts = {
+                                provider = "telescope",
+                            },
+                        },
+                        ["help"] = {
+                            opts = {
+                                provider = "telescope",
+                            },
+                        },
+                        ["symbols"] = {
+                            opts = {
+                                provider = "telescope",
+                            },
+                        },
+                    },
+                },
+                inline = {
+                    adapter = "openrouter",
+                },
+                agent = {
+                    adapter = "openrouter",
                 },
             },
         },
