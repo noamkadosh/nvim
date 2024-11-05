@@ -138,8 +138,9 @@ return {
                         url = "https://openrouter.ai/api/v1/chat/completions",
                         schema = {
                             model = {
-                                default = "anthropic/claude-3.5-sonnet",
+                                default = "anthropic/claude-3-5-haiku",
                                 choices = {
+                                    "anthropic/claude-3-5-haiku",
                                     "anthropic/claude-3.5-sonnet",
                                     "meta-llama/llama-3.2-3b-instruct",
                                     "meta-llama/llama-3.2-1b-instruct",
