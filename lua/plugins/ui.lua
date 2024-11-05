@@ -291,6 +291,8 @@ return {
             vim.opt.list = true
         end,
         config = function()
+            local hooks = require("ibl.hooks")
+
             require("ibl").setup({
                 indent = {
                     highlight = {
@@ -317,6 +319,11 @@ return {
                     },
                 },
             })
+
+            hooks.register(
+                hooks.type.SCOPE_HIGHLIGHT,
+                hooks.builtin.scope_highlight_from_extmark
+            )
         end,
     },
 
