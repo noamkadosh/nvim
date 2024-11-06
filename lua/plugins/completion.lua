@@ -220,6 +220,6 @@ return {
     {
         "zbirenbaum/copilot-cmp",
         lazy = true,
-        config = true,
+        opts = {},
     },
 }

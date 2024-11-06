@@ -62,7 +62,7 @@ return {
     {
         "folke/ts-comments.nvim",
         lazy = true,
-        config = true,
+        opts = {},
     },
 
     {
@@ -73,7 +73,7 @@ return {
     {
         "davidmh/mdx.nvim",
         ft = "mdx",
-        config = true,
+        opts = {},
         dependencies = { "nvim-treesitter/nvim-treesitter" },
     },
 }

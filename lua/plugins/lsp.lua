@@ -319,14 +319,14 @@ return {
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         lazy = true,
-        config = true,
+        opts = {},
     },
 
     {
         "folke/neoconf.nvim",
         lazy = true,
         cmd = "Neoconf",
-        config = true,
+        opts = {},
     },
 
     {

@@ -153,7 +153,7 @@ return {
         dependencies = {
             "rachartier/tiny-devicons-auto-colors.nvim",
         },
-        config = true,
+        opts = {},
     },
 
     {
@@ -174,6 +174,6 @@ return {
             vim.o.number = true
             vim.o.termguicolors = true
         end,
-        config = true,
+        opts = {},
     },
 }

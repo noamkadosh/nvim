@@ -10,6 +10,7 @@ local filetypesMap = {
 
 function M.map_lsp_to_info()
     local clients = vim.lsp.get_clients({ bufnr = 0 })
+    -- TODO: stop tsserver if denols is active
 
     if #clients == 0 then
         return ""
@@ -73,7 +74,12 @@ function M.map_lsp_to_info()
             or client.name:find("typescript")
         then
             client_name = "tsserver"
-            icon, highlight = web_devicons.get_icon(filetypesMap[filetype])
+            icon, highlight =
+                web_devicons.get_icon(filetypesMap[filetype or "typescript"])
+        elseif client.name:find("deno") then
+            client_name = "denols"
+            icon, highlight =
+                web_devicons.get_icon(filetypesMap[filetype or "typescript"])
         elseif
             ---@diagnostic disable-next-line: undefined-field
             utils.table_contains(client.config.filetypes, filetype)

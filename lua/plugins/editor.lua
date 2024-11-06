@@ -148,7 +148,7 @@ return {
     {
         "chentoast/marks.nvim",
         event = "BufReadPre",
-        config = true,
+        opts = {},
     },
 
     {
@@ -337,7 +337,7 @@ return {
                 noremap = true,
             },
         },
-        config = true,
+        opts = {},
     },
 
     {
@@ -372,7 +372,7 @@ return {
                 },
             }
         end,
-        config = true,
+        opts = {},
     },
 
     {

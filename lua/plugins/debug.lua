@@ -252,7 +252,7 @@ return {
     {
         "theHamsta/nvim-dap-virtual-text",
         lazy = true,
-        config = true,
+        opts = {},
     },
 
     {
@@ -307,7 +307,7 @@ return {
                 },
             }
         end,
-        config = true,
+        opts = {},
     },
 
     {

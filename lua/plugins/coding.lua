@@ -7,24 +7,24 @@ return {
     {
         "echasnovski/mini.ai",
         event = { "BufReadPost", "BufNewFile" },
-        config = true,
+        opts = {},
     },
 
     {
         "echasnovski/mini.surround",
         event = { "BufReadPost", "BufNewFile" },
-        config = true,
+        opts = {},
     },
 
     {
         "echasnovski/mini.pairs",
         event = { "BufReadPost", "BufNewFile" },
-        config = true,
+        opts = {},
     },
 
     {
         "m4xshen/hardtime.nvim",
         event = { "BufReadPost", "BufNewFile" },
-        config = true,
+        opts = {},
     },
 }
