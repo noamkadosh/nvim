@@ -6,11 +6,12 @@ local filetypesMap = {
     typescriptreact = "ts",
     javascript = "js",
     javascriptreact = "js",
+    ["javascript.jsx"] = "js",
+    ["typescript.tsx"] = "ts",
 }
 
 function M.map_lsp_to_info()
     local clients = vim.lsp.get_clients({ bufnr = 0 })
-    -- TODO: stop tsserver if denols is active
 
     if #clients == 0 then
         return ""

@@ -31,9 +31,6 @@ return {
                     highlights.gradient7 = { fg = "#8B85D0" }
                     highlights.gradient8 = { fg = "#9D7CD8" }
 
-                    highlights.BufferManagerModified =
-                        { fg = colors.red, bg = NONE }
-
                     highlights.LineNr.fg = highlights.FoldColumn.fg
                     highlights.LineNrAbove.fg = highlights.FoldColumn.fg
                     highlights.LineNrBelow.fg = highlights.FoldColumn.fg

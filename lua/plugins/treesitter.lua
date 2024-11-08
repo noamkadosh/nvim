@@ -66,8 +66,27 @@ return {
     },
 
     {
-        "chr4/nginx.vim",
-        event = { "BufReadPost", "BufNewFile" },
+        "dlvandenberg/nvim-treesitter-nginx",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+        },
+        lazy = true,
+        ft = { "nginx" },
+        init = function()
+            vim.filetype.add({
+                pattern = {
+                    ["nginx.conf"] = "nginx",
+                },
+            })
+
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "nginx",
+                callback = function()
+                    vim.treesitter.language.register("nginx", "nginx")
+                end,
+            })
+        end,
+        opts = {},
     },
 
     {

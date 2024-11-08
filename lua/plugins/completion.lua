@@ -42,8 +42,7 @@ return {
                         winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
                     }),
                 },
-
-                mapping = {
+                mapping = cmp.mapping.preset.insert({
                     ["<C-p>"] = cmp.mapping.select_prev_item({
                         behavior = cmp.SelectBehavior.Select,
                     }),
@@ -65,7 +64,7 @@ return {
                             })
                         end
                     end),
-                },
+                }),
                 sources = cmp.config.sources({
                     {
                         name = "copilot",

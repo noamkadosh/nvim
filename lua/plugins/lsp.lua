@@ -1,7 +1,7 @@
 return {
     {
         "VonHeikemen/lsp-zero.nvim",
-        branch = "v3.x",
+        branch = "v4.x",
         event = { "BufReadPre", "BufNewFile", "InsertEnter", "CmdlineEnter" },
         dependencies = {
             "folke/neoconf.nvim",
@@ -12,7 +12,6 @@ return {
             "L3MON4D3/LuaSnip",
             "glepnir/lspsaga.nvim",
             "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-            "RRethy/vim-illuminate",
         },
         init = function()
             vim.diagnostic.config({
@@ -41,10 +40,10 @@ return {
             })
         end,
         config = function()
-            local lsp = require("lsp-zero")
+            local lsp_zero = require("lsp-zero")
 
-            lsp.on_attach(function(_, bufnr)
-                lsp.default_keymaps({ buffer = bufnr })
+            local lsp_attach = function(_client, bufnr)
+                lsp_zero.default_keymaps({ buffer = bufnr })
 
                 vim.keymap.set({ "n", "x" }, "<leader>f", function()
                     vim.lsp.buf.format({
@@ -58,7 +57,14 @@ return {
                         end,
                     })
                 end, { buffer = bufnr, desc = "Format" })
-            end)
+            end
+
+            lsp_zero.extend_lspconfig({
+                capabilities = require("cmp_nvim_lsp").default_capabilities(),
+                lsp_attach = lsp_attach,
+                float_border = "rounded",
+                sign_text = true,
+            })
 
             vim.lsp.inlay_hint.enable()
 

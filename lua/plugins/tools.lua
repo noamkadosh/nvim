@@ -53,7 +53,7 @@ return {
     {
         "mrcjkb/rustaceanvim",
         lazy = true,
-        version = "^4",
+        version = "^5",
         ft = "rust",
         init = function()
             local path = vim.fn.glob(
@@ -115,6 +115,7 @@ return {
         end,
     },
 
+    -- TODO: consider creating a custom setup for tsserver where it won't step on denols foot
     {
         "pmizio/typescript-tools.nvim",
         lazy = true,

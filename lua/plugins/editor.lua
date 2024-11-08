@@ -341,38 +341,39 @@ return {
     },
 
     {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        opts = {
+            notifier = {
+                style = "compact",
+            },
+            statuscolumn = {
+                left = { "sign", "git", "mark" },
+                right = { "fold" },
+                folds = {
+                    open = true,
+                    git_hl = false,
+                },
+                git = {
+                    patterns = { "GitSign", "MiniDiffSign" },
+                },
+                refresh = 50,
+            },
+            words = {
+                enabled = true,
+                debounce = 100,
+            },
+        },
+    },
+
+    {
         "zbirenbaum/neodim",
         event = "LspAttach",
         opts = {
             alpha = 0.4,
             blend_color = "#1A1B26",
         },
-    },
-
-    {
-        "echasnovski/mini.bufremove",
-        event = { "BufReadPost", "BufNewFile" },
-        keys = function()
-            local bufremove = require("mini.bufremove")
-
-            return {
-                {
-                    "<leader>bd",
-                    function()
-                        bufremove.delete(0, false)
-                    end,
-                    desc = "Delete Buffer",
-                },
-                {
-                    "<leader>bD",
-                    function()
-                        bufremove.delete(0, true)
-                    end,
-                    desc = "Delete Buffer (Force)",
-                },
-            }
-        end,
-        opts = {},
     },
 
     {
@@ -422,32 +423,6 @@ return {
                 show_hidden = false,
                 silent_chdir = false,
                 datapath = vim.fn.stdpath("data"),
-            })
-        end,
-    },
-
-    {
-
-        "luukvbaal/statuscol.nvim",
-        config = function()
-            local builtin = require("statuscol.builtin")
-
-            require("statuscol").setup({
-                segments = {
-                    {
-                        sign = {
-                            name = { ".*" },
-                            namespace = { "diagnostic/signs", "gitsigns" },
-                            maxwidth = 1,
-                            wrap = true,
-                        },
-                    },
-                    {
-                        text = { builtin.lnumfunc },
-                        maxwidth = 2,
-                    },
-                    { text = { builtin.foldfunc, " " } },
-                },
             })
         end,
     },

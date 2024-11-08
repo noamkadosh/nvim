@@ -1,8 +1,10 @@
 local js_flavors = {
-    "typescript",
     "javascript",
-    "typescriptreact",
     "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
 }
 
 return {
@@ -96,6 +98,24 @@ return {
 
             for _, language in pairs(js_flavors) do
                 dap.configurations[language] = {
+                    -- TODO: Test Deno setup
+                    -- Debug Deno
+                    {
+                        name = "Deno debug",
+                        type = "pwa-node",
+                        request = "launch",
+                        runtimeExecutable = "deno",
+                        runtimeArgs = {
+                            "test",
+                            "--inspect-wait",
+                            "--unstable",
+                            "--no-check",
+                            "--allow-all",
+                            "--filter",
+                        },
+                        cwd = "${workspaceFolder}",
+                        attachSimplePort = 9229,
+                    },
                     -- Debug single nodejs files
                     {
                         type = "pwa-node",
@@ -308,54 +328,5 @@ return {
             }
         end,
         opts = {},
-    },
-
-    {
-        "jbyuki/one-small-step-for-vimkind",
-        lazy = true,
-        dependencies = {
-            "mfussenegger/nvim-dap",
-        },
-        event = { "BufReadPre " .. vim.fn.expand("~") .. "/.config/nvim/**" },
-        config = function()
-            local dap = require("dap")
-
-            dap.adapters.nlua = function(callback, conf)
-                local adapter = {
-                    type = "server",
-                    ---@diagnostic disable-next-line: undefined-field
-                    host = conf.host or "127.0.0.1",
-                    ---@diagnostic disable-next-line: undefined-field
-                    port = conf.port or 8086,
-                }
-                ---@diagnostic disable-next-line: undefined-field
-                if conf.start_neovim then
-                    local dap_run = dap.run
-                    ---@diagnostic disable-next-line: duplicate-set-field
-                    dap.run = function(c)
-                        adapter.port = c.port
-                        adapter.host = c.host
-                    end
-                    require("osv").run_this()
-                    dap.run = dap_run
-                end
-                callback(adapter)
-            end
-
-            dap.configurations.lua = {
-                {
-                    type = "nlua",
-                    request = "attach",
-                    name = "Run this file",
-                    start_neovim = {},
-                },
-                {
-                    type = "nlua",
-                    request = "attach",
-                    name = "Attach to running Neovim instance (port = 8086)",
-                    port = 8086,
-                },
-            }
-        end,
     },
 }
