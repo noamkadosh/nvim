@@ -13,32 +13,6 @@ return {
             "glepnir/lspsaga.nvim",
             "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         },
-        init = function()
-            vim.diagnostic.config({
-                float = {
-                    border = "rounded",
-                },
-                severity_sort = true,
-                signs = {
-                    severity = {
-                        min = vim.diagnostic.severity.HINT,
-                    },
-                    priority = 30,
-                    text = {
-                        [vim.diagnostic.severity.ERROR] = " ",
-                        [vim.diagnostic.severity.WARN] = " ",
-                        [vim.diagnostic.severity.HINT] = " ",
-                        [vim.diagnostic.severity.INFO] = " ",
-                    },
-                },
-                underline = true,
-                update_in_insert = true,
-                virtual_lines = {
-                    only_current_line = true,
-                },
-                virtual_text = false,
-            })
-        end,
         config = function()
             local lsp_zero = require("lsp-zero")
 
@@ -64,6 +38,31 @@ return {
                 lsp_attach = lsp_attach,
                 float_border = "rounded",
                 sign_text = true,
+            })
+
+            vim.diagnostic.config({
+                float = {
+                    border = "rounded",
+                },
+                severity_sort = true,
+                signs = {
+                    severity = {
+                        min = vim.diagnostic.severity.HINT,
+                    },
+                    priority = 30,
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = " ",
+                        [vim.diagnostic.severity.WARN] = " ",
+                        [vim.diagnostic.severity.HINT] = " ",
+                        [vim.diagnostic.severity.INFO] = " ",
+                    },
+                },
+                underline = true,
+                update_in_insert = true,
+                virtual_lines = {
+                    only_current_line = true,
+                },
+                virtual_text = false,
             })
 
             vim.lsp.inlay_hint.enable()
