@@ -98,7 +98,6 @@ return {
 
             for _, language in pairs(js_flavors) do
                 dap.configurations[language] = {
-                    -- TODO: Test Deno setup
                     -- Debug Deno
                     {
                         name = "Deno debug",

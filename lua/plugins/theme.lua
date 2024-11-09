@@ -1,8 +1,8 @@
 return {
     {
         "folke/tokyonight.nvim",
-        lazy = false, -- make sure we load this during startup if it is your main colorscheme
-        priority = 1000, -- make sure to load this before all the other start plugins
+        lazy = false,
+        priority = 1000,
         config = function()
             require("tokyonight").setup({
                 style = "night",
@@ -45,12 +45,16 @@ return {
                     highlights.TerminalMode = { fg = colors.yellow }
                     highlights.TerminalNormalMode = { fg = colors.yellow }
 
+                    highlights.Comment.fg = highlights.FoldColumn.fg
                     highlights.NormalFloat = { bg = NONE }
                     highlights.FloatTitle = { bg = NONE }
                     highlights.FloatBorder =
                         { bg = NONE, fg = highlights.FloatBorder.fg }
                     highlights.LspInfoBorder.bg = NONE
-                    highlights.LspInlayHint.bg = NONE
+                    highlights.LspInlayHint =
+                        { fg = highlights.FoldColumn.fg, bg = NONE }
+                    highlights.LspCodeLens =
+                        { fg = highlights.FoldColumn.fg, bg = NONE }
 
                     highlights.DiagnosticVirtualTextError.bg = NONE
                     highlights.DiagnosticVirtualTextWarn.bg = NONE
@@ -78,6 +82,7 @@ return {
                     highlights.TelescopePromptBorder =
                         highlights.TelescopeBorder
                     highlights.SagaLightBulb = { fg = colors.yellow }
+                    highlights.SagaBeacon = { bg = colors.red }
 
                     highlights.RainbowRed = { fg = colors.red }
                     highlights.RainbowYellow = { fg = colors.yellow }
@@ -109,7 +114,7 @@ return {
 
                     highlights.StatusLine = { bg = NONE }
                     highlights.StatusLineSeparator = {
-                        fg = highlights.Comment.fg,
+                        fg = highlights.FoldColumn.fg,
                         bg = NONE,
                     }
 
@@ -122,12 +127,12 @@ return {
                         { fg = colors.blue, bg = NONE }
                     highlights.TabLineFill = { fg = colors.fg, bg = NONE }
 
-                    highlights.SpectreHeader = highlights.Comment
+                    highlights.SpectreHeader = highlights.FoldColumn
                     highlights.SpectreBody = highlights.String
                     highlights.SpectreFile = highlights.Keyword
-                    highlights.SpectreDir = highlights.Comment
+                    highlights.SpectreDir = highlights.FoldColumn
                     highlights.SpectreSearch = highlights.DiffDelete
-                    highlights.SpectreBorder = highlights.Comment
+                    highlights.SpectreBorder = highlights.FoldColumn
                     highlights.SpectreReplace = highlights.DiffAdd
 
                     highlights.WhichKeyNormal.bg = NONE
