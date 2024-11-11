@@ -162,6 +162,9 @@ return {
                 action_palette = {
                     provider = "telescope",
                 },
+                chat = {
+                    render_headers = false,
+                },
                 diff = {
                     provider = "mini_diff",
                 },

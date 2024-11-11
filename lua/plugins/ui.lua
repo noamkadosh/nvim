@@ -468,7 +468,7 @@ return {
 
     {
         "MeanderingProgrammer/render-markdown.nvim",
-        ft = { "markdown", "mdx", "codcompanion" },
+        ft = { "markdown", "mdx", "codecompanion" },
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
             "nvim-tree/nvim-web-devicons",
