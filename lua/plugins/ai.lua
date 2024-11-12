@@ -130,6 +130,15 @@ return {
                         }
                     )
                 end,
+                copilot = function()
+                    return require("codecompanion.adapters").extend("copilot", {
+                        schema = {
+                            model = {
+                                default = "claude-3.5-sonnet",
+                            },
+                        },
+                    })
+                end,
                 openrouter = function()
                     return require("codecompanion.adapters").extend("openai", {
                         env = {
@@ -171,7 +180,7 @@ return {
             },
             strategies = {
                 chat = {
-                    adapter = "openrouter",
+                    adapter = "copilot",
                     slash_commands = {
                         ["buffer"] = {
                             opts = {
@@ -196,10 +205,10 @@ return {
                     },
                 },
                 inline = {
-                    adapter = "openrouter",
+                    adapter = "copilot",
                 },
                 agent = {
-                    adapter = "openrouter",
+                    adapter = "copilot",
                 },
             },
         },
