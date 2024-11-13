@@ -16,7 +16,7 @@ return {
         config = function()
             local lsp_zero = require("lsp-zero")
 
-            local lsp_attach = function(_client, bufnr)
+            local lsp_attach = function(_, bufnr)
                 lsp_zero.default_keymaps({ buffer = bufnr })
 
                 vim.keymap.set({ "n", "x" }, "<leader>f", function()
@@ -346,7 +346,6 @@ return {
         },
         config = function(_, opts)
             require("lspsaga").setup(opts)
-            local colors = require("tokyonight.colors")
             vim.api.nvim_set_hl(
                 0,
                 "SagaActionTitle",
