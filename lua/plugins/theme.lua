@@ -12,133 +12,122 @@ return {
                     auto = true,
                 },
                 on_colors = function(_colors) end,
-                on_highlights = function(highlights, colors)
+                on_highlights = function(hl, colors)
                     local util = require("tokyonight.util")
                     ---@diagnostic disable-next-line: undefined-field
                     local NONE = colors.NONE
 
-                    highlights.Yanked =
-                        { bg = util.darken(colors.orange, 0.15) }
-                    highlights.HighlightUndo = { bg = highlights.DiffDelete.bg }
-                    highlights.HighlightRedo = { bg = highlights.DiffAdd.bg }
+                    hl.Yanked = { bg = util.darken(colors.orange, 0.15) }
+                    hl.HighlightUndo = { bg = hl.DiffDelete.bg }
+                    hl.HighlightRedo = { bg = hl.DiffAdd.bg }
 
-                    highlights.gradient1 = { fg = "#1ABC9C" }
-                    highlights.gradient2 = { fg = "#2EB3A5" }
-                    highlights.gradient3 = { fg = "#40AAAE" }
-                    highlights.gradient4 = { fg = "#53A1B6" }
-                    highlights.gradient5 = { fg = "#6598BF" }
-                    highlights.gradient6 = { fg = "#798EC8" }
-                    highlights.gradient7 = { fg = "#8B85D0" }
-                    highlights.gradient8 = { fg = "#9D7CD8" }
+                    hl.gradient1 = { fg = "#1ABC9C" }
+                    hl.gradient2 = { fg = "#2EB3A5" }
+                    hl.gradient3 = { fg = "#40AAAE" }
+                    hl.gradient4 = { fg = "#53A1B6" }
+                    hl.gradient5 = { fg = "#6598BF" }
+                    hl.gradient6 = { fg = "#798EC8" }
+                    hl.gradient7 = { fg = "#8B85D0" }
+                    hl.gradient8 = { fg = "#9D7CD8" }
 
-                    highlights.LineNr.fg = highlights.FoldColumn.fg
-                    highlights.LineNrAbove.fg = highlights.FoldColumn.fg
-                    highlights.LineNrBelow.fg = highlights.FoldColumn.fg
-                    highlights.CursorLineNr.fg = colors.blue
+                    hl.LineNr.fg = hl.FoldColumn.fg
+                    hl.LineNrAbove.fg = hl.FoldColumn.fg
+                    hl.LineNrBelow.fg = hl.FoldColumn.fg
+                    hl.CursorLineNr.fg = colors.blue
 
-                    highlights.NormalMode = { fg = colors.blue }
-                    highlights.InsertMode = { fg = colors.green }
-                    highlights.VisualMode = { fg = colors.magenta }
-                    highlights.CommandMode = { fg = colors.yellow }
-                    highlights.ReplaceMode = { fg = colors.magenta }
-                    highlights.SelectMode = { fg = colors.magenta }
-                    highlights.TerminalMode = { fg = colors.yellow }
-                    highlights.TerminalNormalMode = { fg = colors.yellow }
+                    hl.NormalMode = { fg = colors.blue }
+                    hl.InsertMode = { fg = colors.green }
+                    hl.VisualMode = { fg = colors.magenta }
+                    hl.CommandMode = { fg = colors.yellow }
+                    hl.ReplaceMode = { fg = colors.magenta }
+                    hl.SelectMode = { fg = colors.magenta }
+                    hl.TerminalMode = { fg = colors.yellow }
+                    hl.TerminalNormalMode = { fg = colors.yellow }
 
-                    highlights.Comment.fg = highlights.FoldColumn.fg
-                    highlights.NormalFloat = { bg = NONE }
-                    highlights.FloatTitle = { bg = NONE }
-                    highlights.FloatBorder =
-                        { bg = NONE, fg = highlights.FloatBorder.fg }
-                    highlights.LspInfoBorder.bg = NONE
-                    highlights.LspInlayHint =
-                        { fg = highlights.FoldColumn.fg, bg = NONE }
-                    highlights.LspCodeLens =
-                        { fg = highlights.FoldColumn.fg, bg = NONE }
+                    hl.Comment.fg = hl.FoldColumn.fg
+                    hl.NormalFloat = { bg = NONE }
+                    hl.FloatTitle = { bg = NONE }
+                    hl.FloatBorder = { bg = NONE, fg = hl.FloatBorder.fg }
+                    hl.LspInfoBorder.bg = NONE
+                    hl.LspInlayHint = { fg = hl.FoldColumn.fg, bg = NONE }
+                    hl.LspCodeLens = { fg = hl.FoldColumn.fg, bg = NONE }
 
-                    highlights.DiagnosticVirtualTextError.bg = NONE
-                    highlights.DiagnosticVirtualTextWarn.bg = NONE
-                    highlights.DiagnosticVirtualTextInfo.bg = NONE
-                    highlights.DiagnosticVirtualTextHint.bg = NONE
+                    hl.DiagnosticVirtualTextError.bg = NONE
+                    hl.DiagnosticVirtualTextWarn.bg = NONE
+                    hl.DiagnosticVirtualTextInfo.bg = NONE
+                    hl.DiagnosticVirtualTextHint.bg = NONE
 
-                    highlights.DiagnosticFloatingError =
+                    hl.DiagnosticFloatingError =
                         { bg = NONE, fg = colors.error }
-                    highlights.DiagnosticFloatingWarn =
+                    hl.DiagnosticFloatingWarn =
                         { bg = NONE, fg = colors.warning }
-                    highlights.DiagnosticFloatingInfo =
-                        { bg = NONE, fg = colors.info }
-                    highlights.DiagnosticFloatingHint =
-                        { bg = NONE, fg = colors.hint }
+                    hl.DiagnosticFloatingInfo = { bg = NONE, fg = colors.info }
+                    hl.DiagnosticFloatingHint = { bg = NONE, fg = colors.hint }
 
-                    highlights.TelescopeNormal = {
+                    hl.TelescopeNormal = {
                         bg = NONE,
-                        fg = highlights.TelescopeNormal.fg,
+                        fg = hl.TelescopeNormal.fg,
                     }
-                    highlights.TelescopePromptTitle = highlights.TelescopeTitle
-                    highlights.TelescopeBorder = {
+                    hl.TelescopePromptTitle = hl.TelescopeTitle
+                    hl.TelescopeBorder = {
                         bg = NONE,
-                        fg = highlights.TelescopeBorder.fg,
+                        fg = hl.TelescopeBorder.fg,
                     }
-                    highlights.TelescopePromptBorder =
-                        highlights.TelescopeBorder
-                    highlights.SagaLightBulb = { fg = colors.yellow }
-                    highlights.SagaBeacon = { bg = colors.red }
+                    hl.TelescopePromptBorder = hl.TelescopeBorder
+                    hl.SagaLightBulb = { fg = colors.yellow }
+                    hl.SagaBeacon = { bg = colors.red }
 
-                    highlights.RainbowRed = { fg = colors.red }
-                    highlights.RainbowYellow = { fg = colors.yellow }
-                    highlights.RainbowGreen = { fg = colors.green }
-                    highlights.RainbowTeal = { fg = colors.teal }
-                    highlights.RainbowBlue = { fg = colors.blue }
-                    highlights.RainbowMagenta = { fg = colors.magenta }
-                    highlights.RainbowPurple = { fg = colors.purple }
+                    hl.RainbowRed = { fg = colors.red }
+                    hl.RainbowYellow = { fg = colors.yellow }
+                    hl.RainbowGreen = { fg = colors.green }
+                    hl.RainbowTeal = { fg = colors.teal }
+                    hl.RainbowBlue = { fg = colors.blue }
+                    hl.RainbowMagenta = { fg = colors.magenta }
+                    hl.RainbowPurple = { fg = colors.purple }
 
-                    highlights.RainbowLightRed =
+                    hl.RainbowLightRed =
                         { fg = util.blend(colors.red, 0.5, colors.bg) }
-                    highlights.RainbowLightYellow =
+                    hl.RainbowLightYellow =
                         { fg = util.blend(colors.yellow, 0.5, colors.bg) }
-                    highlights.RainbowLightGreen =
+                    hl.RainbowLightGreen =
                         { fg = util.blend(colors.green, 0.5, colors.bg) }
-                    highlights.RainbowLightTeal =
+                    hl.RainbowLightTeal =
                         { fg = util.blend(colors.teal, 0.5, colors.bg) }
-                    highlights.RainbowLightBlue =
+                    hl.RainbowLightBlue =
                         { fg = util.blend(colors.blue, 0.5, colors.bg) }
-                    highlights.RainbowLightMagenta =
+                    hl.RainbowLightMagenta =
                         { fg = util.blend(colors.magenta, 0.5, colors.bg) }
-                    highlights.RainbowLightPurple =
+                    hl.RainbowLightPurple =
                         { fg = util.blend(colors.purple, 0.5, colors.bg) }
 
-                    highlights.TreesitterContext =
-                        { bg = NONE, fg = highlights.NormalFloat.fg }
-                    highlights.TreesitterContextLineNumber =
-                        { bg = NONE, fg = highlights.LineNr.fg }
+                    hl.TreesitterContext = { bg = NONE, fg = hl.NormalFloat.fg }
+                    hl.TreesitterContextLineNumber =
+                        { bg = NONE, fg = hl.LineNr.fg }
 
-                    highlights.StatusLine = { bg = NONE }
-                    highlights.StatusLineSeparator = {
-                        fg = highlights.FoldColumn.fg,
+                    hl.StatusLine = { bg = NONE }
+                    hl.StatusLineSeparator = {
+                        fg = hl.FoldColumn.fg,
                         bg = NONE,
                     }
 
-                    highlights.HarpoonInactive =
-                        { fg = colors.comment, bg = NONE }
-                    highlights.HarpoonNumberInactive =
-                        { fg = colors.blue, bg = NONE }
-                    highlights.HarpoonActive = { fg = colors.fg, bg = NONE }
-                    highlights.HarpoonNumberActive =
-                        { fg = colors.blue, bg = NONE }
-                    highlights.TabLineFill = { fg = colors.fg, bg = NONE }
+                    hl.HarpoonInactive = { fg = colors.comment, bg = NONE }
+                    hl.HarpoonNumberInactive = { fg = colors.blue, bg = NONE }
+                    hl.HarpoonActive = { fg = colors.fg, bg = NONE }
+                    hl.HarpoonNumberActive = { fg = colors.blue, bg = NONE }
+                    hl.TabLineFill = { fg = colors.fg, bg = NONE }
 
-                    highlights.SpectreHeader = highlights.FoldColumn
-                    highlights.SpectreBody = highlights.String
-                    highlights.SpectreFile = highlights.Keyword
-                    highlights.SpectreDir = highlights.FoldColumn
-                    highlights.SpectreSearch = highlights.DiffDelete
-                    highlights.SpectreBorder = highlights.FoldColumn
-                    highlights.SpectreReplace = highlights.DiffAdd
+                    hl.SpectreHeader = hl.FoldColumn
+                    hl.SpectreBody = hl.String
+                    hl.SpectreFile = hl.Keyword
+                    hl.SpectreDir = hl.FoldColumn
+                    hl.SpectreSearch = hl.DiffDelete
+                    hl.SpectreBorder = hl.FoldColumn
+                    hl.SpectreReplace = hl.DiffAdd
 
-                    highlights.WhichKeyNormal.bg = NONE
-                    highlights.TroubleNormal.bg = NONE
+                    hl.WhichKeyNormal.bg = NONE
+                    hl.TroubleNormal.bg = NONE
 
-                    highlights.CmpItemKindCopilot = {
+                    hl.CmpItemKindCopilot = {
                         fg = "#4cb4a5",
                         bg = NONE,
                     }

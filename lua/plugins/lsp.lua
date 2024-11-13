@@ -339,10 +339,20 @@ return {
                 show_file = false,
             },
             ui = {
-                code_action = "󱠂",
                 border = "rounded",
+                button = { " ", " " },
+                code_action = "󱠂 ",
             },
         },
+        config = function(_, opts)
+            require("lspsaga").setup(opts)
+            local colors = require("tokyonight.colors")
+            vim.api.nvim_set_hl(
+                0,
+                "SagaActionTitle",
+                { fg = "#27a1b9", bg = nil }
+            )
+        end,
     },
 
     {
