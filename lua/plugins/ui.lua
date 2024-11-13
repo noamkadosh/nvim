@@ -32,10 +32,10 @@ return {
                         {
                             "diagnostics",
                             symbols = {
-                                error = " ",
-                                warn = " ",
-                                hint = " ",
-                                info = " ",
+                                error = " ",
+                                warn = " ",
+                                hint = " ",
+                                info = " ",
                             },
                             update_in_insert = true,
                         },
