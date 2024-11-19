@@ -152,21 +152,6 @@ return {
     },
 
     {
-        "yamatsum/nvim-cursorline",
-        event = { "BufReadPost", "BufNewFile" },
-        opts = {
-            cursorline = {
-                enable = true,
-                timeout = 0,
-                number = false,
-            },
-            cursorword = {
-                enable = false,
-            },
-        },
-    },
-
-    {
         "folke/noice.nvim",
         dependencies = {
             "MunifTanjim/nui.nvim",

@@ -162,6 +162,7 @@ return {
         event = { "BufReadPost", "BufNewFile" },
         init = function()
             vim.o.cursorline = true
+            vim.o.cursorcolumn = true
             vim.o.number = true
             vim.o.termguicolors = true
         end,
