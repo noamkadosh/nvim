@@ -21,14 +21,16 @@ return {
                     hl.HighlightUndo = { bg = hl.DiffDelete.bg }
                     hl.HighlightRedo = { bg = hl.DiffAdd.bg }
 
-                    hl.gradient1 = { fg = "#1ABC9C" }
-                    hl.gradient2 = { fg = "#2EB3A5" }
-                    hl.gradient3 = { fg = "#40AAAE" }
-                    hl.gradient4 = { fg = "#53A1B6" }
-                    hl.gradient5 = { fg = "#6598BF" }
-                    hl.gradient6 = { fg = "#798EC8" }
-                    hl.gradient7 = { fg = "#8B85D0" }
-                    hl.gradient8 = { fg = "#9D7CD8" }
+                    hl.DashboardHeaderGradient1 = { fg = "#1ABC9C" }
+                    hl.DashboardHeaderGradient2 = { fg = "#2EB3A5" }
+                    hl.DashboardHeaderGradient3 = { fg = "#40AAAE" }
+                    hl.DashboardHeaderGradient4 = { fg = "#53A1B6" }
+                    hl.DashboardHeaderGradient5 = { fg = "#6598BF" }
+                    hl.DashboardHeaderGradient6 = { fg = "#798EC8" }
+                    hl.DashboardHeaderGradient7 = { fg = "#8B85D0" }
+                    hl.DashboardHeaderGradient8 = { fg = "#9D7CD8" }
+
+                    hl.SnacksDashboardSpecial = { fg = colors.yellow, bg = NONE }
 
                     hl.LineNr.fg = hl.FoldColumn.fg
                     hl.LineNrAbove.fg = hl.FoldColumn.fg

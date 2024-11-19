@@ -101,16 +101,9 @@ return {
 
     {
         "kevinhwang91/nvim-ufo",
+        lazy = true,
         event = { "BufReadPost", "BufNewFile" },
         dependencies = "kevinhwang91/promise-async",
-        init = function()
-            vim.o.foldcolumn = "1"
-            vim.o.foldlevel = 99
-            vim.o.foldlevelstart = 99
-            vim.o.foldenable = true
-            vim.o.fillchars =
-                [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-        end,
         keys = function()
             local ufo = require("ufo")
 
@@ -341,33 +334,6 @@ return {
     },
 
     {
-        "folke/snacks.nvim",
-        priority = 1000,
-        lazy = false,
-        opts = {
-            notifier = {
-                style = "compact",
-            },
-            statuscolumn = {
-                left = { "sign", "git", "mark" },
-                right = { "fold" },
-                folds = {
-                    open = true,
-                    git_hl = false,
-                },
-                git = {
-                    patterns = { "GitSign", "MiniDiffSign" },
-                },
-                refresh = 50,
-            },
-            words = {
-                enabled = true,
-                debounce = 100,
-            },
-        },
-    },
-
-    {
         "zbirenbaum/neodim",
         event = "LspAttach",
         opts = {
@@ -402,28 +368,5 @@ return {
             archives_dir = vim.fn.stdpath("cache") .. "/fundo",
             limit_archives_size = 128,
         },
-    },
-
-    {
-        "ahmedkhalf/project.nvim",
-        lazy = true,
-        config = function()
-            require("project_nvim").setup({
-                manual_mode = true,
-                detection_methods = { "lsp", "pattern" },
-                patterns = {
-                    "lazy-lock.json",
-                    ".git",
-                    "cargo.toml",
-                    "!^package.json",
-                    "package.json",
-                },
-                ignore_lsp = {},
-                exclude_dirs = {},
-                show_hidden = false,
-                silent_chdir = false,
-                datapath = vim.fn.stdpath("data"),
-            })
-        end,
     },
 }

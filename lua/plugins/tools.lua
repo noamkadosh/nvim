@@ -55,7 +55,7 @@ return {
         lazy = true,
         version = "^5",
         ft = "rust",
-        init = function()
+        config = function()
             local path = vim.fn.glob(
                 vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/"
             ) or ""

@@ -13,7 +13,6 @@ return {
             "tzachar/fuzzy.nvim",
             "AckslD/nvim-neoclip.lua",
             "folke/noice.nvim",
-            "ahmedkhalf/project.nvim",
         },
         keys = function()
             local telescope = require("telescope")
@@ -119,7 +118,6 @@ return {
             telescope.load_extension("neoclip")
             telescope.load_extension("noice")
             telescope.load_extension("persisted")
-            telescope.load_extension("projects")
             telescope.load_extension("ui-select")
             telescope.load_extension("undo")
         end,
