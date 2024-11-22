@@ -123,6 +123,7 @@ return {
                                 },
                             },
                             {
+                                cwd = vim.fn.getcwd(),
                                 indent = 2,
                                 padding = 1,
                                 section = "recent_files",
