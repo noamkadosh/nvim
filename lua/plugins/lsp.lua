@@ -11,7 +11,6 @@ return {
             "hrsh7th/nvim-cmp",
             "L3MON4D3/LuaSnip",
             "glepnir/lspsaga.nvim",
-            "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         },
         config = function()
             local lsp_zero = require("lsp-zero")
@@ -355,9 +354,21 @@ return {
     },
 
     {
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        lazy = true,
-        opts = {},
+        "rachartier/tiny-inline-diagnostic.nvim",
+        event = "LspAttach",
+        priority = 1000,
+        opts = {
+            options = {
+                show_source = true,
+                multiple_diag_under_cursor = true,
+                multilines = true,
+                show_all_diags_on_cursorline = true,
+                enable_on_insert = true,
+                virt_texts = {
+                    priority = 90,
+                },
+            },
+        },
     },
 
     {

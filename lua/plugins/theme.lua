@@ -11,7 +11,7 @@ return {
                 plugins = {
                     auto = true,
                 },
-                on_colors = function(_colors) end,
+                on_colors = function(_) end,
                 on_highlights = function(hl, colors)
                     local util = require("tokyonight.util")
                     ---@diagnostic disable-next-line: undefined-field
@@ -30,7 +30,8 @@ return {
                     hl.DashboardHeaderGradient7 = { fg = "#8B85D0" }
                     hl.DashboardHeaderGradient8 = { fg = "#9D7CD8" }
 
-                    hl.SnacksDashboardSpecial = { fg = colors.yellow, bg = NONE }
+                    hl.SnacksDashboardSpecial =
+                        { fg = colors.yellow, bg = NONE }
 
                     hl.LineNr.fg = hl.FoldColumn.fg
                     hl.LineNrAbove.fg = hl.FoldColumn.fg
