@@ -113,6 +113,7 @@ return {
             })
 
             require("mason-lspconfig").setup({
+                automatic_installation = true,
                 ensure_installed = {
                     "astro",
                     "cssls",
@@ -246,7 +247,7 @@ return {
                     "actionlint",
                     "golangci_lint",
                     "hadolint",
-                    "prettierd",
+                    "prettier",
                     "selene",
                     -- "stylelint",
                     "stylua",
@@ -358,14 +359,16 @@ return {
         event = "LspAttach",
         priority = 1000,
         opts = {
+            preset = "modern",
             options = {
                 show_source = true,
                 multiple_diag_under_cursor = true,
                 multilines = true,
                 show_all_diags_on_cursorline = true,
                 enable_on_insert = true,
+                use_icons_from_diagnostic = true,
                 virt_texts = {
-                    priority = 90,
+                    priority = 80,
                 },
             },
         },

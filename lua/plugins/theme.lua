@@ -6,7 +6,19 @@ return {
         config = function()
             require("tokyonight").setup({
                 style = "night",
-                transparent = true,
+                light_style = "day",
+                transparent = false,
+                terminal_colors = true,
+                styles = {
+                    comments = { italic = true },
+                    keywords = { italic = true },
+                    functions = {},
+                    variables = {},
+                    sidebars = "dark",
+                    floats = "dark",
+                },
+                day_brightness = 0.3,
+                dim_inactive = false,
                 lualine_bold = true,
                 plugins = {
                     auto = true,
@@ -46,6 +58,16 @@ return {
                     hl.SelectMode = { fg = colors.magenta }
                     hl.TerminalMode = { fg = colors.yellow }
                     hl.TerminalNormalMode = { fg = colors.yellow }
+
+                    hl.NormalMoody = { fg = hl.NormalMode.fg }
+                    hl.InsertMoody = { fg = hl.InsertMode.fg }
+                    hl.VisualMoody = { fg = hl.VisualMode.fg }
+                    hl.CommandMoody = { fg = hl.CommandMode.fg }
+                    hl.OperatorMoody = { fg = hl.InsertMode.fg }
+                    hl.ReplaceMoody = { fg = hl.ReplaceMode.fg }
+                    hl.SelectMoody = { fg = hl.SelectMode.fg }
+                    hl.TerminalMoody = { fg = hl.TerminalMode.fg }
+                    hl.TerminalNormalMoody = { fg = hl.TerminalNormalMode.fg }
 
                     hl.Comment.fg = hl.FoldColumn.fg
                     hl.NormalFloat = { bg = NONE }
@@ -135,6 +157,7 @@ return {
                         bg = NONE,
                     }
                 end,
+                cache = true,
             })
             -- load the colorscheme here
             vim.cmd.colorscheme("tokyonight-night")
@@ -170,5 +193,28 @@ return {
             vim.o.termguicolors = true
         end,
         opts = {},
+    },
+
+    {
+        "svampkorg/moody.nvim",
+        event = { "ModeChanged", "BufWinEnter", "WinEnter" },
+        dependencies = {
+            "folke/tokyonight.nvim",
+        },
+        opts = {
+            disabled_filetypes = { "TelescopePrompt" },
+            recording = {
+                enabled = false,
+                icon = "󰑋",
+                pre_registry_text = "[",
+                post_registry_text = "]",
+                right_padding = 2,
+            },
+            extend_to_linenr = true,
+            extend_to_linenr_visual = false,
+            fold_options = {
+                enabled = false,
+            },
+        },
     },
 }

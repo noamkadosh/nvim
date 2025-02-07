@@ -126,7 +126,7 @@ return {
             "javascriptreact",
         },
         opts = {
-            root_dir = require("lspconfig").util.root_pattern("package.json"),
+            root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json"),
             single_file_support = false,
             settings = {
                 tsserver_path = "/Users/noam/.volta/tools/image/packages/typescript/lib/node_modules/typescript/lib/tsserver.js",

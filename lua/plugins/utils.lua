@@ -1,3 +1,4 @@
+-- stylua: ignore start
 local header = {
     {" ██████   █████                   █████   █████  ███                 \n", hl = "DashboardHeaderGradient1"},
     {"░░██████ ░░███                   ░░███   ░░███  ░░░                  \n", hl = "DashboardHeaderGradient2"},
@@ -8,6 +9,7 @@ local header = {
     {" █████  ░░█████░░██████ ░░██████     ░░███      █████ █████░███ █████\n", hl = "DashboardHeaderGradient7"},
     {"░░░░░    ░░░░░  ░░░░░░   ░░░░░░       ░░░      ░░░░░ ░░░░░ ░░░ ░░░░░ \n", hl = "DashboardHeaderGradient8"}
 }
+-- stylua: ignore end
 
 local helpers = require("helpers.dashboard")
 
@@ -85,15 +87,18 @@ return {
                                 align = "center",
                                 text = {
                                     { "🗓️ " },
-                                    { helpers.get_date(), hl = "RainbowPurple" },
+                                    {
+                                        helpers.get_date(),
+                                        hl = "RainbowPurple",
+                                    },
                                 },
                             },
                             { section = "startup", padding = 1 },
                         },
                         -- === Current Projcet Section ===
                         {
-                            enabled = string.len(current_project) > 0
-                                and vim.o.lines > 30,
+                            enabled = string.len(current_project) > 0,
+                            hidden = vim.o.lines <= 30,
                             {
                                 align = "center",
                                 text = {
@@ -146,7 +151,7 @@ return {
                         },
                         -- === Quick Actions Section ===
                         {
-                            enabled = vim.o.lines > 40,
+                            hidden = vim.o.lines <= 40,
                             {
                                 align = "center",
                                 text = {

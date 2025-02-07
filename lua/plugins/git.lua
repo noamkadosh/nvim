@@ -11,8 +11,28 @@ return {
             local gs = require("gitsigns")
 
             return {
-                { "]h", gs.next_hunk, desc = "Next Hunk" },
-                { "[h", gs.prev_hunk, desc = "Prev Hunk" },
+                {
+                    "]h",
+                    function()
+                        if vim.wo.diff then
+                            vim.cmd.normal({ "]c", bang = true })
+                        else
+                            gs.nav_hunk("next")
+                        end
+                    end,
+                    desc = "Next Hunk",
+                },
+                {
+                    "[h",
+                    function()
+                        if vim.wo.diff then
+                            vim.cmd.normal({ "[c", bang = true })
+                        else
+                            gs.nav_hunk("prev")
+                        end
+                    end,
+                    desc = "Prev Hunk",
+                },
                 {
                     "<leader>gs",
                     ":Gitsigns stage_hunk<CR>",
@@ -26,13 +46,13 @@ return {
                     desc = "Reset Hunk",
                 },
                 { "<leader>gS", gs.stage_buffer, desc = "Stage Buffer" },
-                {
-                    "<leader>gu",
-                    gs.undo_stage_hunk,
-                    desc = "Undo Stage Hunk",
-                },
                 { "<leader>gR", gs.reset_buffer, desc = "Reset Buffer" },
                 { "<leader>gp", gs.preview_hunk, desc = "Preview Hunk" },
+                {
+                    "<leader>gi",
+                    gs.preview_hunk_inline,
+                    desc = "Preview Hunk Inline",
+                },
                 {
                     "<leader>gb",
                     function()
@@ -58,9 +78,6 @@ return {
         end,
         opts = {
             current_line_blame = true,
-            current_line_blame_opts = {
-                delay = 0,
-            },
             current_line_blame_formatter = function(_, blame_info, _)
                 local helpers = require("helpers")
 

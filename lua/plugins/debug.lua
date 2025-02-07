@@ -25,22 +25,6 @@ return {
 
             return {
                 {
-                    "<leader>da",
-                    function()
-                        if vim.fn.filereadable(".vscode/launch.json") then
-                            local dap_vscode = require("dap.ext.vscode")
-                            dap_vscode.load_launchjs(nil, {
-                                ["pwa-node"] = js_flavors,
-                                ["node"] = js_flavors,
-                                ["chrome"] = js_flavors,
-                                ["pwa-chrome"] = js_flavors,
-                            })
-                        end
-                        dap.continue()
-                    end,
-                    desc = "Run with Args",
-                },
-                {
                     "<leader>db",
                     dap.toggle_breakpoint,
                     desc = "toggle breakpoint",
