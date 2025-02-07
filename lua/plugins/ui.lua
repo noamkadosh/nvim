@@ -3,6 +3,7 @@ return {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
         dependencies = {
+            "nvim-lualine/lualine.nvim",
             { "dokwork/lualine-ex" },
             "nvim-lua/plenary.nvim",
             "kyazdani42/nvim-web-devicons",
@@ -261,58 +262,8 @@ return {
     },
 
     {
-        "nmac427/guess-indent.nvim",
-        event = { "BufReadPost", "BufNewFile" },
-        opts = {},
-    },
-
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        event = { "BufReadPost", "BufNewFile" },
-        dependencies = {
-            "https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git",
-        },
-        init = function()
-            vim.opt.list = true
-        end,
-        config = function()
-            local hooks = require("ibl.hooks")
-
-            require("ibl").setup({
-                indent = {
-                    highlight = {
-                        "RainbowLightRed",
-                        "RainbowLightYellow",
-                        "RainbowLightGreen",
-                        "RainbowLightTeal",
-                        "RainbowLightBlue",
-                        "RainbowLightMagenta",
-                        "RainbowLightPurple",
-                    },
-                },
-                scope = {
-                    highlight = {
-                        "RainbowRed",
-                        "RainbowYellow",
-                        "RainbowGreen",
-                        "RainbowTeal",
-                        "RainbowBlue",
-                        "RainbowMagenta",
-                        "RainbowPurple",
-                    },
-                },
-            })
-
-            hooks.register(
-                hooks.type.SCOPE_HIGHLIGHT,
-                hooks.builtin.scope_highlight_from_extmark
-            )
-        end,
-    },
-
-    {
         "https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git",
-        lazy = true,
+        event = { "BufReadPost", "BufNewFile" },
         config = function()
             require("rainbow-delimiters")
             vim.g.rainbow_delimiters = {

@@ -368,7 +368,7 @@ return {
                 enable_on_insert = true,
                 use_icons_from_diagnostic = true,
                 virt_texts = {
-                    priority = 80,
+                    priority = 110,
                 },
             },
         },

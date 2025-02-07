@@ -27,6 +27,10 @@ return {
 
             return {
                 dashboard = {
+                    formats = {
+                        header = { "%s", align = "center" },
+                        key = { "%s", hl = "RainbowRed" },
+                    },
                     preset = {
                         keys = {
                             {
@@ -74,10 +78,6 @@ return {
                             },
                         },
                         header = header,
-                    },
-                    formats = {
-                        header = { "%s", align = "center" },
-                        key = { "%s", hl = "RainbowRed" },
                     },
                     sections = {
                         { section = "header" },
@@ -167,6 +167,34 @@ return {
                         },
                     },
                 },
+                indent = {
+                    indent = {
+                        char = "▏",
+                        enabled = true,
+                        hl = {
+                            "RainbowLightRed",
+                            "RainbowLightYellow",
+                            "RainbowLightGreen",
+                            "RainbowLightTeal",
+                            "RainbowLightBlue",
+                            "RainbowLightMagenta",
+                            "RainbowLightPurple",
+                        },
+                    },
+                    scope = {
+                        char = "▎",
+                        enabled = true,
+                        hl = {
+                            "RainbowRed",
+                            "RainbowYellow",
+                            "RainbowGreen",
+                            "RainbowTeal",
+                            "RainbowBlue",
+                            "RainbowMagenta",
+                            "RainbowPurple",
+                        },
+                    },
+                },
                 notifier = {
                     style = "compact",
                 },
@@ -182,15 +210,15 @@ return {
                     },
                     refresh = 50,
                 },
-                words = {
-                    debounce = 100,
-                },
                 styles = {
                     dashboard = {
                         wo = {
                             cursorline = true,
                         },
                     },
+                },
+                words = {
+                    debounce = 100,
                 },
             }
         end,
