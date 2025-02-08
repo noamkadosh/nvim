@@ -6,7 +6,6 @@ return {
         lazy = false,
         dependencies = {
             "tsakirist/telescope-lazy.nvim",
-            "nvim-telescope/telescope-file-browser.nvim",
             "debugloop/telescope-undo.nvim",
             "nvim-telescope/telescope-ui-select.nvim",
             "nvim-telescope/telescope-fzf-native.nvim",
@@ -15,16 +14,10 @@ return {
             "folke/noice.nvim",
         },
         keys = function()
-            local telescope = require("telescope")
             local builtin = require("telescope.builtin")
             local themes = require("telescope.themes")
 
             return {
-                {
-                    "<leader>pv",
-                    telescope.extensions.file_browser.file_browser,
-                    desc = "File browser",
-                },
                 {
                     "<leader>pf",
                     builtin.find_files,
@@ -88,15 +81,6 @@ return {
                     ["ui-select"] = {
                         themes.get_dropdown({}),
                     },
-                    file_browser = {
-                        hidden = true,
-                        -- NOTE: lazy loading Telescope will cause the following setting not to work when opening folders in nvim
-                        hijack_netrw = true,
-                        path = "%:p:h",
-                        cwd_to_path = true,
-                        dir_icon = "󰝰 ",
-                        dir_icon_hl = "TelescopePersistedDir",
-                    },
                     fzf = {
                         override_generic_sorter = true,
                         override_file_sorter = true,
@@ -112,7 +96,6 @@ return {
                 },
             })
 
-            telescope.load_extension("file_browser")
             telescope.load_extension("fzf")
             telescope.load_extension("lazy")
             telescope.load_extension("neoclip")

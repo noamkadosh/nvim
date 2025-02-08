@@ -44,6 +44,8 @@ return {
 
                     hl.SnacksDashboardSpecial =
                         { fg = colors.yellow, bg = NONE }
+                    hl.SnacksPickerBoxTitle = { fg = "#c0caf5", bg = NONE }
+                    hl.SnacksPickerInputBorder = { fg = colors.border_highlight, bg = NONE }
 
                     hl.LineNr.fg = hl.FoldColumn.fg
                     hl.LineNrAbove.fg = hl.FoldColumn.fg

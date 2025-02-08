@@ -125,7 +125,7 @@ return {
                     "gopls",
                     "graphql",
                     "html",
-                    "htmx",
+                    -- "htmx",
                     "jsonls",
                     "lua_ls",
                     "marksman",

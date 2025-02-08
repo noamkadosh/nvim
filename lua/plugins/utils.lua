@@ -18,6 +18,17 @@ return {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
+        keys = function()
+            local snacks = require("snacks")
+
+            return {
+                {
+                    "<leader>pv",
+                    snacks.explorer.open,
+                    desc = "File browser",
+                },
+            }
+        end,
         opts = function()
             local snacks_git = require("snacks.git")
             -- HACK: adding "/hack" to the cwd so the get_root function detects the git root properly
@@ -97,16 +108,18 @@ return {
                         },
                         -- === Current Projcet Section ===
                         {
-                            enabled = string.len(current_project) > 0,
-                            hidden = vim.o.lines <= 30,
                             {
                                 align = "center",
+                                enabled = string.len(current_project) > 0,
+                                hidden = vim.o.lines <= 30,
                                 text = {
                                     { "  ", hl = "RainbowBlue" },
                                     { "Current Project", hl = "RainbowBlue" },
                                 },
                             },
                             {
+                                enabled = string.len(current_project) > 0,
+                                hidden = vim.o.lines <= 30,
                                 padding = 1,
                                 text = {
                                     string.match(
@@ -138,12 +151,14 @@ return {
                         {
                             {
                                 align = "center",
+                                hidden = vim.o.lines <= 40,
                                 text = {
                                     { "󰪺  ", hl = "RainbowBlue" },
                                     { "Recent Projects", hl = "RainbowBlue" },
                                 },
                             },
                             {
+                                hidden = vim.o.lines <= 40,
                                 indent = 2,
                                 padding = 1,
                                 section = "projects",
@@ -151,7 +166,6 @@ return {
                         },
                         -- === Quick Actions Section ===
                         {
-                            hidden = vim.o.lines <= 40,
                             {
                                 align = "center",
                                 text = {
@@ -167,6 +181,7 @@ return {
                         },
                     },
                 },
+                explorer = { enabled = true },
                 indent = {
                     indent = {
                         char = "▏",
@@ -197,6 +212,20 @@ return {
                 },
                 notifier = {
                     style = "compact",
+                },
+                picker = {
+                    enabled = true,
+                    sources = {
+                        explorer = {
+                            auto_close = true,
+                            layout = {
+                                preset = "default",
+                                preview = true,
+                                layout = { height = 1000, width = 1000 },
+                            },
+                            matcher = { fuzzy = true },
+                        },
+                    },
                 },
                 statuscolumn = {
                     left = { "sign", "git", "mark" },
