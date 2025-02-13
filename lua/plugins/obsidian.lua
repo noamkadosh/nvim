@@ -1,4 +1,5 @@
 return {
+    -- TODO: create a picker for this plugin using snacks picker
     {
         "epwalsh/obsidian.nvim",
         event = {
@@ -7,7 +8,6 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
             "hrsh7th/nvim-cmp",
-            "nvim-telescope/telescope.nvim",
             "nvim-treesitter/nvim-treesitter",
         },
         keys = {
@@ -46,7 +46,7 @@ return {
                 vim.fn.jobstart({ "open", url }) -- Mac OS
                 -- vim.fn.jobstart({"xdg-open", url})  -- linux
             end,
-            finder = "telescope.nvim",
+            -- finder = "telescope.nvim",
         },
     },
 }

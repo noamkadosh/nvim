@@ -90,17 +90,6 @@ return {
                         { bg = NONE, fg = colors.warning }
                     hl.DiagnosticFloatingInfo = { bg = NONE, fg = colors.info }
                     hl.DiagnosticFloatingHint = { bg = NONE, fg = colors.hint }
-
-                    hl.TelescopeNormal = {
-                        bg = NONE,
-                        fg = hl.TelescopeNormal.fg,
-                    }
-                    hl.TelescopePromptTitle = hl.TelescopeTitle
-                    hl.TelescopeBorder = {
-                        bg = NONE,
-                        fg = hl.TelescopeBorder.fg,
-                    }
-                    hl.TelescopePromptBorder = hl.TelescopeBorder
                     hl.SagaLightBulb = { fg = colors.yellow }
                     hl.SagaBeacon = { bg = colors.red }
 
@@ -204,7 +193,6 @@ return {
             "folke/tokyonight.nvim",
         },
         opts = {
-            disabled_filetypes = { "TelescopePrompt" },
             recording = {
                 enabled = false,
                 icon = "󰑋",

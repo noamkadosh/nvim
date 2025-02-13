@@ -11,8 +11,6 @@ return {
             "petertriho/cmp-git",
             "saadparwaiz1/cmp_luasnip",
             "hrsh7th/cmp-nvim-lua",
-            "tzachar/cmp-fuzzy-buffer",
-            "tzachar/cmp-fuzzy-path",
             "zbirenbaum/copilot.lua",
 
             -- LSP Icons
@@ -75,12 +73,6 @@ return {
                     {
                         name = "luasnip",
                     },
-                    {
-                        name = "fuzzy_buffer",
-                    },
-                    {
-                        name = "fuzzy_path",
-                    },
                 }, {
                     {
                         name = "buffer",
@@ -96,8 +88,6 @@ return {
                         menu = {
                             buffer = "[Buffer]",
                             copilot = "[AI]",
-                            fuzzy_buffer = "[Fuzzy Buffer]",
-                            fuzzy_path = "[Fuzzy Path]",
                             latex_symbols = "[Latex]",
                             luasnip = "[LuaSnip]",
                             nvim_lsp = "[LSP]",
@@ -117,8 +107,6 @@ return {
                     comparators = {
                         copilot_cmp_comparators.prioritize,
                         copilot_cmp_comparators.score,
-                        require("cmp_fuzzy_path.compare"),
-                        require("cmp_fuzzy_buffer.compare"),
                         compare.offset,
                         compare.exact,
                         compare.scopes,
@@ -147,20 +135,11 @@ return {
 
             cmp.setup.cmdline({ "/", "?" }, {
                 mapping = cmp.mapping.preset.cmdline(),
-                sources = {
-                    {
-                        name = "fuzzy_buffer",
-                    },
-                },
             })
 
             cmp.setup.cmdline(":", {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = cmp.config.sources({
-                    {
-                        name = "fuzzy_path",
-                    },
-                }, {
                     {
                         name = "cmdline",
                         option = {
@@ -185,12 +164,12 @@ return {
         end,
     },
 
+    -- TODO: create a snacks picker for snippets
     {
         "L3MON4D3/LuaSnip",
         event = { "BufReadPost", "BufNewFile" },
         dependencies = {
             "rafamadriz/friendly-snippets",
-            "benfowler/telescope-luasnip.nvim",
         },
         config = function()
             local luasnip = require("luasnip")
@@ -205,14 +184,6 @@ return {
             luasnip.filetype_extend("lua", { "luadoc" })
             luasnip.filetype_extend("rust", { "rustdoc" })
             luasnip.filetype_extend("sh", { "shelldoc" })
-        end,
-    },
-
-    {
-        "benfowler/telescope-luasnip.nvim",
-        lazy = true,
-        config = function()
-            require("telescope").load_extension("luasnip")
         end,
     },
 

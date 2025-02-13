@@ -5,7 +5,6 @@ return {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
             "hrsh7th/nvim-cmp",
-            "nvim-telescope/telescope.nvim",
         },
         init = function()
             vim.cmd([[cab cc CodeCompanion]])
@@ -164,9 +163,6 @@ return {
                 end,
             },
             display = {
-                action_palette = {
-                    provider = "telescope",
-                },
                 chat = {
                     render_headers = false,
                 },
@@ -177,28 +173,6 @@ return {
             strategies = {
                 chat = {
                     adapter = "copilot",
-                    slash_commands = {
-                        ["buffer"] = {
-                            opts = {
-                                provider = "telescope",
-                            },
-                        },
-                        ["file"] = {
-                            opts = {
-                                provider = "telescope",
-                            },
-                        },
-                        ["help"] = {
-                            opts = {
-                                provider = "telescope",
-                            },
-                        },
-                        ["symbols"] = {
-                            opts = {
-                                provider = "telescope",
-                            },
-                        },
-                    },
                 },
                 inline = {
                     adapter = "copilot",

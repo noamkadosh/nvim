@@ -12,7 +12,7 @@ return {
                 function()
                     require("which-key").show({ global = false })
                 end,
-                desc = "Buffer Local Keymaps (which-key)",
+                desc = "Buffer Local Keymaps",
             },
         },
         config = function()
@@ -23,10 +23,10 @@ return {
             })
 
             which_key.add({
-                { "<leader>b", group = "Buffer" },
                 { "<leader>c", group = "Code actions" },
                 { "<leader>d", group = "Debug" },
-                { "<leader>g", group = "Git" },
+                { "<leader>g", group = "Git Actions" },
+                { "<leader>G", group = "Git" },
                 { "<leader>n", group = "Notifications" },
                 { "<leader>o", group = "Session" },
                 { "<leader>p", group = "File browser" },
@@ -70,12 +70,12 @@ return {
         keys = function()
             local keys = {
                 {
-                    "<leader>h",
+                    "<leader>ha",
                     "<cmd>lua require('harpoon.mark').add_file()<cr>",
                     desc = "Mark file with harpoon",
                 },
                 {
-                    "<leader>e",
+                    "<leader>ht",
                     "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>",
                     desc = "Toggle Harpoon quick menu",
                 },
@@ -144,6 +144,7 @@ return {
         opts = {},
     },
 
+    -- TODO: Create a custom snacks picker for persisted plugin
     {
         "olimorris/persisted.nvim",
         keys = {
@@ -166,14 +167,14 @@ return {
         config = function()
             require("persisted").setup({
                 use_git_branch = true,
-                telescope = {
-                    icons = {
-                        branch = require("nvim-web-devicons").get_icon("git")
-                            .. " ",
-                        dir = "󰝰 ",
-                        selected = " ",
-                    },
-                },
+                -- telescope = {
+                --     icons = {
+                --         branch = require("nvim-web-devicons").get_icon("git")
+                --             .. " ",
+                --         dir = "󰝰 ",
+                --         selected = " ",
+                --     },
+                -- },
             })
 
             vim.o.sessionoptions =
@@ -305,7 +306,23 @@ return {
                 noremap = true,
             },
         },
-        opts = {},
+        opts = function(_, opts)
+            return vim.tbl_deep_extend("force", opts or {}, {
+                picker = {
+                    actions = require("trouble.sources.snacks").actions,
+                    win = {
+                        input = {
+                            keys = {
+                                ["<c-t>"] = {
+                                    "trouble_open",
+                                    mode = { "n", "i" },
+                                },
+                            },
+                        },
+                    },
+                },
+            })
+        end,
     },
 
     {
@@ -315,21 +332,6 @@ return {
             alpha = 0.4,
             blend_color = "#1A1B26",
         },
-    },
-
-    {
-        "AckslD/nvim-neoclip.lua",
-        event = { "BufReadPre", "BufNewFile" },
-        keys = {
-            {
-                "<leader>x",
-                "<cmd>Telescope neoclip<cr>",
-                desc = "Telescope Clipboard",
-            },
-        },
-        config = function()
-            require("neoclip").setup()
-        end,
     },
 
     {

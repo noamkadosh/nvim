@@ -8,11 +8,11 @@ local js_flavors = {
 }
 
 return {
+    -- TODO: create a snacks picker for the following: commands, configurations, list_breakpoints, variables and frames
     {
         "mfussenegger/nvim-dap",
         dependencies = {
             "rcarriga/nvim-dap-ui",
-            "nvim-telescope/telescope-dap.nvim",
             "theHamsta/nvim-dap-virtual-text",
             "mxsdev/nvim-dap-vscode-js",
             "microsoft/vscode-js-debug",
@@ -256,14 +256,6 @@ return {
         "theHamsta/nvim-dap-virtual-text",
         lazy = true,
         opts = {},
-    },
-
-    {
-        "nvim-telescope/telescope-dap.nvim",
-        lazy = true,
-        config = function()
-            require("telescope").load_extension("dap")
-        end,
     },
 
     {

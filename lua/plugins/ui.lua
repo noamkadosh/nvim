@@ -172,13 +172,6 @@ return {
                     desc = "Last message in popup",
                 },
                 {
-                    "<leader>nh",
-                    function()
-                        noice.cmd("history")
-                    end,
-                    desc = "Message history",
-                },
-                {
                     "<S-Enter>",
                     function()
                         noice.redirect(vim.fn.getcmdline())
@@ -197,11 +190,6 @@ return {
                     desc = "Scroll history forward (LSP)",
                     silent = true,
                     expr = true,
-                },
-                {
-                    "<leader>nt",
-                    "<cmd>Telescope noice<cr>",
-                    desc = "Telescope Noice",
                 },
                 {
                     "<c-b>",
@@ -283,22 +271,47 @@ return {
     {
         "folke/todo-comments.nvim",
         event = { "BufReadPost", "BufNewFile" },
-        keys = {
-            {
-                "]t",
-                function()
-                    require("todo-comments").jump_next({ keywords = { "TODO" } })
-                end,
-                desc = "Next todo comment",
-            },
-            {
-                "[t",
-                function()
-                    require("todo-comments").jump_prev({ keywords = { "TODO" } })
-                end,
-                desc = "Previous todo comment",
-            },
-        },
+        keys = function()
+            local todo_comments = require("todo-comments")
+            local snacks = require("snacks")
+
+            return {
+                {
+                    "]t",
+                    function()
+                        todo_comments.jump_next({
+                            keywords = { "TODO" },
+                        })
+                    end,
+                    desc = "Next todo comment",
+                },
+                {
+                    "[t",
+                    function()
+                        todo_comments.jump_prev({
+                            keywords = { "TODO" },
+                        })
+                    end,
+                    desc = "Previous todo comment",
+                },
+                {
+                    "<leader>tt",
+                    function()
+                        snacks.picker.todo_comments()
+                    end,
+                    desc = "Todo",
+                },
+                {
+                    "<leader>tT",
+                    function()
+                        snacks.picker.todo_comments({
+                            keywords = { "TODO", "FIX", "FIXME" },
+                        })
+                    end,
+                    desc = "Todo/Fix/Fixme",
+                },
+            }
+        end,
         opts = {
             sign_priority = 10,
         },
