@@ -61,22 +61,31 @@ return {
         end,
     },
 
+    -- TODO: create a snacks picker for this plugin
     {
         "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        lazy = true,
         event = { "BufReadPost", "BufNewFile" },
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
         keys = function()
+            local harpoon = require("harpoon")
+
             local keys = {
                 {
-                    "<leader>ha",
-                    "<cmd>lua require('harpoon.mark').add_file()<cr>",
+                    "<leader>h",
+                    function()
+                        harpoon:list():add()
+                    end,
                     desc = "Mark file with harpoon",
                 },
                 {
-                    "<leader>ht",
-                    "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>",
+                    "<leader>q",
+                    function()
+                        harpoon.ui:toggle_quick_menu(harpoon:list())
+                    end,
                     desc = "Toggle Harpoon quick menu",
                 },
             }
@@ -84,18 +93,33 @@ return {
             for i = 1, 9 do
                 table.insert(keys, {
                     "<F" .. i + 1 .. ">",
-                    "<cmd>lua require('harpoon.ui').nav_file(" .. i .. ")<cr>",
+                    function()
+                        harpoon:list():select(i)
+                    end,
                     desc = "Navigate to file " .. i,
                 })
             end
 
             return keys
         end,
+        config = function()
+            local harpoon = require("harpoon")
+            harpoon:setup()
+
+            local harpoon_extensions = require("harpoon.extensions")
+            harpoon:extend(harpoon_extensions.builtins.highlight_current_file())
+        end,
+    },
+
+    {
+        "jasonpanosso/harpoon-tabline.nvim",
+        lazy = true,
+        event = { "BufReadPost", "BufNewFile" },
+        dependencies = { "ThePrimeagen/harpoon" },
         opts = {
-            -- enable tabline with harpoon marks
-            tabline = true,
-            tabline_prefix = "   ",
-            tabline_suffix = "   ",
+            tab_prefix = "   ",
+            tab_suffix = "   ",
+            use_editor_color_scheme = true,
         },
     },
 
