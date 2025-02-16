@@ -12,7 +12,7 @@ return {
             local noice = require("noice")
             local colors = require("tokyonight.colors").setup()
             local theme = require("lualine.themes.tokyonight")
-            local code_companion = require("helpers.lualine_codecompanion")
+            local code_companion = require("utils.lualine_codecompanion")
 
             -- Change the background of lualine_c section for normal mode
             theme.normal.c.bg = nil
@@ -41,7 +41,7 @@ return {
                             update_in_insert = true,
                         },
                         {
-                            require("helpers.lualine_lsp").map_lsp_to_info,
+                            require("utils.lualine_lsp").map_lsp_to_info,
                         },
                         {
                             "ex.lsp.none_ls",

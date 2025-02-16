@@ -1,5 +1,5 @@
 local M = {}
-local utils = require("helpers.utils")
+local utils = require("utils")
 
 local filetypesMap = {
     typescript = "ts",

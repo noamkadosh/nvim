@@ -20,7 +20,7 @@ return {
             local cmp = require("cmp")
             local compare = require("cmp.config.compare")
             local copilot_cmp_comparators = require("copilot_cmp.comparators")
-            local helpers = require("helpers")
+            local utils = require("utils")
 
             cmp.setup({
                 snippet = {
@@ -56,7 +56,7 @@ return {
                     ["<C-e>"] = cmp.mapping.abort(),
                     ["<C-Space>"] = cmp.mapping.complete({}),
                     ["<Tab>"] = vim.schedule_wrap(function(_)
-                        if cmp.visible() and helpers.has_words_before() then
+                        if cmp.visible() and utils.has_words_before() then
                             cmp.select_next_item({
                                 behavior = cmp.SelectBehavior.Select,
                             })

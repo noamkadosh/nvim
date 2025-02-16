@@ -61,7 +61,6 @@ return {
         end,
     },
 
-    -- TODO: create a snacks picker for this plugin
     {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
@@ -87,6 +86,56 @@ return {
                         harpoon.ui:toggle_quick_menu(harpoon:list())
                     end,
                     desc = "Toggle Harpoon quick menu",
+                },
+                {
+                    "<leader>ph",
+                    function()
+                        require("snacks").picker({
+                            finder = function()
+                                local files = {}
+
+                                for _, item in ipairs(harpoon:list().items) do
+                                    table.insert(files, {
+                                        file = item.value,
+                                        text = item.value,
+                                    })
+                                end
+
+                                return files
+                            end,
+                            win = {
+                                input = {
+                                    keys = {
+                                        ["dd"] = {
+                                            "remove_item",
+                                            mode = { "n", "x" },
+                                        },
+                                    },
+                                },
+                                list = {
+                                    keys = {
+                                        ["dd"] = {
+                                            "remove_item",
+                                            mode = { "n", "x" },
+                                        },
+                                    },
+                                },
+                            },
+                            actions = {
+                                remove_item = function(picker, item)
+                                    local removed_item = item
+                                        or picker:selected()
+
+                                    harpoon:list():remove_at(removed_item.idx)
+
+                                    picker:find({
+                                        refresh = true,
+                                    })
+                                end,
+                            },
+                        })
+                    end,
+                    desc = "Harpoon Explorer",
                 },
             }
 

@@ -11,7 +11,7 @@ local header = {
 }
 -- stylua: ignore end
 
-local helpers = require("helpers.dashboard")
+local utils = require("utils")
 
 return {
     {
@@ -378,7 +378,7 @@ return {
                                 text = {
                                     { "🗓️ " },
                                     {
-                                        helpers.get_date(),
+                                        utils.get_date(),
                                         hl = "RainbowPurple",
                                     },
                                 },

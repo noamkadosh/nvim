@@ -79,7 +79,7 @@ return {
         opts = {
             current_line_blame = true,
             current_line_blame_formatter = function(_, blame_info, _)
-                local helpers = require("helpers")
+                local utils = require("utils")
 
                 local day = tonumber(os.date("%d", blame_info.author_time))
                 local hour = tonumber(os.date("%I", blame_info.author_time))
@@ -90,7 +90,7 @@ return {
                     .. hour
                     .. os.date(":%M %p", blame_info.author_time)
                 local blame = "    by "
-                    .. helpers.capitalize(blame_info.author)
+                    .. utils.capitalize(blame_info.author)
                     .. " - at "
                     .. dateTime
                     .. ": "
