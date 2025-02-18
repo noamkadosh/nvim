@@ -51,4 +51,11 @@ function M.get_table_keys(table)
     return keys
 end
 
+function M.escape_pattern(str, pattern, replace, n)
+    pattern = string.gsub(pattern, "[%(%)%.%+%-%*%?%[%]%^%$%%]", "%%%1") -- escape pattern
+    replace = string.gsub(replace, "[%%]", "%%%%") -- escape replacement
+
+    return string.gsub(str, pattern, replace, n)
+end
+
 return M

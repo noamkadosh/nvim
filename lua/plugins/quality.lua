@@ -178,7 +178,7 @@ return {
                     function()
                         snacks.picker.search_history()
                     end,
-                    desc = "search History",
+                    desc = "Search History",
                 },
                 {
                     "<leader>sa",

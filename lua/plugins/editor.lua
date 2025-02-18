@@ -91,6 +91,18 @@ return {
                     "<leader>ph",
                     function()
                         require("snacks").picker({
+                            actions = {
+                                remove_item = function(picker, item)
+                                    local selected_file = item
+                                        or picker:selected()
+
+                                    harpoon:list():remove_at(selected_file.idx)
+
+                                    picker:find({
+                                        refresh = true,
+                                    })
+                                end,
+                            },
                             finder = function()
                                 local files = {}
 
@@ -120,18 +132,6 @@ return {
                                         },
                                     },
                                 },
-                            },
-                            actions = {
-                                remove_item = function(picker, item)
-                                    local removed_item = item
-                                        or picker:selected()
-
-                                    harpoon:list():remove_at(removed_item.idx)
-
-                                    picker:find({
-                                        refresh = true,
-                                    })
-                                end,
                             },
                         })
                     end,
@@ -217,37 +217,211 @@ return {
         opts = {},
     },
 
-    -- TODO: Create a custom snacks picker for persisted plugin
     {
         "olimorris/persisted.nvim",
-        keys = {
-            {
-                "<leader>os",
-                "<cmd>:SessionSave<cr>",
-                desc = "Save session",
-            },
-            {
-                "<leader>ol",
-                "<cmd>:SessionLoad<cr>",
-                desc = "Load session",
-            },
-            {
-                "<leader>oa",
-                "<cmd>:SessionLoadLast<cr>",
-                desc = "Load last session",
-            },
-        },
+        keys = function()
+            local persisted = require("persisted")
+            local save_dir =
+                vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/")
+
+            return {
+                {
+                    "<leader>os",
+                    "<cmd>:SessionSave<cr>",
+                    desc = "Save session",
+                },
+                {
+                    "<leader>ol",
+                    "<cmd>:SessionLoad<cr>",
+                    desc = "Load session",
+                },
+                {
+                    "<leader>oa",
+                    "<cmd>:SessionLoadLast<cr>",
+                    desc = "Load last session",
+                },
+                {
+                    "<leader>ss",
+                    function()
+                        require("snacks").picker({
+                            actions = {
+                                copy_session = function(picker, item)
+                                    local selected_session = item
+                                        or picker:selected()
+                                    local old_name =
+                                        selected_session.file_path:gsub(
+                                            save_dir,
+                                            ""
+                                        )
+
+                                    local new_name = vim.fn.input(
+                                        "New session name: ",
+                                        old_name
+                                    )
+
+                                    if
+                                        vim.fn.confirm(
+                                            "Rename session from ["
+                                                .. old_name
+                                                .. "] to ["
+                                                .. new_name
+                                                .. "]?",
+                                            "&Yes\n&No"
+                                        )
+                                        == 1
+                                    then
+                                        os.execute(
+                                            "cp "
+                                                .. selected_session.file_path
+                                                .. " "
+                                                .. save_dir
+                                                .. new_name
+                                        )
+                                    end
+                                end,
+                                delete_session = function(picker, item)
+                                    local selected_session = item
+                                        or picker:selected()
+
+                                    persisted.delete({
+                                        session = selected_session.file_path,
+                                    })
+
+                                    picker:find({
+                                        refresh = true,
+                                    })
+                                end,
+                                update_session_branch = function(picker, item)
+                                    local selected_session = item
+                                        or picker:selected()
+                                    local path = selected_session.file_path
+
+                                    local branch = vim.fn.input("Branch name: ")
+
+                                    if
+                                        vim.fn.confirm(
+                                            "Add/update branch to ["
+                                                .. branch
+                                                .. "]?",
+                                            "&Yes\n&No"
+                                        )
+                                        == 1
+                                    then
+                                        local ext = path:match("^.+(%..+)$")
+
+                                        -- Check for existing branch in the filename
+                                        local pattern = "(.*)@@.+" .. ext .. "$"
+                                        local base = path:match(pattern)
+                                            or path:sub(1, #path - #ext)
+
+                                        -- Replace or add the new branch name
+                                        local new_path = ""
+                                        if branch == "" then
+                                            new_path = base .. ext
+                                        else
+                                            new_path = base
+                                                .. "@@"
+                                                .. branch
+                                                .. ext
+                                        end
+
+                                        os.rename(path, new_path)
+                                    end
+                                end,
+                            },
+                            confirm = function(picker, item)
+                                local selected_session = item
+                                    or picker:selected()
+
+                                persisted.load({
+                                    session = selected_session.file_path,
+                                })
+                            end,
+                            finder = function()
+                                local utils = require("utils")
+                                local sep =
+                                    require("persisted.utils").dir_pattern()
+                                local sessions = {}
+
+                                for _, session in ipairs(persisted.list()) do
+                                    local session_name = utils
+                                        .escape_pattern(session, save_dir, "")
+                                        :gsub("%%", sep)
+                                        :sub(1, -5) .. ".git"
+
+                                    local branch, dir_path
+
+                                    if
+                                        string.find(session_name, "@@", 1, true)
+                                    then
+                                        local splits = vim.split(
+                                            session_name,
+                                            "@@",
+                                            { plain = true }
+                                        )
+                                        branch = table.remove(splits, #splits)
+                                        dir_path = vim.fn.join(splits, "@@")
+                                    else
+                                        dir_path = session_name
+                                    end
+
+                                    table.insert(sessions, {
+                                        file = session_name,
+                                        text = session_name,
+                                        file_path = session,
+                                        dir_path = dir_path,
+                                        branch = branch,
+                                    })
+                                end
+
+                                return sessions
+                            end,
+                            layout = {
+                                preset = "select",
+                            },
+                            win = {
+                                input = {
+                                    keys = {
+                                        ["y"] = {
+                                            "copy_session",
+                                            mode = { "n", "x" },
+                                        },
+                                        ["dd"] = {
+                                            "delete_session",
+                                            mode = { "n", "x" },
+                                        },
+                                        ["b"] = {
+                                            "update_session_branch",
+                                            mode = { "n", "x" },
+                                        },
+                                    },
+                                },
+                                list = {
+                                    keys = {
+                                        ["y"] = {
+                                            "copy_session",
+                                            mode = { "n", "x" },
+                                        },
+                                        ["dd"] = {
+                                            "delete_session",
+                                            mode = { "n", "x" },
+                                        },
+                                        ["b"] = {
+                                            "update_session_branch",
+                                            mode = { "n", "x" },
+                                        },
+                                    },
+                                },
+                            },
+                        })
+                    end,
+                    desc = "Session Explorer",
+                },
+            }
+        end,
         config = function()
             require("persisted").setup({
                 use_git_branch = true,
-                -- telescope = {
-                --     icons = {
-                --         branch = require("nvim-web-devicons").get_icon("git")
-                --             .. " ",
-                --         dir = "󰝰 ",
-                --         selected = " ",
-                --     },
-                -- },
             })
 
             vim.o.sessionoptions =

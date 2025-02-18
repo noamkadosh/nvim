@@ -165,6 +165,7 @@ return {
     },
 
     -- TODO: create a snacks picker for snippets
+    -- First, migrate cmp to blink and see if LuaSnip is still needed
     {
         "L3MON4D3/LuaSnip",
         event = { "BufReadPost", "BufNewFile" },
