@@ -11,9 +11,7 @@ return {
             "petertriho/cmp-git",
             "hrsh7th/cmp-nvim-lua",
             "zbirenbaum/copilot.lua",
-            "rafamadriz/friendly-snippets",
-
-            -- LSP Icons
+            "garymjr/nvim-snippets",
             "onsails/lspkind.nvim",
         },
         config = function()
@@ -37,6 +35,7 @@ return {
                             nvim_lsp = "[LSP]",
                             nvim_lua = "[Lua]",
                             path = "[Path]",
+                            snippets = "[Snippet]",
                         },
                         maxwidth = 50,
                         ellipsis_char = "...",
@@ -98,10 +97,13 @@ return {
                         group_index = 0,
                     },
                     {
-                        name = "copilot",
+                        name = "nvim_lsp",
                     },
                     {
-                        name = "nvim_lsp",
+                        name = "snippets",
+                    },
+                    {
+                        name = "copilot",
                     },
                 }, {
                     {
@@ -162,6 +164,85 @@ return {
                 }),
             })
         end,
+    },
+
+    -- TODO: Might remove this plugin when migrating to blink.cmp
+    {
+        "garymjr/nvim-snippets",
+        lazy = true,
+        dependencies = {
+            "rafamadriz/friendly-snippets",
+        },
+        keys = {
+            {
+                "<Tab>",
+                function()
+                    if vim.snippet.active({ direction = 1 }) then
+                        vim.schedule(function()
+                            vim.snippet.jump(1)
+                        end)
+                        return
+                    end
+                    return "<Tab>"
+                end,
+                expr = true,
+                silent = true,
+                mode = "i",
+            },
+            {
+                "<Tab>",
+                function()
+                    vim.schedule(function()
+                        vim.snippet.jump(1)
+                    end)
+                end,
+                expr = true,
+                silent = true,
+                mode = "s",
+            },
+            {
+                "<S-Tab>",
+                function()
+                    if vim.snippet.active({ direction = -1 }) then
+                        vim.schedule(function()
+                            vim.snippet.jump(-1)
+                        end)
+                        return
+                    end
+                    return "<S-Tab>"
+                end,
+                expr = true,
+                silent = true,
+                mode = { "i", "s" },
+            },
+            -- TODO: work on this snacks picker
+            {
+                "<leader>sn",
+                function()
+                    require("snacks").picker({
+                        confirm = function() end,
+                        finder = function()
+                            local snippets = {}
+
+                            for key, snippet in
+                                pairs(require("snippets").get_loaded_snippets())
+                            do
+                                table.insert(snippets, {
+                                    file = key,
+                                    text = snippet.description,
+                                })
+                            end
+
+                            return snippets
+                        end,
+                    })
+                end,
+                desc = "Snippets Explorer",
+            },
+        },
+        opts = {
+            friendly_snippets = true,
+        },
     },
 
     {
