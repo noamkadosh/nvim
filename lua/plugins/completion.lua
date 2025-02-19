@@ -9,9 +9,9 @@ return {
             "hrsh7th/cmp-path",
             "hrsh7th/cmp-cmdline",
             "petertriho/cmp-git",
-            "saadparwaiz1/cmp_luasnip",
             "hrsh7th/cmp-nvim-lua",
             "zbirenbaum/copilot.lua",
+            "rafamadriz/friendly-snippets",
 
             -- LSP Icons
             "onsails/lspkind.nvim",
@@ -23,22 +23,28 @@ return {
             local utils = require("utils")
 
             cmp.setup({
-                snippet = {
-                    expand = function(args)
-                        require("luasnip").lsp_expand(args.body)
-                    end,
-                },
-                preselect = "None",
                 completion = {
                     completeopt = "menu,menuone,noinsert,noselect",
                 },
-                window = {
-                    completion = cmp.config.window.bordered({
-                        winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+                formatting = {
+                    fields = { "abbr", "kind", "menu" },
+                    format = require("lspkind").cmp_format({
+                        mode = "symbol_text",
+                        menu = {
+                            buffer = "[Buffer]",
+                            copilot = "[AI]",
+                            latex_symbols = "[Latex]",
+                            nvim_lsp = "[LSP]",
+                            nvim_lua = "[Lua]",
+                            path = "[Path]",
+                        },
+                        maxwidth = 50,
+                        ellipsis_char = "...",
+                        symbol_map = {
+                            Copilot = "",
+                        },
                     }),
-                    documentation = cmp.config.window.bordered({
-                        winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
-                    }),
+                    expandable_indicator = true,
                 },
                 mapping = cmp.mapping.preset.insert({
                     ["<C-p>"] = cmp.mapping.select_prev_item({
@@ -63,44 +69,11 @@ return {
                         end
                     end),
                 }),
-                sources = cmp.config.sources({
-                    {
-                        name = "copilot",
-                    },
-                    {
-                        name = "nvim_lsp",
-                    },
-                    {
-                        name = "luasnip",
-                    },
-                }, {
-                    {
-                        name = "buffer",
-                    },
-                    {
-                        name = "path",
-                    },
-                }),
-                formatting = {
-                    fields = { "abbr", "kind", "menu" },
-                    format = require("lspkind").cmp_format({
-                        mode = "symbol_text",
-                        menu = {
-                            buffer = "[Buffer]",
-                            copilot = "[AI]",
-                            latex_symbols = "[Latex]",
-                            luasnip = "[LuaSnip]",
-                            nvim_lsp = "[LSP]",
-                            nvim_lua = "[Lua]",
-                            path = "[Path]",
-                        },
-                        maxwidth = 50,
-                        ellipsis_char = "...",
-                        symbol_map = {
-                            Copilot = "",
-                        },
-                    }),
-                    expandable_indicator = true,
+                preselect = "None",
+                snippet = {
+                    expand = function(args)
+                        vim.snippet.expand(args.body)
+                    end,
                 },
                 sorting = {
                     priority_weight = 2,
@@ -118,6 +91,33 @@ return {
                         compare.length,
                         compare.order,
                     },
+                },
+                sources = cmp.config.sources({
+                    {
+                        name = "lazydev",
+                        group_index = 0,
+                    },
+                    {
+                        name = "copilot",
+                    },
+                    {
+                        name = "nvim_lsp",
+                    },
+                }, {
+                    {
+                        name = "buffer",
+                    },
+                    {
+                        name = "path",
+                    },
+                }),
+                window = {
+                    completion = cmp.config.window.bordered({
+                        winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+                    }),
+                    documentation = cmp.config.window.bordered({
+                        winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+                    }),
                 },
             })
 
@@ -161,30 +161,6 @@ return {
                     },
                 }),
             })
-        end,
-    },
-
-    -- TODO: create a snacks picker for snippets
-    -- First, migrate cmp to blink and see if LuaSnip is still needed
-    {
-        "L3MON4D3/LuaSnip",
-        event = { "BufReadPost", "BufNewFile" },
-        dependencies = {
-            "rafamadriz/friendly-snippets",
-        },
-        config = function()
-            local luasnip = require("luasnip")
-            luasnip.config.setup()
-
-            vim.tbl_map(function(type)
-                require("luasnip.loaders.from_" .. type).lazy_load()
-            end, { "vscode", "snipmate", "lua" })
-
-            luasnip.filetype_extend("typescript", { "tsdoc" })
-            luasnip.filetype_extend("javascript", { "jsdoc" })
-            luasnip.filetype_extend("lua", { "luadoc" })
-            luasnip.filetype_extend("rust", { "rustdoc" })
-            luasnip.filetype_extend("sh", { "shelldoc" })
         end,
     },
 
