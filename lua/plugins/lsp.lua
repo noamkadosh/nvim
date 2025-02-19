@@ -1,43 +1,98 @@
 return {
     {
-        "VonHeikemen/lsp-zero.nvim",
-        branch = "v4.x",
+        "folke/neoconf.nvim",
+        opts = {},
+    },
+
+    {
+        "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile", "InsertEnter", "CmdlineEnter" },
         dependencies = {
-            "folke/neoconf.nvim",
-            "folke/lazydev.nvim",
-            "williamboman/mason.nvim",
-            "neovim/nvim-lspconfig",
             "hrsh7th/nvim-cmp",
-            "L3MON4D3/LuaSnip",
-            "glepnir/lspsaga.nvim",
         },
-        config = function()
-            local lsp_zero = require("lsp-zero")
-
-            local lsp_attach = function(_, bufnr)
-                lsp_zero.default_keymaps({ buffer = bufnr })
-
-                vim.keymap.set({ "n", "x" }, "<leader>f", function()
-                    vim.lsp.buf.format({
-                        async = false,
-                        timeout_ms = 10000,
-                        filter = function(server)
-                            -- Only use null-ls
-                            return server.name == "null-ls"
-                                or server.name == "eslint"
-                                or server.name == "rust_analyzer"
-                        end,
+        init = function()
+            vim.api.nvim_create_autocmd("LspAttach", {
+                desc = "LSP actions",
+                callback = function(event)
+                    vim.keymap.set(
+                        "n",
+                        "K",
+                        vim.lsp.buf.hover,
+                        { buffer = event.buf, desc = "Hover Documentation" }
+                    )
+                    vim.keymap.set(
+                        "n",
+                        "gd",
+                        vim.lsp.buf.definition,
+                        { buffer = event.buf, desc = "Go To Definition" }
+                    )
+                    vim.keymap.set(
+                        "n",
+                        "gD",
+                        vim.lsp.buf.declaration,
+                        { buffer = event.buf, desc = "Go To Declaration" }
+                    )
+                    vim.keymap.set(
+                        "n",
+                        "gi",
+                        vim.lsp.buf.implementation,
+                        { buffer = event.buf, desc = "Implementation" }
+                    )
+                    vim.keymap.set(
+                        "n",
+                        "go",
+                        vim.lsp.buf.type_definition,
+                        { buffer = event.buf, desc = "Type Definition" }
+                    )
+                    vim.keymap.set(
+                        "n",
+                        "gr",
+                        vim.lsp.buf.references,
+                        { buffer = event.buf, desc = "LSP References" }
+                    )
+                    vim.keymap.set(
+                        "n",
+                        "gs",
+                        vim.lsp.buf.signature_help,
+                        { buffer = event.buf, desc = "Signature" }
+                    )
+                    vim.keymap.set("n", "<leader>R", vim.lsp.buf.rename, {
+                        buffer = event.buf,
+                        desc = "Rename occurrences of hovered word for current file",
                     })
-                end, { buffer = bufnr, desc = "Format" })
-            end
-
-            lsp_zero.extend_lspconfig({
-                capabilities = require("cmp_nvim_lsp").default_capabilities(),
-                lsp_attach = lsp_attach,
-                float_border = "rounded",
-                sign_text = true,
+                    vim.keymap.set({ "n", "x" }, "<leader>f", function()
+                        vim.lsp.buf.format({
+                            async = true,
+                            timeout_ms = 10000,
+                            filter = function(server)
+                                -- Only use null-ls
+                                return server.name == "null-ls"
+                                    or server.name == "eslint"
+                                    or server.name == "rust_analyzer"
+                            end,
+                        })
+                    end, {
+                        buffer = event.buf,
+                        desc = "Format",
+                    })
+                    vim.keymap.set(
+                        "n",
+                        "<leader>ca",
+                        vim.lsp.buf.code_action,
+                        { buffer = event.buf, desc = "Line Code Actions" }
+                    )
+                end,
             })
+        end,
+        config = function()
+            local lspconfig_defaults = require("lspconfig").util.default_config
+            lspconfig_defaults.capabilities = vim.tbl_deep_extend(
+                "force",
+                lspconfig_defaults.capabilities,
+                require("cmp_nvim_lsp").default_capabilities()
+            )
+
+            require("lspconfig.ui.windows").default_options.border = "rounded"
 
             vim.diagnostic.config({
                 float = {
@@ -79,16 +134,7 @@ return {
     },
 
     {
-        "neovim/nvim-lspconfig",
-        lazy = true,
-        config = function()
-            require("lspconfig.ui.windows").default_options.border = "rounded"
-        end,
-    },
-
-    {
         "williamboman/mason.nvim",
-        lazy = true,
         cmd = {
             "Mason",
             "MasonUninstall",
@@ -103,8 +149,8 @@ return {
             "jay-babu/mason-nvim-dap.nvim",
         },
         config = function()
-            local lsp_zero = require("lsp-zero")
             local lspconfig = require("lspconfig")
+            local noop = function() end
 
             require("mason").setup({
                 ui = {
@@ -141,21 +187,75 @@ return {
                     "yamlls",
                 },
                 handlers = {
-                    lsp_zero.default_setup,
+                    function(server_name)
+                        lspconfig[server_name].setup({})
+                    end,
                     lua_ls = function()
-                        local lua_opts = lsp_zero.nvim_lua_ls({
+                        lspconfig.lua_ls.setup({
                             settings = {
                                 Lua = {
                                     hint = {
                                         enable = true,
                                     },
+                                    telemetry = {
+                                        enable = false,
+                                    },
                                 },
                             },
+                            on_init = function(client)
+                                local join = vim.fs.joinpath
+                                local path = client.workspace_folders[1].name
+
+                                -- Don't do anything if there is project local config
+                                if
+                                    vim.uv.fs_stat(join(path, ".luarc.json"))
+                                    or vim.uv.fs_stat(
+                                        join(path, ".luarc.jsonc")
+                                    )
+                                then
+                                    return
+                                end
+
+                                -- Apply neovim specific settings
+                                local runtime_path =
+                                    vim.split(package.path, ";")
+                                table.insert(runtime_path, join("lua", "?.lua"))
+                                table.insert(
+                                    runtime_path,
+                                    join("lua", "?", "init.lua")
+                                )
+
+                                local nvim_settings = {
+                                    runtime = {
+                                        -- Tell the language server which version of Lua you're using
+                                        version = "LuaJIT",
+                                        path = runtime_path,
+                                    },
+                                    diagnostics = {
+                                        -- Get the language server to recognize the `vim` global
+                                        globals = { "vim" },
+                                    },
+                                    workspace = {
+                                        checkThirdParty = false,
+                                        library = {
+                                            -- Make the server aware of Neovim runtime files
+                                            vim.env.VIMRUNTIME,
+                                            vim.fn.stdpath("config"),
+                                        },
+                                    },
+                                }
+
+                                client.config.settings.Lua =
+                                    vim.tbl_deep_extend(
+                                        "force",
+                                        client.config.settings.Lua,
+                                        nvim_settings
+                                    )
+                            end,
                         })
-                        lspconfig.lua_ls.setup(lua_opts)
                     end,
-                    jsonls = lsp_zero.noop,
-                    ts_ls = lsp_zero.noop,
+                    jsonls = noop,
+                    ts_ls = noop,
                     denols = function()
                         lspconfig.denols.setup({
                             root_dir = lspconfig.util.root_pattern(
@@ -214,8 +314,8 @@ return {
                             ),
                         })
                     end,
-                    rust_analyzer = lsp_zero.noop,
-                    gopls = lsp_zero.noop,
+                    rust_analyzer = noop,
+                    gopls = noop,
                     graphql = function()
                         lspconfig.graphql.setup({
                             filetypes = {
@@ -279,20 +379,9 @@ return {
                 desc = "Find symbol's definition",
             },
             {
-                "gr",
-                "<cmd>Lspsaga rename<CR>",
-                desc = "Rename occurrences of hovered word for current file",
-            },
-            {
-                "gR",
+                "gA",
                 "<cmd>Lspsaga rename ++project<CR>",
                 desc = "Rename occurrences of hovered word for selected files",
-            },
-            {
-                "<leader>ca",
-                "<cmd>Lspsaga code_action<CR>",
-                mode = { "n", "v" },
-                desc = "Line code actions",
             },
             {
                 "gp",
@@ -300,29 +389,14 @@ return {
                 desc = "Peek definition",
             },
             {
-                "gd",
-                "<cmd>Lspsaga goto_definition<CR>",
-                desc = "Go to definition",
-            },
-            {
                 "gP",
                 "<cmd>Lspsaga peek_type_definition<CR>",
                 desc = "Peek type definition",
             },
             {
-                "gD",
-                "<cmd>Lspsaga goto_type_definition<CR>",
-                desc = "Go to type definition",
-            },
-            {
                 "go",
                 "<cmd>Lspsaga outline<CR>",
                 desc = "Toggle outline",
-            },
-            {
-                "gk",
-                "<cmd>Lspsaga hover_doc<CR>",
-                desc = "Hover documentation",
             },
         },
         opts = {
@@ -375,21 +449,12 @@ return {
     },
 
     {
-        "folke/neoconf.nvim",
-        lazy = true,
-        cmd = "Neoconf",
-        opts = {},
-    },
-
-    {
         "folke/lazydev.nvim",
         ft = "lua",
         opts = {
             library = {
-                vim.fn.stdpath("data") .. "/lazy/luvit-meta/library",
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
             },
         },
     },
-
-    { "Bilal2453/luvit-meta", lazy = true },
 }
