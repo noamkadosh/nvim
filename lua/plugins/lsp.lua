@@ -1,13 +1,14 @@
 return {
     {
         "folke/neoconf.nvim",
+        priority = 100,
         opts = {},
     },
 
     {
         "neovim/nvim-lspconfig",
-        event = { "BufReadPre", "BufNewFile", "InsertEnter", "CmdlineEnter" },
         dependencies = {
+            "williamboman/mason.nvim",
             "hrsh7th/nvim-cmp",
         },
         init = function()
@@ -135,6 +136,7 @@ return {
 
     {
         "williamboman/mason.nvim",
+        lazy = true,
         cmd = {
             "Mason",
             "MasonUninstall",

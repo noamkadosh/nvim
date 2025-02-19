@@ -16,7 +16,6 @@ return {
             "theHamsta/nvim-dap-virtual-text",
             "mxsdev/nvim-dap-vscode-js",
             "microsoft/vscode-js-debug",
-            "williamboman/mason.nvim",
         },
         lazy = true,
         keys = function()
