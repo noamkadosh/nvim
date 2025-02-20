@@ -45,7 +45,8 @@ return {
                     hl.SnacksDashboardSpecial =
                         { fg = colors.yellow, bg = NONE }
                     hl.SnacksPickerBoxTitle = { fg = "#c0caf5", bg = NONE }
-                    hl.SnacksPickerInputBorder = { fg = colors.border_highlight, bg = NONE }
+                    hl.SnacksPickerInputBorder =
+                        { fg = colors.border_highlight, bg = NONE }
 
                     hl.LineNr.fg = hl.FoldColumn.fg
                     hl.LineNrAbove.fg = hl.FoldColumn.fg
@@ -142,6 +143,15 @@ return {
 
                     hl.WhichKeyNormal.bg = NONE
                     hl.TroubleNormal.bg = NONE
+
+                    hl.BlinkCmpMenu = hl.Normal
+                    hl.BlinkCmpMenuBorder = hl.FloatBorder
+                    hl.BlinkCmpDoc = hl.Normal
+                    hl.BlinkCmpDocBorder = hl.FloatBorder
+                    hl.BlinkCmpDocSeparator = hl.Normal
+                    hl.BlinkCmpSignatureHelp = hl.Normal
+                    hl.BlinkCmpSignatureHelpBorder = hl.FloatBorder
+                    hl.BlinkCmpGhostText = hl.Comment
 
                     hl.CmpItemKindCopilot = {
                         fg = "#4cb4a5",

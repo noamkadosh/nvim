@@ -74,7 +74,7 @@ return {
                             enabled = true,
                         },
                     },
-                    capabilities = require("lspconfig").get_capabilities(),
+                    capabilities = require("blink.cmp").get_lsp_capabilities(),
                     on_attach = function(_, bufnr)
                         vim.keymap.set("n", "<leader>rh", function()
                             vim.cmd.RustLsp({ "hover", "actions" })
@@ -122,6 +122,7 @@ return {
             "javascriptreact",
         },
         opts = {
+            capabilities = require("blink.cmp").get_lsp_capabilities(),
             root_dir = require("lspconfig").util.root_pattern(
                 "package.json",
                 "tsconfig.json"
@@ -153,6 +154,9 @@ return {
         ft = { "go", "gomod" },
         build = ":lua require('go.install').update_all_sync()",
         opts = {
+            lsp_cfg = {
+                capabilities = require("blink.cmp").get_lsp_capabilities(),
+            },
             lsp_inlay_hints = {
                 enable = true,
                 parameter_hints_prefix = " <- ",
@@ -166,6 +170,7 @@ return {
         ft = { "json", "json5", "jsonc" },
         config = function()
             require("lspconfig").jsonls.setup({
+                capabilities = require("blink.cmp").get_lsp_capabilities(),
                 settings = {
                     json = {
                         schemas = require("schemastore").json.schemas(),

@@ -4,7 +4,6 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
-            "hrsh7th/nvim-cmp",
         },
         init = function()
             vim.cmd([[cab cc CodeCompanion]])
@@ -185,16 +184,24 @@ return {
     },
 
     {
-        "zbirenbaum/copilot.lua",
+        "github/copilot.vim",
         lazy = true,
-        dependencies = { "zbirenbaum/copilot-cmp" },
-        opts = {
-            suggestion = {
-                enabled = false,
-            },
-            panel = {
-                enabled = false,
-            },
-        },
+        cmd = "Copilot",
+        build = ":Copilot auth",
+        init = function()
+            vim.g.copilot_no_maps = true
+        end,
+        config = function()
+            vim.api.nvim_create_augroup("github_copilot", { clear = true })
+
+            for _, event in pairs({ "FileType", "BufUnload", "BufEnter" }) do
+                vim.api.nvim_create_autocmd({ event }, {
+                    group = "github_copilot",
+                    callback = function()
+                        vim.fn["copilot#On" .. event]()
+                    end,
+                })
+            end
+        end,
     },
 }

@@ -32,7 +32,7 @@ function M.map_lsp_to_info()
         local client_name = client.name
         local icon, highlight
 
-        if client.name:find("copilot") then
+        if client.name:find("Copilot") then
             local fg_hl_id =
                 vim.api.nvim_get_hl_id_by_name("CmpItemKindCopilot")
             local fg = vim.fn.synIDattr(fg_hl_id, "fg")
@@ -42,8 +42,9 @@ function M.map_lsp_to_info()
                 { fg = fg, bg = bg }
             )
 
-            icon = ""
+            icon = ""
             highlight = "CmpItemKindCopilotStatus"
+            client_name = "copilot"
         elseif client.name:find("null") then
             local fg = colors.orange
             vim.api.nvim_set_hl(0, "ConstantStatus", { fg = fg, bg = bg })

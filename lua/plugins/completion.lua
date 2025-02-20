@@ -1,172 +1,236 @@
 return {
     {
-        "hrsh7th/nvim-cmp",
-        lazy = true,
-        event = "InsertEnter",
+        "saghen/blink.cmp",
         dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-cmdline",
-            "petertriho/cmp-git",
-            "hrsh7th/cmp-nvim-lua",
-            "zbirenbaum/copilot.lua",
-            "rafamadriz/friendly-snippets",
-
-            -- LSP Icons
+            "fang2hou/blink-copilot",
+            "github/copilot.vim",
+            "L3MON4D3/LuaSnip",
             "onsails/lspkind.nvim",
         },
-        config = function()
-            local cmp = require("cmp")
-            local compare = require("cmp.config.compare")
-            local copilot_cmp_comparators = require("copilot_cmp.comparators")
-            local utils = require("utils")
-
-            cmp.setup({
-                completion = {
-                    completeopt = "menu,menuone,noinsert,noselect",
+        version = "*",
+        opts = {
+            appearance = {
+                kind_icons = {
+                    Copilot = "",
                 },
-                formatting = {
-                    fields = { "abbr", "kind", "menu" },
-                    format = require("lspkind").cmp_format({
-                        mode = "symbol_text",
-                        menu = {
-                            buffer = "[Buffer]",
-                            copilot = "[AI]",
-                            latex_symbols = "[Latex]",
-                            nvim_lsp = "[LSP]",
-                            nvim_lua = "[Lua]",
-                            path = "[Path]",
+                nerd_font_variant = "mono",
+                use_nvim_cmp_as_default = false,
+            },
+            completion = {
+                documentation = {
+                    auto_show = true,
+                    auto_show_delay_ms = 500,
+                    window = { border = "rounded" },
+                },
+                ghost_text = { enabled = true },
+                list = {
+                    selection = {
+                        preselect = false,
+                        auto_insert = false,
+                    },
+                },
+                menu = {
+                    border = "rounded",
+                    draw = {
+                        columns = {
+                            {
+                                "kind_icon",
+                                "label",
+                                "label_description",
+                                gap = 1,
+                            },
+                            {
+                                "kind",
+                                gap = 1,
+                                "source_name",
+                            },
                         },
-                        maxwidth = 50,
-                        ellipsis_char = "...",
-                        symbol_map = {
-                            Copilot = "",
-                        },
-                    }),
-                    expandable_indicator = true,
-                },
-                mapping = cmp.mapping.preset.insert({
-                    ["<C-p>"] = cmp.mapping.select_prev_item({
-                        behavior = cmp.SelectBehavior.Select,
-                    }),
-                    ["<C-n>"] = cmp.mapping.select_next_item({
-                        behavior = cmp.SelectBehavior.Select,
-                    }),
-                    ["<CR>"] = cmp.mapping.confirm({
-                        behavior = cmp.ConfirmBehavior.Replace,
-                        select = false,
-                    }),
-                    ["<C-u>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-d>"] = cmp.mapping.scroll_docs(4),
-                    ["<C-e>"] = cmp.mapping.abort(),
-                    ["<C-Space>"] = cmp.mapping.complete({}),
-                    ["<Tab>"] = vim.schedule_wrap(function(_)
-                        if cmp.visible() and utils.has_words_before() then
-                            cmp.select_next_item({
-                                behavior = cmp.SelectBehavior.Select,
-                            })
-                        end
-                    end),
-                }),
-                preselect = "None",
-                snippet = {
-                    expand = function(args)
-                        vim.snippet.expand(args.body)
-                    end,
-                },
-                sorting = {
-                    priority_weight = 2,
-                    comparators = {
-                        copilot_cmp_comparators.prioritize,
-                        copilot_cmp_comparators.score,
-                        compare.offset,
-                        compare.exact,
-                        compare.scopes,
-                        compare.score,
-                        compare.recently_used,
-                        compare.locality,
-                        compare.kind,
-                        compare.sort_text,
-                        compare.length,
-                        compare.order,
-                    },
-                },
-                sources = cmp.config.sources({
-                    {
-                        name = "lazydev",
-                        group_index = 0,
-                    },
-                    {
-                        name = "copilot",
-                    },
-                    {
-                        name = "nvim_lsp",
-                    },
-                }, {
-                    {
-                        name = "buffer",
-                    },
-                    {
-                        name = "path",
-                    },
-                }),
-                window = {
-                    completion = cmp.config.window.bordered({
-                        winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
-                    }),
-                    documentation = cmp.config.window.bordered({
-                        winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
-                    }),
-                },
-            })
+                        components = {
+                            kind_icon = {
+                                text = function(ctx)
+                                    local icon = ctx.kind_icon
 
-            cmp.setup.filetype("gitcommit", {
-                sources = cmp.config.sources({
-                    {
-                        name = "cmp_git",
-                    },
-                }, {
-                    {
-                        name = "buffer",
-                    },
-                }),
-            })
+                                    if
+                                        vim.tbl_contains(
+                                            { "Path" },
+                                            ctx.source_name
+                                        )
+                                    then
+                                        local dev_icon, _ = require(
+                                            "nvim-web-devicons"
+                                        ).get_icon(
+                                            ctx.label
+                                        )
+                                        if dev_icon then
+                                            icon = dev_icon
+                                        end
+                                    elseif ctx.kind ~= "Copilot" then
+                                        icon = require("lspkind").symbolic(
+                                            ctx.kind,
+                                            {
+                                                mode = "symbol",
+                                            }
+                                        )
+                                    end
 
-            cmp.setup.cmdline({ "/", "?" }, {
-                mapping = cmp.mapping.preset.cmdline(),
-            })
+                                    return icon .. ctx.icon_gap
+                                end,
+                                highlight = function(ctx)
+                                    local hl = "BlinkCmpKind" .. ctx.kind
+                                        or require(
+                                            "blink.cmp.completion.windows.render.tailwind"
+                                        ).get_hl(
+                                            ctx
+                                        )
 
-            cmp.setup.cmdline(":", {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = cmp.config.sources({
-                    {
-                        name = "cmdline",
-                        option = {
-                            ignore_cmds = {
-                                "q",
-                                "qa",
-                                "w",
-                                "wq",
-                                "x",
-                                "xa",
-                                "cq",
-                                "cqa",
-                                "cw",
-                                "cwq",
-                                "cx",
-                                "cxa",
+                                    if
+                                        vim.tbl_contains(
+                                            { "Path" },
+                                            ctx.source_name
+                                        )
+                                    then
+                                        local dev_icon, dev_hl = require(
+                                            "nvim-web-devicons"
+                                        ).get_icon(
+                                            ctx.label
+                                        )
+                                        if dev_icon then
+                                            hl = dev_hl
+                                        end
+                                    end
+
+                                    return hl
+                                end,
+                            },
+                            label = {
+                                width = { fill = true, max = 60 },
+                                text = function(ctx)
+                                    local highlights_info = require(
+                                        "colorful-menu"
+                                    ).blink_highlights(
+                                        ctx
+                                    )
+                                    if highlights_info ~= nil then
+                                        return highlights_info.label
+                                    else
+                                        return ctx.label
+                                    end
+                                end,
+                                highlight = function(ctx)
+                                    local highlights = {}
+                                    local highlights_info = require(
+                                        "colorful-menu"
+                                    ).blink_highlights(
+                                        ctx
+                                    )
+                                    if highlights_info ~= nil then
+                                        highlights = highlights_info.highlights
+                                    end
+                                    for _, idx in
+                                        ipairs(ctx.label_matched_indices)
+                                    do
+                                        table.insert(highlights, {
+                                            idx,
+                                            idx + 1,
+                                            group = "BlinkCmpLabelMatch",
+                                        })
+                                    end
+
+                                    return highlights
+                                end,
                             },
                         },
                     },
-                }),
-            })
+                },
+            },
+            keymap = { preset = "enter" },
+            signature = {
+                enabled = true,
+                window = {
+                    border = "rounded",
+                },
+            },
+            snippets = { preset = "luasnip" },
+            sources = {
+                default = {
+                    "lazydev",
+                    "lsp",
+                    "copilot",
+                    "path",
+                    "snippets",
+                    "buffer",
+                },
+                providers = {
+                    copilot = {
+                        name = "AI",
+                        module = "blink-copilot",
+                        score_offset = 100,
+                        async = true,
+                        opts = {
+                            max_completions = 2,
+                        },
+                    },
+                    lazydev = {
+                        name = "LazyDev",
+                        module = "lazydev.integrations.blink",
+                        score_offset = 100,
+                    },
+                },
+            },
+        },
+        opts_extend = { "sources.default" },
+    },
+
+    {
+
+        "L3MON4D3/LuaSnip",
+        lazy = true,
+        dependencies = {
+            "rafamadriz/friendly-snippets",
+        },
+        keys = {
+            {
+                "<leader>sn",
+                function()
+                    require("snacks").picker({
+                        finder = function()
+                            local snippets = {}
+
+                            for _, file in pairs(require("luasnip").available()) do
+                                for _, snippet in ipairs(file) do
+                                    table.insert(snippets, {
+                                        file = snippet.name,
+                                        text = snippet.name,
+                                    })
+                                end
+                            end
+
+                            return snippets
+                        end,
+                    })
+                end,
+                desc = "Snippets Explorer",
+            },
+        },
+        config = function()
+            local luasnip = require("luasnip")
+
+            luasnip.config.setup()
+
+            vim.tbl_map(function(type)
+                require("luasnip.loaders.from_" .. type).lazy_load()
+            end, { "vscode", "snipmate", "lua" })
+
+            luasnip.filetype_extend("typescript", { "tsdoc" })
+            luasnip.filetype_extend("javascript", { "jsdoc" })
+            luasnip.filetype_extend("lua", { "luadoc" })
+            luasnip.filetype_extend("rust", { "rustdoc" })
+            luasnip.filetype_extend("sh", { "shelldoc" })
         end,
     },
 
     {
-        "zbirenbaum/copilot-cmp",
-        lazy = true,
+        "xzbdmw/colorful-menu.nvim",
         opts = {},
     },
 }
