@@ -1,11 +1,13 @@
 return {
     {
         "saghen/blink.cmp",
+        lazy = true,
         dependencies = {
             "fang2hou/blink-copilot",
             "github/copilot.vim",
             "L3MON4D3/LuaSnip",
             "onsails/lspkind.nvim",
+            "xzbdmw/colorful-menu.nvim",
         },
         version = "*",
         opts = {
@@ -182,13 +184,13 @@ return {
     },
 
     {
-
         "L3MON4D3/LuaSnip",
         lazy = true,
         dependencies = {
             "rafamadriz/friendly-snippets",
         },
         keys = {
+            -- TODO: finish this picker for snippets
             {
                 "<leader>sn",
                 function()
@@ -231,6 +233,7 @@ return {
 
     {
         "xzbdmw/colorful-menu.nvim",
+        lazy = true,
         opts = {},
     },
 }
