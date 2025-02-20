@@ -9,7 +9,7 @@ return {
         "neovim/nvim-lspconfig",
         dependencies = {
             "williamboman/mason.nvim",
-            "hrsh7th/nvim-cmp",
+            "saghen/blink.cmp",
         },
         init = function()
             vim.api.nvim_create_autocmd("LspAttach", {
@@ -86,13 +86,6 @@ return {
             })
         end,
         config = function()
-            local lspconfig_defaults = require("lspconfig").util.default_config
-            lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-                "force",
-                lspconfig_defaults.capabilities,
-                require("cmp_nvim_lsp").default_capabilities()
-            )
-
             require("lspconfig.ui.windows").default_options.border = "rounded"
 
             vim.diagnostic.config({
@@ -152,6 +145,7 @@ return {
         },
         config = function()
             local lspconfig = require("lspconfig")
+            local capabilities = require("blink.cmp").get_lsp_capabilities()
             local noop = function() end
 
             require("mason").setup({
@@ -190,10 +184,13 @@ return {
                 },
                 handlers = {
                     function(server_name)
-                        lspconfig[server_name].setup({})
+                        lspconfig[server_name].setup({
+                            capabilities = capabilities,
+                        })
                     end,
                     lua_ls = function()
                         lspconfig.lua_ls.setup({
+                            capabilities = capabilities,
                             settings = {
                                 Lua = {
                                     hint = {
@@ -260,6 +257,7 @@ return {
                     ts_ls = noop,
                     denols = function()
                         lspconfig.denols.setup({
+                            capabilities = capabilities,
                             root_dir = lspconfig.util.root_pattern(
                                 "deno.json",
                                 "deno.jsonc"
@@ -292,6 +290,7 @@ return {
                     end,
                     tailwindcss = function()
                         lspconfig.tailwindcss.setup({
+                            capabilities = capabilities,
                             root_dir = lspconfig.util.root_pattern(
                                 "tailwind.config.js",
                                 "tailwind.config.cjs",
@@ -302,6 +301,7 @@ return {
                     end,
                     stylelint_lsp = function()
                         lspconfig.stylelint_lsp.setup({
+                            capabilities = capabilities,
                             root_dir = lspconfig.util.root_pattern(
                                 "stylelint.config.js",
                                 ".stylelintrc.js",
@@ -320,6 +320,7 @@ return {
                     gopls = noop,
                     graphql = function()
                         lspconfig.graphql.setup({
+                            capabilities = capabilities,
                             filetypes = {
                                 "graphql",
                                 "typescript",
@@ -331,14 +332,18 @@ return {
                     end,
                     yamlls = function()
                         require("lspconfig").yamlls.setup({
-                            capabilities = {
-                                textDocument = {
-                                    foldingRange = {
-                                        dynamicRegistration = false,
-                                        lineFoldingOnly = true,
+                            capabilities = vim.tbl_deep_extend(
+                                "force",
+                                capabilities,
+                                {
+                                    textDocument = {
+                                        foldingRange = {
+                                            dynamicRegistration = false,
+                                            lineFoldingOnly = true,
+                                        },
                                     },
-                                },
-                            },
+                                }
+                            ),
                         })
                     end,
                 },

@@ -2,7 +2,7 @@ local M = require("lualine.component"):extend()
 
 M.processing = false
 M.spinner_index = 1
-M.icon = ""
+M.icon = ""
 
 local spinner_symbols = {
     "⠋",
