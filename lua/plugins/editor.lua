@@ -29,33 +29,37 @@ return {
                 { "<leader>G", group = "Git" },
                 { "<leader>n", group = "Notifications" },
                 { "<leader>o", group = "Session" },
-                { "<leader>p", group = "File browser" },
+                {
+                    "<leader>p",
+                    group = "Pickers",
+                    icon = { icon = "󱥰", hl = "SnacksDashboardKey" },
+                },
                 { "<leader>s", group = "Search" },
                 { "<leader>t", group = "Diagnostics" },
                 {
                     "<leader>k",
                     mode = "v",
-                    icon = { icon = "", color = "red" },
+                    icon = { icon = "", hl = "WhichKeyIconRed" },
                 },
                 {
                     "<leader>j",
                     mode = "v",
-                    icon = { icon = "", color = "red" },
+                    icon = { icon = "", hl = "WhichKeyIconRed" },
                 },
                 {
                     "<leader>Y",
                     mode = "n",
-                    icon = { icon = "󱉧", color = "yellow" },
+                    icon = { icon = "󱉧", hl = "WhichKeyIconYellow" },
                 },
                 {
                     "<leader>y",
                     mode = { "n", "v" },
-                    icon = { icon = "󱉧", color = "yellow" },
+                    icon = { icon = "󱉧", hl = "WhichKeyIconYellow" },
                 },
                 {
                     "<leader>m",
                     mode = "n",
-                    icon = { icon = "󱒄", color = "yellow" },
+                    icon = { icon = "󱒄", hl = "WhichKeyIconYellow" },
                 },
             })
         end,

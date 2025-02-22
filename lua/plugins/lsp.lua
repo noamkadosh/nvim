@@ -21,18 +21,24 @@ return {
                         vim.lsp.buf.hover,
                         { buffer = event.buf, desc = "Hover Documentation" }
                     )
-                    vim.keymap.set(
-                        "n",
-                        "gd",
-                        vim.lsp.buf.definition,
-                        { buffer = event.buf, desc = "Go To Definition" }
-                    )
-                    vim.keymap.set(
-                        "n",
-                        "gD",
-                        vim.lsp.buf.declaration,
-                        { buffer = event.buf, desc = "Go To Declaration" }
-                    )
+                    -- vim.keymap.set(
+                    --     "n",
+                    --     "gd",
+                    --     vim.lsp.buf.definition,
+                    --     { buffer = event.buf, desc = "Go To Definition" }
+                    -- )
+                    -- vim.keymap.set(
+                    --     "n",
+                    --     "gD",
+                    --     vim.lsp.buf.declaration,
+                    --     { buffer = event.buf, desc = "Go To Declaration" }
+                    -- )
+                    -- vim.keymap.set(
+                    --     "n",
+                    --     "gr",
+                    --     vim.lsp.buf.references,
+                    --     { buffer = event.buf, desc = "LSP References" }
+                    -- )
                     vim.keymap.set(
                         "n",
                         "gi",
@@ -44,12 +50,6 @@ return {
                         "go",
                         vim.lsp.buf.type_definition,
                         { buffer = event.buf, desc = "Type Definition" }
-                    )
-                    vim.keymap.set(
-                        "n",
-                        "gr",
-                        vim.lsp.buf.references,
-                        { buffer = event.buf, desc = "LSP References" }
                     )
                     vim.keymap.set(
                         "n",
