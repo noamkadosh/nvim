@@ -108,7 +108,13 @@ return {
                 underline = true,
                 update_in_insert = true,
                 virtual_lines = {
-                    only_current_line = true,
+                    current_line = true,
+                    format = function(diagnostic)
+                        return diagnostic.message
+                            .. " ("
+                            .. diagnostic.source
+                            .. ")"
+                    end,
                 },
                 virtual_text = false,
             })
@@ -163,7 +169,7 @@ return {
                     "dockerls",
                     "docker_compose_language_service",
                     "eslint",
-                    "emmet_language_server",
+                    -- "emmet_language_server",
                     "gopls",
                     "graphql",
                     "html",
@@ -174,7 +180,6 @@ return {
                     "mdx_analyzer",
                     "prismals",
                     -- "snyk_ls",
-                    "stylelint_lsp",
                     "sqlls",
                     "nil_ls",
                     "rust_analyzer",
@@ -297,23 +302,22 @@ return {
                                 "tailwind.config.mjs",
                                 "tailwind.config.ts"
                             ),
-                        })
-                    end,
-                    stylelint_lsp = function()
-                        lspconfig.stylelint_lsp.setup({
-                            capabilities = capabilities,
-                            root_dir = lspconfig.util.root_pattern(
-                                "stylelint.config.js",
-                                ".stylelintrc.js",
-                                "stylelint.config.mjs",
-                                ".stylelintrc.mjs",
-                                "stylelint.config.cjs",
-                                ".stylelintrc.cjs",
-                                ".stylelintrc",
-                                ".stylelintrc.json",
-                                ".stylelintrc.yml",
-                                ".stylelintrc.yaml"
-                            ),
+                            settings = {
+                                tailwindCSS = {
+                                    experimental = {
+                                        classRegex = {
+                                            {
+                                                "cva\\(((?:[^()]|\\([^()]*\\))*)\\)",
+                                                "[\"'`]([^\"'`]*).*?[\"'`]",
+                                            },
+                                            {
+                                                "cx\\(((?:[^()]|\\([^()]*\\))*)\\)",
+                                                "(?:'|\"|`)([^']*)(?:'|\"|`)",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
                         })
                     end,
                     rust_analyzer = noop,
@@ -356,7 +360,7 @@ return {
                     "hadolint",
                     "prettier",
                     "selene",
-                    -- "stylelint",
+                    "stylelint",
                     "stylua",
                     "sqlfluff",
                     "yamlfmt",
@@ -401,7 +405,7 @@ return {
                 desc = "Peek type definition",
             },
             {
-                "go",
+                "gl",
                 "<cmd>Lspsaga outline<CR>",
                 desc = "Toggle outline",
             },
@@ -433,26 +437,6 @@ return {
                 { fg = "#27a1b9", bg = nil }
             )
         end,
-    },
-
-    {
-        "rachartier/tiny-inline-diagnostic.nvim",
-        event = "LspAttach",
-        priority = 1000,
-        opts = {
-            preset = "modern",
-            options = {
-                show_source = true,
-                multiple_diag_under_cursor = true,
-                multilines = true,
-                show_all_diags_on_cursorline = true,
-                enable_on_insert = true,
-                use_icons_from_diagnostic = true,
-                virt_texts = {
-                    priority = 110,
-                },
-            },
-        },
     },
 
     {

@@ -4,7 +4,7 @@ return {
         lazy = true,
         dependencies = {
             "fang2hou/blink-copilot",
-            "github/copilot.vim",
+            "zbirenbaum/copilot.lua",
             "L3MON4D3/LuaSnip",
             "onsails/lspkind.nvim",
             "xzbdmw/colorful-menu.nvim",
@@ -175,7 +175,10 @@ return {
                     lazydev = {
                         name = "LazyDev",
                         module = "lazydev.integrations.blink",
-                        score_offset = 100,
+                        score_offset = 6,
+                    },
+                    lsp = {
+                        score_offset = 10,
                     },
                 },
             },

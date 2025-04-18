@@ -30,8 +30,27 @@ return {
                     local NONE = colors.NONE
 
                     hl.Yanked = { bg = util.darken(colors.orange, 0.15) }
-                    hl.HighlightUndo = { bg = hl.DiffDelete.bg }
-                    hl.HighlightRedo = { bg = hl.DiffAdd.bg }
+
+                    hl.DiagnosticVirtualLinesHint = {
+                        fg = hl.DiagnosticHint.fg,
+                        bg = util.blend(hl.DiagnosticHint.fg, 0.1, colors.bg),
+                    }
+                    hl.DiagnosticVirtualLinesInfo = {
+                        fg = hl.DiagnosticInfo.fg,
+                        bg = util.blend(hl.DiagnosticInfo.fg, 0.1, colors.bg),
+                    }
+                    hl.DiagnosticVirtualLinesWarn = {
+                        fg = hl.DiagnosticWarn.fg,
+                        bg = util.blend(hl.DiagnosticWarn.fg, 0.1, colors.bg),
+                    }
+                    hl.DiagnosticVirtualLinesError = {
+                        fg = hl.DiagnosticError.fg,
+                        bg = util.blend(hl.DiagnosticError.fg, 0.1, colors.bg),
+                    }
+                    -- hl.DiagnosticVirtualLinesOk = {
+                    --     fg = hl.DiagnosticOk.fg,
+                    --     bg = util.blend(hl.DiagnosticOk.fg, 0.1, colors.bg),
+                    -- }
 
                     hl.DashboardHeaderGradient1 = { fg = "#1ABC9C" }
                     hl.DashboardHeaderGradient2 = { fg = "#2EB3A5" }

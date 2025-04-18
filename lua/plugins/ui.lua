@@ -373,16 +373,7 @@ return {
     {
         "tzachar/highlight-undo.nvim",
         event = { "BufReadPost", "BufNewFile" },
-        config = {
-            keymaps = {
-                Paste = {
-                    hlgroup = "HighlightRedo",
-                },
-                paste = {
-                    hlgroup = "HighlightRedo",
-                },
-            },
-        },
+        opts = {},
     },
 
     {
@@ -405,14 +396,6 @@ return {
     {
         "Bekaboo/deadcolumn.nvim",
         event = { "BufReadPost", "BufNewFile" },
-    },
-
-    {
-        "OXY2DEV/helpview.nvim",
-        lazy = false,
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-        },
     },
 
     {

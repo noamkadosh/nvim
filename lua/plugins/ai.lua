@@ -3,6 +3,7 @@ return {
         "olimorris/codecompanion.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
+            "ravitemer/mcphub.nvim",
             "nvim-treesitter/nvim-treesitter",
         },
         init = function()
@@ -172,6 +173,25 @@ return {
             strategies = {
                 chat = {
                     adapter = "copilot",
+                    roles = {
+                        llm = function(adapter)
+                            return "  " .. adapter.formatted_name
+                                .. " ("
+                                .. adapter.schema.model.default
+                                .. ")"
+                        end,
+                        user = "  Me",
+                    },
+                    tools = {
+                        ["mcp"] = {
+                            callback = function()
+                                return require(
+                                    "mcphub.extensions.codecompanion"
+                                )
+                            end,
+                            description = "Call tools and resources from the MCP Servers",
+                        },
+                    },
                 },
                 inline = {
                     adapter = "copilot",
@@ -184,24 +204,38 @@ return {
     },
 
     {
-        "github/copilot.vim",
+        "ravitemer/mcphub.nvim",
+        lazy = true,
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        cmd = "MCPHub",
+        build = "npm install -g mcp-hub@latest",
+        opts = {
+            auto_approve = true,
+            config = vim.fn.expand("~/.local/share/mcphub/servers.json"),
+            extensions = {
+                codecompanion = {
+                    show_result_in_chat = false,
+                    make_vars = true,
+                    make_slash_commands = true,
+                },
+            },
+        },
+    },
+
+    {
+        "zbirenbaum/copilot.lua",
         lazy = true,
         cmd = "Copilot",
         build = ":Copilot auth",
-        init = function()
-            vim.g.copilot_no_maps = true
-        end,
-        config = function()
-            vim.api.nvim_create_augroup("github_copilot", { clear = true })
-
-            for _, event in pairs({ "FileType", "BufUnload", "BufEnter" }) do
-                vim.api.nvim_create_autocmd({ event }, {
-                    group = "github_copilot",
-                    callback = function()
-                        vim.fn["copilot#On" .. event]()
-                    end,
-                })
-            end
-        end,
+        opts = {
+            suggestion = { enabled = false },
+            panel = { enabled = false },
+            filetypes = {
+                markdown = true,
+                help = true,
+            },
+        },
     },
 }

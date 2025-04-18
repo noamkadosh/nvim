@@ -13,6 +13,10 @@ return {
                     -- TS, JS
                     null_ls.builtins.formatting.prettier,
 
+                    -- CSS
+                    null_ls.builtins.diagnostics.stylelint,
+                    null_ls.builtins.formatting.stylelint,
+
                     -- Go
                     null_ls.builtins.diagnostics.golangci_lint,
                     null_ls.builtins.formatting.gofmt,
