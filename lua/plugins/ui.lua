@@ -64,6 +64,7 @@ return {
                             },
                             code_companion,
                         },
+                        { require("mcphub.extensions.lualine") },
                         {
                             "encoding",
                             padding = 1,
