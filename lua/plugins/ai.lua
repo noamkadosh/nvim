@@ -4,7 +4,9 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
             "ravitemer/mcphub.nvim",
+            "Davidyz/VectorCode",
             "nvim-treesitter/nvim-treesitter",
+            "echasnovski/mini.diff",
         },
         init = function()
             vim.cmd([[cab cc CodeCompanion]])
@@ -117,90 +119,108 @@ return {
                 silent = true,
             },
         },
-        opts = {
-            adapters = {
-                anthropic = function()
-                    return require("codecompanion.adapters").extend(
-                        "anthropic",
-                        {
-                            env = {
-                                api_key = "cmd:op read op://personal/Anthropic\\ API/credential --no-newline",
-                            },
-                        }
-                    )
-                end,
-                copilot = function()
-                    return require("codecompanion.adapters").extend("copilot", {
-                        schema = {
-                            model = {
-                                default = "claude-3.5-sonnet",
-                            },
-                        },
-                    })
-                end,
-                openrouter = function()
-                    return require("codecompanion.adapters").extend("openai", {
-                        env = {
-                            api_key = "cmd:op read op://personal/OpenRouter\\ API/credential --no-newline",
-                        },
-                        url = "https://openrouter.ai/api/v1/chat/completions",
-                        schema = {
-                            model = {
-                                default = "deepseek/deepseek-chat",
-                                choices = {
-                                    "anthropic/claude-3-5-haiku",
-                                    "anthropic/claude-3.5-sonnet",
-                                    "deepseek/deepseek-chat",
-                                    "deepseek/deepseek-r1",
-                                    "google/gemini-2.0-flash-exp:free",
-                                    "meta-llama/llama-3.3-70b-instruct",
-                                    "openai/gpt-4o-mini",
-                                    "x-ai/grok-2-1212",
+        opts = function()
+            local vectorCode = require("vectorcode.integrations")
+
+            return {
+                adapters = {
+                    anthropic = function()
+                        return require("codecompanion.adapters").extend(
+                            "anthropic",
+                            {
+                                env = {
+                                    api_key = "cmd:op read op://personal/Anthropic\\ API/credential --no-newline",
                                 },
+                            }
+                        )
+                    end,
+                    copilot = function()
+                        return require("codecompanion.adapters").extend(
+                            "copilot",
+                            {
+                                schema = {
+                                    model = {
+                                        default = "claude-3.7-sonnet",
+                                    },
+                                },
+                            }
+                        )
+                    end,
+                    openrouter = function()
+                        return require("codecompanion.adapters").extend(
+                            "openai",
+                            {
+                                env = {
+                                    api_key = "cmd:op read op://personal/OpenRouter\\ API/credential --no-newline",
+                                },
+                                url = "https://openrouter.ai/api/v1/chat/completions",
+                                schema = {
+                                    model = {
+                                        default = "deepseek/deepseek-chat",
+                                        choices = {
+                                            "anthropic/claude-3-5-haiku",
+                                            "anthropic/claude-3.5-sonnet",
+                                            "deepseek/deepseek-chat",
+                                            "deepseek/deepseek-r1",
+                                            "google/gemini-2.0-flash-exp:free",
+                                            "meta-llama/llama-3.3-70b-instruct",
+                                            "openai/gpt-4o-mini",
+                                            "x-ai/grok-2-1212",
+                                        },
+                                    },
+                                },
+                            }
+                        )
+                    end,
+                },
+                display = {
+                    chat = {
+                        render_headers = false,
+                    },
+                    diff = {
+                        provider = "mini_diff",
+                    },
+                },
+                strategies = {
+                    chat = {
+                        adapter = "copilot",
+                        roles = {
+                            llm = function(adapter)
+                                return "  "
+                                    .. adapter.formatted_name
+                                    .. " ("
+                                    .. adapter.schema.model.default
+                                    .. ")"
+                            end,
+                            user = "  Me",
+                        },
+                        slash_commands = {
+                            codebase = vectorCode.codecompanion.chat.make_slash_command(),
+                        },
+                        tools = {
+                            ["mcp"] = {
+                                callback = function()
+                                    return require(
+                                        "mcphub.extensions.codecompanion"
+                                    )
+                                end,
+                                description = "Call tools and resources from the MCP Servers",
+                            },
+                            vectorcode = {
+                                description = "Run VectorCode to retrieve the project context.",
+                                callback = require("vectorcode.integrations").codecompanion.chat.make_tool({}),
                             },
                         },
-                    })
-                end,
-            },
-            display = {
-                chat = {
-                    render_headers = false,
-                },
-                diff = {
-                    provider = "mini_diff",
-                },
-            },
-            strategies = {
-                chat = {
-                    adapter = "copilot",
-                    roles = {
-                        llm = function(adapter)
-                            return "  " .. adapter.formatted_name
-                                .. " ("
-                                .. adapter.schema.model.default
-                                .. ")"
-                        end,
-                        user = "  Me",
                     },
-                    tools = {
-                        ["mcp"] = {
-                            callback = function()
-                                return require(
-                                    "mcphub.extensions.codecompanion"
-                                )
-                            end,
-                            description = "Call tools and resources from the MCP Servers",
-                        },
+                    inline = {
+                        adapter = "copilot",
+                    },
+                    agent = {
+                        adapter = "copilot",
                     },
                 },
-                inline = {
-                    adapter = "copilot",
-                },
-                agent = {
-                    adapter = "copilot",
-                },
-            },
-        },
+            }
+        end,
     },
 
     {
@@ -222,6 +242,13 @@ return {
                 },
             },
         },
+    },
+
+    {
+        "Davidyz/VectorCode",
+        lazy = true,
+        dependencies = { "nvim-lua/plenary.nvim" },
+        cmd = "VectorCode",
     },
 
     {

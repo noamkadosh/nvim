@@ -32,7 +32,7 @@ function M.map_lsp_to_info()
         local client_name = client.name
         local icon, highlight
 
-        if client.name:find("Copilot") then
+        if client.name:lower():find("copilot") then
             local fg_hl_id =
                 vim.api.nvim_get_hl_id_by_name("CmpItemKindCopilot")
             local fg = vim.fn.synIDattr(fg_hl_id, "fg")
@@ -45,17 +45,17 @@ function M.map_lsp_to_info()
             icon = ""
             highlight = "CmpItemKindCopilotStatus"
             client_name = "copilot"
-        elseif client.name:find("null") then
+        elseif client.name:lower():find("null") then
             local fg = colors.orange
             vim.api.nvim_set_hl(0, "ConstantStatus", { fg = fg, bg = bg })
 
             icon = "󱌣"
             highlight = "ConstantStatus"
-        elseif client.name:find("eslint") then
+        elseif client.name:lower():find("eslint") then
             icon, highlight = web_devicons.get_icon(".eslintrc")
-        elseif client.name:find("tailwind") then
+        elseif client.name:lower():find("tailwind") then
             icon, highlight = web_devicons.get_icon("tailwind.config.ts")
-        elseif client.name:find("stylelint") then
+        elseif client.name:lower():find("stylelint") then
             ---@diagnostic disable-next-line: undefined-field
             local fg = colors.white
             vim.api.nvim_set_hl(0, "rainbowcol4Status", { fg = fg, bg = bg })
@@ -63,22 +63,22 @@ function M.map_lsp_to_info()
             icon = ""
             highlight = "rainbowcol4Status"
         ---@diagnostic disable-next-line: undefined-field
-        elseif client.name:find("emmet") then
+        elseif client.name:lower():find("emmet") then
             client_name = "emmet"
             icon, highlight = web_devicons.get_icon("html")
-        elseif client.name:find("htmx") then
+        elseif client.name:lower():find("htmx") then
             client_name = "htmx"
             icon, highlight = web_devicons.get_icon("html")
         ---@diagnostic disable-next-line: undefined-field
         elseif
-            client.name:find("tsserver")
-            or client.name:find("ts_ls")
-            or client.name:find("typescript")
+            client.name:lower():find("tsserver")
+            or client.name:lower():find("ts_ls")
+            or client.name:lower():find("typescript")
         then
             client_name = "tsserver"
             icon, highlight =
                 web_devicons.get_icon(filetypesMap[filetype or "typescript"])
-        elseif client.name:find("deno") then
+        elseif client.name:lower():find("deno") then
             client_name = "denols"
             icon, highlight =
                 web_devicons.get_icon(filetypesMap[filetype or "typescript"])

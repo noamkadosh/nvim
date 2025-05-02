@@ -597,4 +597,10 @@ return {
             limit_archives_size = 128,
         },
     },
+
+    {
+        "echasnovski/mini.diff",
+        lazy = true,
+        opts = {},
+    },
 }

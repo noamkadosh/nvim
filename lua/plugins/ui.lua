@@ -64,7 +64,14 @@ return {
                             },
                             code_companion,
                         },
-                        { require("mcphub.extensions.lualine") },
+                        {
+                            require("vectorcode.integrations").lualine({
+                                show_job_count = true,
+                            })[1],
+                        },
+                        {
+                            require("mcphub.extensions.lualine"),
+                        },
                         {
                             "encoding",
                             padding = 1,

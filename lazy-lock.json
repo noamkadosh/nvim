@@ -1,5 +1,6 @@
 {
   "LuaSnip": { "branch": "master", "commit": "c9b9a22904c97d0eb69ccb9bab76037838326817" },
+  "VectorCode": { "branch": "main", "commit": "5d0c897b78aeb6ec0960abbcd7fbc406ee8ed76d" },
   "blink-copilot": { "branch": "main", "commit": "71102fe2fa1616353f8cb315bb8b85db0812a218" },
   "blink.cmp": { "branch": "main", "commit": "cb5e346d9e0efa7a3eee7fd4da0b690c48d2a98e" },
   "codecompanion.nvim": { "branch": "main", "commit": "071f738ac152690b5518612dfbd17e1249ad819a" },
@@ -31,6 +32,7 @@
   "mcphub.nvim": { "branch": "main", "commit": "bb6741391f19ac93e335a72bd67a602ccdae0af7" },
   "mdx.nvim": { "branch": "main", "commit": "464a74be368dce212cff02f6305845dc7f209ab3" },
   "mini.ai": { "branch": "main", "commit": "e139eb1101beb0250fea322f8c07a42f0f175688" },
+  "mini.diff": { "branch": "main", "commit": "7e268d0241255abaa07b8aa0ddff028f7315fe21" },
   "mini.pairs": { "branch": "main", "commit": "69864a2efb36c030877421634487fd90db1e4298" },
   "mini.surround": { "branch": "main", "commit": "5aab42fcdcf31fa010f012771eda5631c077840a" },
   "modicator.nvim": { "branch": "main", "commit": "45b64561e109cd04de551b081fb947b4f856009e" },
