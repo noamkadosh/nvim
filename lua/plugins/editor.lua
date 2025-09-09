@@ -515,14 +515,14 @@ return {
         "folke/trouble.nvim",
         keys = {
             {
-                "<leader>tx",
+                "<leader>tX",
                 "<cmd>Trouble diagnostics toggle<cr>",
                 desc = "Toggle diagnostics",
                 silent = true,
                 noremap = true,
             },
             {
-                "<leader>td",
+                "<leader>tx",
                 "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
                 desc = "Document diagnostics",
                 silent = true,
@@ -599,8 +599,15 @@ return {
     },
 
     {
-        "echasnovski/mini.diff",
+        "nvim-mini/mini.diff",
         lazy = true,
         opts = {},
+    },
+
+    {
+        "atiladefreitas/dooing",
+        config = function()
+            require("dooing").setup({})
+        end,
     },
 }

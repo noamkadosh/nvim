@@ -5,19 +5,19 @@ return {
     },
 
     {
-        "echasnovski/mini.ai",
+        "nvim-mini/mini.ai",
         event = { "BufReadPost", "BufNewFile" },
         opts = {},
     },
 
     {
-        "echasnovski/mini.surround",
+        "nvim-mini/mini.surround",
         event = { "BufReadPost", "BufNewFile" },
         opts = {},
     },
 
     {
-        "echasnovski/mini.pairs",
+        "nvim-mini/mini.pairs",
         event = { "BufReadPost", "BufNewFile" },
         opts = {},
     },

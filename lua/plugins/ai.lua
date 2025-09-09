@@ -6,7 +6,7 @@ return {
             "ravitemer/mcphub.nvim",
             "Davidyz/VectorCode",
             "nvim-treesitter/nvim-treesitter",
-            "echasnovski/mini.diff",
+            "nvim-mini/mini.diff",
         },
         init = function()
             vim.cmd([[cab cc CodeCompanion]])

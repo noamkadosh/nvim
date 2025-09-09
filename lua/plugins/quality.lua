@@ -592,8 +592,8 @@ return {
                     },
                 },
                 statuscolumn = {
-                    left = { "sign", "git", "mark" },
-                    right = { "fold" },
+                    left = { "sign","git", "mark" },
+                    right = { "git", "fold" },
                     folds = {
                         open = true,
                         git_hl = false,
