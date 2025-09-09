@@ -78,7 +78,7 @@
   "ts-comments.nvim": { "branch": "main", "commit": "1bd9d0ba1d8b336c3db50692ffd0955fe1bb9f0c" },
   "typescript-tools.nvim": { "branch": "master", "commit": "885f4cc150f996f5bff5804874f92ff3051c883d" },
   "vim-repeat": { "branch": "master", "commit": "65846025c15494983dafe5e3b46c8f88ab2e9635" },
-  "vscode-js-debug": { "branch": "main", "commit": "41c802115c16b25c5a4c3573c1b38b4ba58875e3" },
+  "vscode-js-debug": { "branch": "main", "commit": "1b77d76e68a848b9857a21acaff368d66bb8d875" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
   "yamlmatter.nvim": { "branch": "master", "commit": "222893021ab846fd100c7a98c017a57f92b7c677" }
 }

@@ -370,7 +370,7 @@ return {
             })
 
             require("mason-nvim-dap").setup({
-                ensure_installed = { "chrome", "codelldb", "delve" },
+                ensure_installed = { "firefox", "js", "codelldb", "delve" },
                 automatic_installation = true,
             })
         end,
