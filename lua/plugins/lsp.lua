@@ -8,7 +8,7 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            "williamboman/mason.nvim",
+            "mason-org/mason.nvim",
             "saghen/blink.cmp",
         },
         init = function()
@@ -134,7 +134,7 @@ return {
     },
 
     {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         lazy = true,
         cmd = {
             "Mason",
@@ -145,7 +145,7 @@ return {
             "MasonUpdate",
         },
         dependencies = {
-            "williamboman/mason-lspconfig.nvim",
+            "mason-org/mason-lspconfig.nvim",
             "jay-babu/mason-null-ls.nvim",
             "jay-babu/mason-nvim-dap.nvim",
         },
