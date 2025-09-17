@@ -82,6 +82,9 @@ function M.map_lsp_to_info()
             client_name = "denols"
             icon, highlight =
                 web_devicons.get_icon(filetypesMap[filetype or "typescript"])
+        elseif client.name:lower():find("rust") then
+            icon, highlight =
+                web_devicons.get_icon("rs")
         elseif
             ---@diagnostic disable-next-line: undefined-field
             utils.table_contains(client.config.filetypes, filetype)
