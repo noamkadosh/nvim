@@ -606,8 +606,10 @@ return {
 
     {
         "atiladefreitas/dooing",
-        config = function()
-            require("dooing").setup({})
-        end,
+        opts = {
+            per_project = {
+                default_filename = ".todo.json",
+            },
+        },
     },
 }
