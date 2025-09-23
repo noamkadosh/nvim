@@ -15,6 +15,7 @@ return {
         config = function()
             require("nvim-treesitter").install({
                 "bash",
+                "css",
                 "gitcommit",
                 "go",
                 "javascript",
@@ -25,6 +26,7 @@ return {
                 "query",
                 "regex",
                 "rust",
+                "scss",
                 "typescript",
                 "tsx",
                 "vimdoc",
@@ -33,6 +35,7 @@ return {
             vim.api.nvim_create_autocmd("FileType", {
                 pattern = {
                     "bash",
+                    "css",
                     "gitcommit",
                     "go",
                     "javascript",
@@ -42,6 +45,7 @@ return {
                     "markdown",
                     "query",
                     "rust",
+                    "scss",
                     "typescript",
                     "typescriptreact",
                     "vim",
