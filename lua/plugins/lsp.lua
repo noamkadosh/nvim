@@ -70,6 +70,7 @@ return {
                                 return server.name == "null-ls"
                                     or server.name == "eslint"
                                     or server.name == "rust_analyzer"
+                                    or server.name == "stylua"
                             end,
                         })
                     end, {
@@ -150,7 +151,6 @@ return {
             "jay-babu/mason-nvim-dap.nvim",
         },
         config = function()
-            local lspconfig = vim.lsp.config
             local capabilities = require("blink.cmp").get_lsp_capabilities()
             local noop = function() end
 
@@ -190,12 +190,12 @@ return {
                 },
                 handlers = {
                     function(server_name)
-                        lspconfig[server_name].setup({
+                        vim.lsp.config[server_name].setup({
                             capabilities = capabilities,
                         })
                     end,
                     lua_ls = function()
-                        lspconfig.lua_ls.setup({
+                        vim.lsp.config("lua_ls", {
                             capabilities = capabilities,
                             settings = {
                                 Lua = {
@@ -261,7 +261,7 @@ return {
                     end,
                     jsonls = noop,
                     stylelint_lsp = function()
-                        lspconfig.stylelint_lsp.setup({
+                        vim.lsp.config("stylelint_lsp", {
                             on_attach = function(client)
                                 client.server_capabilities.document_formatting =
                                     false
@@ -269,7 +269,7 @@ return {
                         })
                     end,
                     ts_ls = function()
-                        lspconfig.ts_ls.setup({
+                        vim.lsp.config("ts_ls", {
                             capabilities = capabilities,
                             settings = {
                                 typescript = {
@@ -310,7 +310,7 @@ return {
                         })
                     end,
                     -- denols = function()
-                    --     lspconfig.denols.setup({
+                    --     vim.lsp.config("denols", {
                     --         capabilities = capabilities,
                     --         root_dir = lspconfig.util.root_pattern(
                     --             "deno.json",
@@ -343,14 +343,8 @@ return {
                     --     })
                     -- end,
                     tailwindcss = function()
-                        lspconfig.tailwindcss.setup({
+                        vim.lsp.config("tailwindcss", {
                             capabilities = capabilities,
-                            root_dir = lspconfig.util.root_pattern(
-                                "tailwind.config.js",
-                                "tailwind.config.cjs",
-                                "tailwind.config.mjs",
-                                "tailwind.config.ts"
-                            ),
                             settings = {
                                 tailwindCSS = {
                                     experimental = {
@@ -372,7 +366,7 @@ return {
                     rust_analyzer = noop,
                     gopls = noop,
                     graphql = function()
-                        lspconfig.graphql.setup({
+                        vim.lsp.config("graphql", {
                             capabilities = capabilities,
                             filetypes = {
                                 "graphql",
@@ -384,7 +378,7 @@ return {
                         })
                     end,
                     yamlls = function()
-                        lspconfig.yamlls.setup({
+                        vim.lsp.config("yamlls", {
                             capabilities = vim.tbl_deep_extend(
                                 "force",
                                 capabilities,

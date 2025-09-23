@@ -17,7 +17,6 @@ return {
 
                     -- Lua
                     null_ls.builtins.diagnostics.selene,
-                    null_ls.builtins.formatting.stylua,
 
                     -- Docker
                     null_ls.builtins.diagnostics.hadolint,
