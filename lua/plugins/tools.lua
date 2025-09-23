@@ -7,15 +7,8 @@ return {
 
             null_ls.setup({
                 sources = {
-                    -- Git
-                    null_ls.builtins.code_actions.gitsigns,
-
                     -- TS, JS
                     null_ls.builtins.formatting.prettier,
-
-                    -- CSS
-                    null_ls.builtins.diagnostics.stylelint,
-                    null_ls.builtins.formatting.stylelint,
 
                     -- Go
                     null_ls.builtins.diagnostics.golangci_lint,
@@ -132,41 +125,6 @@ return {
                 },
             }
         end,
-    },
-
-    {
-        "pmizio/typescript-tools.nvim",
-        lazy = true,
-        ft = {
-            "typescript",
-            "typescriptreact",
-            "javascript",
-            "javascriptreact",
-        },
-        opts = {
-            capabilities = require("blink.cmp").get_lsp_capabilities(),
-            root_dir = require("lspconfig").util.root_pattern(
-                "package.json",
-                "tsconfig.json"
-            ),
-            single_file_support = false,
-            settings = {
-                tsserver_path = "/Users/noam/.volta/tools/image/packages/typescript/lib/node_modules/typescript/lib/tsserver.js",
-                -- WARNING: Not sure the plugins work without a way to specify a custom path (like for tsserver above)
-                tsserver_plugins = {
-                    "@styled/typescript-styled-plugin",
-                },
-                tsserver_file_preferences = {
-                    includeInlayParameterNameHints = "all",
-                    includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                    includeInlayFunctionParameterTypeHints = true,
-                    includeInlayVariableTypeHints = true,
-                    includeInlayPropertyDeclarationTypeHints = true,
-                    includeInlayFunctionLikeReturnTypeHints = true,
-                    includeInlayEnumMemberValueHints = true,
-                },
-            },
-        },
     },
 
     {

@@ -150,7 +150,7 @@ return {
             "jay-babu/mason-nvim-dap.nvim",
         },
         config = function()
-            local lspconfig = require("lspconfig")
+            local lspconfig = vim.lsp.config
             local capabilities = require("blink.cmp").get_lsp_capabilities()
             local noop = function() end
 
@@ -165,7 +165,7 @@ return {
                 ensure_installed = {
                     "astro",
                     "cssls",
-                    "denols",
+                    -- "denols",
                     "dockerls",
                     "docker_compose_language_service",
                     "eslint",
@@ -180,6 +180,7 @@ return {
                     "mdx_analyzer",
                     "prismals",
                     -- "snyk_ls",
+                    "stylelint_lsp",
                     "sqlls",
                     "nil_ls",
                     "rust_analyzer",
@@ -259,40 +260,88 @@ return {
                         })
                     end,
                     jsonls = noop,
-                    ts_ls = noop,
-                    denols = function()
-                        lspconfig.denols.setup({
+                    stylelint_lsp = function()
+                        lspconfig.stylelint_lsp.setup({
+                            on_attach = function(client)
+                                client.server_capabilities.document_formatting =
+                                    false
+                            end,
+                        })
+                    end,
+                    ts_ls = function()
+                        lspconfig.ts_ls.setup({
                             capabilities = capabilities,
-                            root_dir = lspconfig.util.root_pattern(
-                                "deno.json",
-                                "deno.jsonc"
-                            ),
                             settings = {
-                                deno = {
+                                typescript = {
                                     inlayHints = {
-                                        parameterNames = {
-                                            enabled = "all",
-                                        },
-                                        parameterTypes = {
-                                            enabled = true,
-                                        },
-                                        variableTypes = {
-                                            enabled = true,
-                                        },
-                                        propertyDeclarationTypes = {
-                                            enabled = true,
-                                        },
-                                        functionLikeReturnTypes = {
-                                            enabled = true,
-                                        },
-                                        enumMemberValues = {
-                                            enabled = true,
-                                        },
+                                        includeInlayParameterNameHints = "all",
+                                        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                                        includeInlayVariableTypeHints = true,
+                                        includeInlayFunctionParameterTypeHints = true,
+                                        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+                                        includeInlayPropertyDeclarationTypeHints = true,
+                                        includeInlayFunctionLikeReturnTypeHints = true,
+                                        includeInlayEnumMemberValueHints = true,
+                                    },
+                                },
+                                javascript = {
+                                    inlayHints = {
+                                        includeInlayParameterNameHints = "all",
+                                        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                                        includeInlayVariableTypeHints = true,
+                                        includeInlayFunctionParameterTypeHints = true,
+                                        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+                                        includeInlayPropertyDeclarationTypeHints = true,
+                                        includeInlayFunctionLikeReturnTypeHints = true,
+                                        includeInlayEnumMemberValueHints = true,
                                     },
                                 },
                             },
+                            on_attach = function(client, bufnr)
+                                if
+                                    client.server_capabilities.inlayHintProvider
+                                then
+                                    vim.lsp.inlay_hint.enable(
+                                        true,
+                                        { bufnr = bufnr }
+                                    )
+                                end
+                            end,
                         })
                     end,
+                    -- denols = function()
+                    --     lspconfig.denols.setup({
+                    --         capabilities = capabilities,
+                    --         root_dir = lspconfig.util.root_pattern(
+                    --             "deno.json",
+                    --             "deno.jsonc"
+                    --         ),
+                    --         settings = {
+                    --             deno = {
+                    --                 inlayHints = {
+                    --                     parameterNames = {
+                    --                         enabled = "all",
+                    --                     },
+                    --                     parameterTypes = {
+                    --                         enabled = true,
+                    --                     },
+                    --                     variableTypes = {
+                    --                         enabled = true,
+                    --                     },
+                    --                     propertyDeclarationTypes = {
+                    --                         enabled = true,
+                    --                     },
+                    --                     functionLikeReturnTypes = {
+                    --                         enabled = true,
+                    --                     },
+                    --                     enumMemberValues = {
+                    --                         enabled = true,
+                    --                     },
+                    --                 },
+                    --             },
+                    --         },
+                    --     })
+                    -- end,
                     tailwindcss = function()
                         lspconfig.tailwindcss.setup({
                             capabilities = capabilities,
@@ -335,7 +384,7 @@ return {
                         })
                     end,
                     yamlls = function()
-                        require("lspconfig").yamlls.setup({
+                        lspconfig.yamlls.setup({
                             capabilities = vim.tbl_deep_extend(
                                 "force",
                                 capabilities,

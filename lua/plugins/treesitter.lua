@@ -12,8 +12,8 @@ return {
         init = function()
             vim.g.skip_ts_context_commentstring_module = true
         end,
-        opts = {
-            ensure_installed = {
+        config = function()
+            require("nvim-treesitter").install({
                 "bash",
                 "gitcommit",
                 "go",
@@ -26,23 +26,34 @@ return {
                 "regex",
                 "rust",
                 "typescript",
+                "tsx",
                 "vimdoc",
-            },
-            ignore_install = {},
-            modules = {},
-            sync_install = false,
-            auto_install = true,
-            highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = { "markdown" },
-            },
-            autotag = {
-                enable = true,
-            },
-            playground = {
-                enable = true,
-            },
-        },
+            })
+
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = {
+                    "bash",
+                    "gitcommit",
+                    "go",
+                    "javascript",
+                    "javascriptreact",
+                    "jsonc",
+                    "lua",
+                    "markdown",
+                    "query",
+                    "rust",
+                    "typescript",
+                    "typescriptreact",
+                    "vim",
+                },
+                callback = function()
+                    vim.treesitter.start()
+                    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+                    vim.bo.indentexpr =
+                        "v:lua.require'nvim-treesitter'.indentexpr()"
+                end,
+            })
+        end,
     },
 
     {
