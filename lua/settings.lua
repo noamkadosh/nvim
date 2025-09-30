@@ -31,3 +31,4 @@ vim.opt.foldlevel = 99
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.inccommand = "split"
+vim.o.winborder = "rounded"
