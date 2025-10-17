@@ -28,7 +28,8 @@ return {
                 { "<leader>g", group = "Git Actions" },
                 { "<leader>G", group = "Git" },
                 { "<leader>n", group = "Notifications" },
-                { "<leader>o", group = "Session" },
+                { "<leader>o", group = "AI" },
+                { "<leader>x", group = "Session" },
                 {
                     "<leader>p",
                     group = "Pickers",
@@ -230,17 +231,17 @@ return {
 
             return {
                 {
-                    "<leader>os",
+                    "<leader>xs",
                     "<cmd>:SessionSave<cr>",
                     desc = "Save session",
                 },
                 {
-                    "<leader>ol",
+                    "<leader>xl",
                     "<cmd>:SessionLoad<cr>",
                     desc = "Load session",
                 },
                 {
-                    "<leader>oa",
+                    "<leader>xa",
                     "<cmd>:SessionLoadLast<cr>",
                     desc = "Load last session",
                 },

@@ -12,7 +12,6 @@ return {
             local noice = require("noice")
             local colors = require("tokyonight.colors").setup()
             local theme = require("lualine.themes.tokyonight")
-            local code_companion = require("utils.lualine_codecompanion")
 
             -- Change the background of lualine_c section for normal mode
             theme.normal.c.bg = nil
@@ -408,13 +407,22 @@ return {
 
     {
         "MeanderingProgrammer/render-markdown.nvim",
-        ft = { "markdown", "mdx", "codecompanion" },
+        ft = {
+            "markdown",
+            "mdx",
+            "copilot-chat",
+            "opencode_output",
+            "codecompanion",
+            "Avante",
+        },
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
             "nvim-tree/nvim-web-devicons",
         },
         opts = {
             render_modes = true,
+            anti_conceal = { enabled = false },
+            file_types = { "markdown", "opencode_output" },
         },
     },
 
