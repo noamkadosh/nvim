@@ -69,6 +69,7 @@ return {
                                 -- Only use null-ls
                                 return server.name == "null-ls"
                                     or server.name == "eslint"
+                                    or server.name == "biome"
                                     or server.name == "rust_analyzer"
                                     or server.name == "stylua"
                             end,
@@ -164,6 +165,7 @@ return {
                 automatic_installation = true,
                 ensure_installed = {
                     "astro",
+                    "biome",
                     "cssls",
                     -- "denols",
                     "dockerls",

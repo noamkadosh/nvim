@@ -422,7 +422,7 @@ return {
         opts = {
             render_modes = true,
             anti_conceal = { enabled = false },
-            file_types = { "markdown", "opencode_output" },
+            file_types = { "markdown", "codecompanion", "opencode_output" },
         },
     },
 
