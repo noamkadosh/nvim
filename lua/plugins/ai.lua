@@ -1,155 +1,51 @@
 return {
     {
-        "olimorris/codecompanion.nvim",
+        "NickvanDyke/opencode.nvim",
         dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-            "nvim-mini/mini.diff",
+            "folke/snacks.nvim",
         },
-        init = function()
-            vim.cmd([[cab cc CodeCompanion]])
-        end,
-        cmd = {
-            "CodeCompanion",
-            "CodeCompanionChat",
-            "CodeCompanionActions",
-        },
-        keys = {
-            {
+        config = function()
+            local zellij_provider =
+                require("opencode.provider.zellij").new({
+                    direction = "right",
+                    cmd = "opencode",
+                })
+
+            require("opencode.config").provider = zellij_provider
+
+            vim.o.autoread = true
+
+            vim.keymap.set({ "n", "x" }, "<C-a>", function()
+                require("opencode").ask("@this: ", { submit = true })
+            end, { desc = "Ask opencode" })
+            vim.keymap.set({ "n", "x" }, "<C-x>", function()
+                require("opencode").select()
+            end, { desc = "Execute opencode action…" })
+            vim.keymap.set({ "n", "x" }, "ga", function()
+                require("opencode").prompt("@this")
+            end, { desc = "Add to opencode" })
+            vim.keymap.set({ "n", "t" }, "<C-.>", function()
+                require("opencode").toggle()
+            end, { desc = "Toggle opencode" })
+            vim.keymap.set("n", "<S-C-u>", function()
+                require("opencode").command("session.half.page.up")
+            end, { desc = "opencode half page up" })
+            vim.keymap.set("n", "<S-C-d>", function()
+                require("opencode").command("session.half.page.down")
+            end, { desc = "opencode half page down" })
+            vim.keymap.set(
+                "n",
+                "+",
                 "<C-a>",
-                "<cmd>CodeCompanionActions<cr>",
-                mode = { "n", "v" },
-                noremap = true,
-                silent = true,
-                desc = "CodeCompanion Actions",
-            },
-            {
-                "<leader>a",
-                "<cmd>CodeCompanionChat Toggle<cr>",
-                mode = { "n", "v" },
-                noremap = true,
-                silent = true,
-                desc = "Toggle CodeCompanion Chat",
-            },
-            {
-                "ga",
-                "<cmd>CodeCompanionChat Add<cr>",
-                mode = "v",
-                noremap = true,
-                silent = true,
-                desc = "Add selection to CodeCompanion Chat",
-            },
-            {
-                "<leader>cw",
-                "",
-                callback = function()
-                    require("codecompanion").prompt("workflow")
-                end,
-                mode = "v",
-                desc = "Use a workflow to guide an LLM in writing code",
-                noremap = true,
-                silent = true,
-            },
-            {
-                "<leader>ce",
-                "",
-                callback = function()
-                    require("codecompanion").prompt("explain")
-                end,
-                mode = "v",
-                desc = "Explain how code in a buffer works",
-                noremap = true,
-                silent = true,
-            },
-            {
-                "<leader>ct",
-                "",
-                callback = function()
-                    require("codecompanion").prompt("tests")
-                end,
-                mode = "v",
-                desc = "Generate unit tests for the selected code",
-                noremap = true,
-                silent = true,
-            },
-            {
-                "<leader>cf",
-                "",
-                callback = function()
-                    require("codecompanion").prompt("fix")
-                end,
-                mode = "v",
-                desc = "Fix the selected code",
-                noremap = true,
-                silent = true,
-            },
-            {
-                "<leader>cb",
-                "",
-                callback = function()
-                    require("codecompanion").prompt("buffer")
-                end,
-                mode = "v",
-                desc = "Send the current buffer to the LLM as part of an inline prompt",
-                noremap = true,
-                silent = true,
-            },
-            {
-                "<leader>cl",
-                "",
-                callback = function()
-                    require("codecompanion").prompt("lsp")
-                end,
-                mode = "v",
-                desc = "Explain the LSP diagnostics for the selected code",
-                noremap = true,
-                silent = true,
-            },
-            {
-                "<leader>cc",
-                "",
-                callback = function()
-                    require("codecompanion").prompt("commit")
-                end,
-                mode = "v",
-                desc = "Generate a commit message",
-                noremap = true,
-                silent = true,
-            },
-        },
-        opts = {
-            adapters = {
-                acp = {
-                    opencode = "opencode",
-                },
-            },
-            display = {
-                chat = {
-                    show_token_count = true,
-                    fold_context = true,
-                },
-                diff = {
-                    provider = "mini_diff",
-                },
-            },
-            strategies = {
-                chat = {
-                    adapter = "opencode",
-                    roles = {
-                        llm = function(adapter)
-                            return "  " .. adapter.formatted_name
-                        end,
-                        user = "  Me",
-                    },
-                },
-                inline = {
-                    adapter = "opencode",
-                },
-                agent = {
-                    adapter = "opencode",
-                },
-            },
-        },
+                { desc = "Increment", noremap = true }
+            )
+            vim.keymap.set(
+                "n",
+                "-",
+                "<C-x>",
+                { desc = "Decrement", noremap = true }
+            )
+        end,
     },
 
     {

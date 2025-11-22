@@ -543,6 +543,7 @@ return {
                 notifier = {
                     style = "compact",
                 },
+                input = {},
                 picker = {
                     auto_close = true,
                     enabled = true,

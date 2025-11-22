@@ -55,22 +55,7 @@ return {
                         },
                     },
                     lualine_x = {
-                        -- {
-                        --     icon_enabled = true,
-                        --     icon = {
-                        --         code_companion.icon,
-                        --         color = { fg = colors.teal },
-                        --     },
-                        --     code_companion,
-                        -- },
-                        -- {
-                        --     require("vectorcode.integrations").lualine({
-                        --         show_job_count = true,
-                        --     })[1],
-                        -- },
-                        -- {
-                        --     require("mcphub.extensions.lualine"),
-                        -- },
+                        { require("opencode").statusline },
                         {
                             "encoding",
                             padding = 1,
