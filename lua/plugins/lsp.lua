@@ -66,7 +66,6 @@ return {
                             async = true,
                             timeout_ms = 10000,
                             filter = function(server)
-                                -- Only use null-ls
                                 return server.name == "null-ls"
                                     or server.name == "eslint"
                                     or server.name == "biome"
