@@ -1,53 +1,74 @@
 return {
-    --     -- TODO: create a picker for this plugin using snacks picker
-    --     -- update setting
-    --     {
-    --         "epwalsh/obsidian.nvim",
-    --         event = {
-    --             "BufReadPre " .. vim.fn.expand("~") .. "/.config/obsidian/**.md",
-    --         },
-    --         dependencies = {
-    --             "nvim-lua/plenary.nvim",
-    --             "hrsh7th/nvim-cmp",
-    --             "nvim-treesitter/nvim-treesitter",
-    --         },
-    --         keys = {
-    --             {
-    --                 "gf",
-    --                 function()
-    --                     if require("obsidian").util.cursor_on_markdown_link() then
-    --                         return "<cmd>ObsidianFollowLink<CR>"
-    --                     else
-    --                         return "gf"
-    --                     end
-    --                 end,
-    --                 desc = "Search obsidian notes",
-    --                 noremap = false,
-    --                 expr = true,
-    --             },
-    --         },
-    --         opts = {
-    --             dir = "~/.config/obsidian",
-    --             ui = { enable = false },
-    --             daily_notes = {
-    --                 folder = "Inbox/Daily Notes",
-    --                 -- Optional, if you want to change the date format for daily notes.
-    --                 date_format = "%ddd, %LL",
-    --             },
-    --             completion = {
-    --                 nvim_cmp = true,
-    --             },
-    --             templates = {
-    --                 subdir = "Templates",
-    --                 date_format = "%ddd, %LL",
-    --                 time_format = "%h:%mm %A",
-    --             },
-    --             follow_url_func = function(url)
-    --                 -- Open the URL in the default web browser.
-    --                 vim.fn.jobstart({ "open", url }) -- Mac OS
-    --                 -- vim.fn.jobstart({"xdg-open", url})  -- linux
-    --             end,
-    --             -- finder = "telescope.nvim",
-    --         },
-    --     },
+    {
+        "obsidian-nvim/obsidian.nvim",
+        version = "*",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        event = {
+            "BufReadPre "
+                .. vim.fn.expand("~")
+                .. "/Developer/dotfiles/obsidian/**.md",
+            "BufNewFile "
+                .. vim.fn.expand("~")
+                .. "/Developer/dotfiles/obsidian/**.md",
+        },
+        keys = {
+            {
+                "<CR>",
+                function()
+                    return require("obsidian").util.smart_action()
+                end,
+                buffer = true,
+                expr = true,
+                desc = "Obsidian smart action",
+            },
+            {
+                "[o",
+                function()
+                    return require("obsidian").util.nav_link("prev")
+                end,
+                buffer = true,
+                desc = "Navigate to previous link",
+            },
+            {
+                "]o",
+                function()
+                    return require("obsidian").util.nav_link("next")
+                end,
+                buffer = true,
+                desc = "Navigate to next link",
+            },
+        },
+        opts = {
+            legacy_commands = false,
+            workspaces = {
+                {
+                    name = "personal",
+                    path = "~/Developer/dotfiles/obsidian",
+                },
+            },
+            ui = { enable = false },
+            daily_notes = {
+                folder = "00 Daily Notes",
+                date_format = "%ddd, %LL",
+            },
+            completion = {
+                nvim_cmp = false,
+                blink = true,
+                min_chars = 2,
+            },
+            templates = {
+                folder = "06 Templates",
+                date_format = "%ddd, %LL",
+                time_format = "%h:%mm %A",
+            },
+            picker = {
+                name = "snacks.picker",
+            },
+            follow_url_func = function(url)
+                vim.fn.jobstart({ "open", url })
+            end,
+        },
+    },
 }
