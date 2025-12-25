@@ -2,7 +2,14 @@ return {
     {
         "obsidian-nvim/obsidian.nvim",
         version = "*",
-        ft = "markdown",
+        event = {
+            "BufReadPre "
+                .. vim.fn.expand("~")
+                .. "/Developer/dotfiles/obsidian/**.md",
+            "BufNewFile "
+                .. vim.fn.expand("~")
+                .. "/Developer/dotfiles/obsidian/**.md",
+        },
         keys = {
             {
                 "<CR>",
@@ -58,7 +65,6 @@ return {
             picker = {
                 name = "snacks.picker",
             },
-            mappings = {},
             follow_url_func = function(url)
                 vim.fn.jobstart({ "open", url })
             end,
