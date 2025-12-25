@@ -2,6 +2,9 @@ return {
     {
         "obsidian-nvim/obsidian.nvim",
         version = "*",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
         event = {
             "BufReadPre "
                 .. vim.fn.expand("~")
@@ -16,7 +19,6 @@ return {
                 function()
                     return require("obsidian").util.smart_action()
                 end,
-                ft = "markdown",
                 buffer = true,
                 expr = true,
                 desc = "Obsidian smart action",
@@ -26,7 +28,6 @@ return {
                 function()
                     return require("obsidian").util.nav_link("prev")
                 end,
-                ft = "markdown",
                 buffer = true,
                 desc = "Navigate to previous link",
             },
@@ -35,7 +36,6 @@ return {
                 function()
                     return require("obsidian").util.nav_link("next")
                 end,
-                ft = "markdown",
                 buffer = true,
                 desc = "Navigate to next link",
             },
@@ -55,6 +55,7 @@ return {
             },
             completion = {
                 nvim_cmp = false,
+                blink = true,
                 min_chars = 2,
             },
             templates = {
