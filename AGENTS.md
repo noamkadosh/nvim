@@ -3,13 +3,15 @@
 ## Build/Test/Lint Commands
 - **Format Lua code**: `stylua .` (80 char line width, spaces indentation)
 - **Lint Lua code**: `selene .` (lua51+vim std, allows global usage, multiple statements, mixed tables)
-- **Check syntax**: `:luafile %` (in Neovim) or `lua -c "dofile('filename.lua')"`
+- **Test config**: `:luafile %` (in Neovim) or `nvim --headless -c "luafile init.lua" -c "quitall"`
+- **Check syntax**: `lua -c "dofile('filename.lua')"`
 
 ## Code Style Guidelines
 - **Line width**: 80 characters maximum
 - **Indentation**: Spaces (not tabs), consistent with existing files
 - **Imports**: Use `require("module")` for local modules, full paths for external plugins
-- **Functions**: Snake_case for utility functions, camelCase for local variables
+- **Naming**: snake_case for functions (e.g., `get_date`), camelCase for local variables (e.g., `dateTime`)
+- **Modules**: Use `local M = {}` and `return M` pattern for utility files in `lua/utils/`
 - **Comments**: Minimal, only for complex logic or non-obvious configurations
 - **Lua standard**: lua51+vim for Neovim compatibility
 - **Tables**: Return tables from plugin files, use consistent formatting with existing patterns

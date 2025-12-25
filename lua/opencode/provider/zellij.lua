@@ -12,7 +12,6 @@
 ---@class opencode.provider.Zellij : opencode.Provider
 ---@field opts opencode.provider.zellij.Opts
 ---@field cmd string The command to run opencode (e.g., "opencode").
----@field pane_name? string The zellij pane name where `opencode` is running (internal use only).
 local Zellij = {}
 Zellij.__index = Zellij
 
@@ -28,7 +27,6 @@ function Zellij.new(opts)
     local self = setmetatable({}, Zellij)
     self.opts = opts or {}
     self.cmd = self.opts.cmd or "opencode"
-    self.pane_name = nil
     return self
 end
 
@@ -55,7 +53,19 @@ function Zellij.health()
     return true
 end
 
----Check if `opencode` process is running.
+---Get unique pane name for current project (based on cwd).
+---@return string
+function Zellij:get_pane_name()
+    local cwd = vim.fn.getcwd()
+    -- Create a simple hash of the cwd
+    local hash = 0
+    for i = 1, #cwd do
+        hash = (hash * 31 + string.byte(cwd, i)) % 0xFFFFFFFF
+    end
+    return string.format("opencode_%x", hash)
+end
+
+---Check if the project-specific `opencode` process is running.
 ---@return boolean
 function Zellij:is_running()
     local ok = self.health()
@@ -63,9 +73,34 @@ function Zellij:is_running()
         return false
     end
 
-    -- Use pgrep to check if opencode process exists (more reliable than ps+grep)
-    local result = vim.fn.system("pgrep -f '" .. self.cmd .. "'")
-    return result and result ~= ""
+    local cwd = vim.fn.getcwd()
+
+    -- Find all opencode processes and check their working directories
+    local cmd = string.format(
+        "ps aux | awk '$11 == \"%s\" || $11 ~ /\\/%s$/ {print $2}'",
+        self.cmd,
+        self.cmd
+    )
+    local pids = vim.fn.system(cmd)
+
+    if pids == "" then
+        return false
+    end
+
+    -- Check each PID's working directory
+    for pid in pids:gmatch("%d+") do
+        local lsof_cmd = string.format(
+            "lsof -p %s 2>/dev/null | grep cwd | awk '{print $NF}'",
+            pid
+        )
+        local proc_cwd = vim.fn.system(lsof_cmd):gsub("%s+$", "")
+
+        if proc_cwd == cwd then
+            return true
+        end
+    end
+
+    return false
 end
 
 ---Create or kill the `opencode` zellij pane.
@@ -81,18 +116,18 @@ end
 function Zellij:start()
     if not self:is_running() then
         local direction = self.opts.direction or "right"
-        -- Create a unique name for the pane to identify it later
-        self.pane_name = "opencode_" .. vim.fn.getpid()
+        local pane_name = self:get_pane_name()
 
         -- Get PATH from Neovim's environment (it has the correct PATH)
         local path = vim.env.PATH or ""
 
         -- Use zellij run with close-on-exit for automatic cleanup
         -- Pass Neovim's PATH to ensure node, bun, npm, etc. are available
+        -- Zellij will automatically use the current pane's working directory
         local zellij_cmd = string.format(
             "zellij run --close-on-exit --direction %s --name '%s' -- env PATH='%s' %s",
             direction,
-            self.pane_name,
+            pane_name,
             path,
             self.cmd
         )
@@ -100,42 +135,53 @@ function Zellij:start()
     end
 end
 
----Kill the `opencode` pane.
----Kills the opencode process and its parent shell, causing the pane to close.
+---Kill the project-specific `opencode` pane.
+---Finds and kills only the opencode process running in the current project directory.
+---The pane will close automatically due to --close-on-exit flag.
 function Zellij:stop()
-    if self:is_running() then
-        -- Find the opencode process and its parent shell, then kill both
-        local kill_script = string.format(
-            [[
-			#!/bin/sh
-			# Find all opencode processes
-			pids=$(pgrep -f '%s')
-			for pid in $pids; do
-				# Get the parent process ID (the shell wrapper)
-				ppid=$(ps -o ppid= -p $pid | tr -d ' ')
-				# Kill the child first (opencode)
-				kill -TERM $pid 2>/dev/null
-				# Kill the parent shell to close the pane
-				if [ -n "$ppid" ] && [ "$ppid" != "1" ]; then
-					kill -TERM $ppid 2>/dev/null
-				fi
-			done
-			# Wait a bit for graceful shutdown
-			sleep 0.2
-			# Force kill any remaining processes
-			pkill -9 -f '%s' 2>/dev/null
-		]],
-            self.cmd,
-            self.cmd
-        )
-
-        vim.fn.system(kill_script)
-
-        -- Wait for pane to close
-        vim.wait(300)
-
-        self.pane_name = nil
+    if not self:is_running() then
+        return
     end
+
+    local cwd = vim.fn.getcwd()
+
+    -- Find all opencode processes
+    local cmd = string.format(
+        "ps aux | awk '$11 == \"%s\" || $11 ~ /\\/%s$/ {print $2}'",
+        self.cmd,
+        self.cmd
+    )
+    local pids = vim.fn.system(cmd)
+
+    -- Check each PID and kill if it matches current directory
+    for pid in pids:gmatch("%d+") do
+        local lsof_cmd = string.format(
+            "lsof -p %s 2>/dev/null | grep cwd | awk '{print $NF}'",
+            pid
+        )
+        local proc_cwd = vim.fn.system(lsof_cmd):gsub("%s+$", "")
+
+        if proc_cwd == cwd then
+            -- Kill the process gracefully
+            vim.fn.system(string.format("kill -TERM %s 2>/dev/null", pid))
+
+            -- Wait a bit for graceful exit
+            vim.wait(500)
+
+            -- Force kill if still running
+            vim.fn.system(
+                string.format(
+                    "kill -0 %s 2>/dev/null && kill -9 %s 2>/dev/null",
+                    pid,
+                    pid
+                )
+            )
+            break
+        end
+    end
+
+    -- Wait for pane to close
+    vim.wait(100)
 end
 
 ---Show the `opencode` pane by focusing it.
